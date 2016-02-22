@@ -9,7 +9,7 @@
         'base.org',
         'spec.poorTeenagers'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, PoorTeenagersService, Org) {
+    app.controller('Ctrl', function ($scope, CommonUtils, PoorTeenagersService, Org, AlertFactory, ModalFactory) {
         $scope.condition = {};
 
         // 如果不是根节点，则只能查询自己的机构的数据
@@ -55,9 +55,11 @@
                 scope: $scope,
                 content: '确定要执行【删除】操作吗?',
                 callback: function () {
-                    var promise = PoorTeenagersService.deleteByIds({ids: id}, function () {
-                        AlertFactory.success(null, '删除成功!');
-                        $scope.query();
+                    var promise = PoorTeenagersService.deleteByIds({ids: id}, function (data) {
+                        if (data.success) {
+                            AlertFactory.success(null, '删除成功!');
+                            $scope.query();
+                        }
                     });
                     CommonUtils.loading(promise);
                 }
