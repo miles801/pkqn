@@ -2,7 +2,6 @@ package eccrm.base.user.dao.impl;
 
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.context.SecurityContext;
-import com.ycrl.core.hibernate.filter.FilterFieldType;
 import eccrm.base.user.bo.UserBo;
 import eccrm.base.user.dao.UserDao;
 import eccrm.base.user.domain.User;
@@ -38,7 +37,8 @@ public class UserDaoImpl extends HibernateDaoHelper implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> query(UserBo bo) {
-        Criteria criteria = createCriteria(User.class, FILTER_NAME, "employeeId", FilterFieldType.EMPLOYEE);
+//        Criteria criteria = createCriteria(User.class, FILTER_NAME, "employeeId", FilterFieldType.EMPLOYEE);
+        Criteria criteria = createCriteria(User.class);
         initCriteria(criteria, bo);
         criteria.addOrder(Order.asc("username"));
         return criteria.list();
@@ -46,7 +46,8 @@ public class UserDaoImpl extends HibernateDaoHelper implements UserDao {
 
     @Override
     public Long getTotal(UserBo bo) {
-        Criteria criteria = createRowCountsCriteria(User.class, FILTER_NAME, "employeeId", FilterFieldType.EMPLOYEE);
+//        Criteria criteria = createRowCountsCriteria(User.class, FILTER_NAME, "employeeId", FilterFieldType.EMPLOYEE);
+        Criteria criteria = createRowCountsCriteria(User.class);
         initCriteria(criteria, bo);
         return (Long) criteria.uniqueResult();
     }
