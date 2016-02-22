@@ -63,7 +63,9 @@ public class LoginFilter implements Filter {
             }
         }
 
-        if (requestUri.equals(request.getContextPath() + "/login") || requestUri.startsWith(request.getContextPath() + "/index.html")) {
+        if (requestUri.equals(request.getContextPath() + "/login") || requestUri.startsWith(request.getContextPath() + "/index.html")
+                // 解决在360的flash下session会丢失的问题
+                || requestUri.startsWith(request.getContextPath() + "/attachment/upload")) {
             logger.info("without login request uri:" + requestUri);
             filterChain.doFilter(request, response);
             return;
