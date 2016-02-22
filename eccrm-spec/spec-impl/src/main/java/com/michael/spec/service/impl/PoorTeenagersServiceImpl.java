@@ -33,6 +33,8 @@ public class PoorTeenagersServiceImpl implements PoorTeenagersService, BeanWrapC
     public String save(PoorTeenagers poorTeenagers) {
         ValidatorUtils.validate(poorTeenagers);
         setAge(poorTeenagers);
+        poorTeenagers.setCondoleTimes(0);
+        poorTeenagers.setCondoleMoney(0d);
         String id = poorTeenagersDao.save(poorTeenagers);
         return id;
     }

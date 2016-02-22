@@ -8,9 +8,9 @@ import com.ycrl.core.hibernate.criteria.MatchModel;
 /**
  * @author Michael
  */
-public class PoorTeenagersBo implements BO{
+public class PoorTeenagersBo implements BO {
 
-    @Condition(matchMode = MatchModel.LIKE,likeMode = LikeModel.ANYWHERE)
+    @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
     private String name;
 
     @Condition
@@ -21,15 +21,47 @@ public class PoorTeenagersBo implements BO{
     @Condition
     private String qq;
 
-    @Condition(matchMode = MatchModel.LIKE,likeMode = LikeModel.ANYWHERE)
+    @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
     private String school;
 
     @Condition
     private String sex;
 
-    @Condition(matchMode = MatchModel.LIKE,likeMode = LikeModel.ANYWHERE)
+    @Condition(matchMode = MatchModel.LIKE, likeMode = LikeModel.ANYWHERE)
     private String address;
 
+    // 金额
+    @Condition(matchMode = MatchModel.GE, target = "condoleMoney")
+    private Double minMoney;
+    @Condition(matchMode = MatchModel.LT, target = "condoleMoney")
+    private Double maxMoney;
+    @Condition
+    private Integer condoleTimes;
+
+
+    public Integer getCondoleTimes() {
+        return condoleTimes;
+    }
+
+    public void setCondoleTimes(Integer condoleTimes) {
+        this.condoleTimes = condoleTimes;
+    }
+
+    public Double getMinMoney() {
+        return minMoney;
+    }
+
+    public void setMinMoney(Double minMoney) {
+        this.minMoney = minMoney;
+    }
+
+    public Double getMaxMoney() {
+        return maxMoney;
+    }
+
+    public void setMaxMoney(Double maxMoney) {
+        this.maxMoney = maxMoney;
+    }
 
     public String getName() {
         return name;

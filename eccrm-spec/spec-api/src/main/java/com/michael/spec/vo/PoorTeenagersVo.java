@@ -49,6 +49,27 @@ public class PoorTeenagersVo extends CommonVo {
     // 基本情况描述
     private String content;
 
+    // 慰问总金额
+    private Double condoleMoney;
+
+    // 慰问次数
+    private Integer condoleTimes;
+
+    public Double getCondoleMoney() {
+        return condoleMoney;
+    }
+
+    public void setCondoleMoney(Double condoleMoney) {
+        this.condoleMoney = condoleMoney;
+    }
+
+    public Integer getCondoleTimes() {
+        return condoleTimes;
+    }
+
+    public void setCondoleTimes(Integer condoleTimes) {
+        this.condoleTimes = condoleTimes;
+    }
 
     public String getName() {
         return name;

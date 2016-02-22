@@ -1,19 +1,23 @@
 package com.michael.spec.web;
 
-import com.ycrl.core.web.BaseController;
-import com.ycrl.base.common.JspAccessType;
-import com.ycrl.core.pager.PageVo;
-import com.ycrl.utils.gson.GsonUtils;
 import com.michael.spec.bo.CondoleBo;
 import com.michael.spec.domain.Condole;
 import com.michael.spec.service.CondoleService;
 import com.michael.spec.vo.CondoleVo;
+import com.ycrl.base.common.JspAccessType;
+import com.ycrl.core.pager.PageVo;
+import com.ycrl.core.web.BaseController;
+import com.ycrl.utils.gson.GsonUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author Michael
@@ -23,7 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CondoleCtrl extends BaseController {
     @Resource
     private CondoleService condoleService;
-    @RequestMapping(value = {""}, method=RequestMethod.GET )
+
+    @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String toList() {
         return "spec/condole/list/condole_list";
     }
@@ -41,6 +46,7 @@ public class CondoleCtrl extends BaseController {
         condoleService.save(condole);
         GsonUtils.printSuccess(response);
     }
+
     @RequestMapping(value = "/modify", params = {"id"}, method = RequestMethod.GET)
     public String toModify(@RequestParam String id, HttpServletRequest request) {
         request.setAttribute(JspAccessType.PAGE_TYPE, JspAccessType.MODIFY);
@@ -76,6 +82,13 @@ public class CondoleCtrl extends BaseController {
         CondoleBo bo = GsonUtils.wrapDataToEntity(request, CondoleBo.class);
         PageVo pageVo = condoleService.pageQuery(bo);
         GsonUtils.printData(response, pageVo);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/queryByTeenager", params = "teenagerId", method = RequestMethod.GET)
+    public void pageQuery(@RequestParam String teenagerId, HttpServletResponse response) {
+        List<CondoleVo> vos = condoleService.queryByTeenager(teenagerId);
+        GsonUtils.printData(response, vos);
     }
 
     @ResponseBody

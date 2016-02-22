@@ -10,7 +10,8 @@
         'eccrm.angular.ztree'
     ]);
 
-    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, PoorTeenagersService, PoorTeenagersParam, Org) {
+    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, PoorTeenagersService,
+                                     PoorTeenagersParam, Org, CondoleService, CondoleModal) {
 
         var pageType = $('#pageType').val();
         var id = $('#id').val();
@@ -87,14 +88,60 @@
             CommonUtils.loading(promise, '更新中...');
         };
 
+        // 慰问记录
+        var loadCondole = function () {
+            var promise = CondoleService.queryByTeenager({teenagerId: id}, function (data) {
+                $scope.condoles = data.data || [];
+            });
+            CommonUtils.loading(promise);
+        };
+
         // 加载数据
         $scope.load = function (id) {
+            // 明细
             var promise = PoorTeenagersService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
             });
             CommonUtils.loading(promise, 'Loading...');
+
+            // 慰问记录
+            loadCondole();
+
         };
 
+
+        $scope.addCondole = function () {
+            CondoleModal.add(id, $scope.beans.name, function () {
+                AlertFactory.success(null, '添加成功!');
+                loadCondole();
+            })
+        };
+
+        $scope.modifyCondole = function (condoleId) {
+            CondoleModal.modify(condoleId, function () {
+                AlertFactory.success(null, '更新成功!');
+                loadCondole();
+            })
+        };
+
+        $scope.viewCondole = function (condoleId) {
+            CondoleModal.view(condoleId)
+        };
+
+        // 删除慰问记录
+        $scope.removeCondole = function (condoleId) {
+            ModalFactory.confirm({
+                scope: $scope,
+                content: '数据删除后将不可恢复，确定删除？',
+                callback: function () {
+                    var promise = CondoleService.deleteByIds({ids: condoleId}, function () {
+                        AlertFactory.success(null, '删除成功!');
+                        loadCondole();
+                    });
+                    CommonUtils.loading(promise);
+                }
+            });
+        };
 
         if (pageType == 'add') {
             $scope.beans.sex = 'BP_MAN';

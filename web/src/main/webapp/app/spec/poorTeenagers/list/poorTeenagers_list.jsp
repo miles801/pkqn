@@ -17,7 +17,7 @@
     </script>
 </head>
 <body>
-<div class="main condition-row-1" ng-app="spec.poorTeenagers.list" ng-controller="Ctrl">
+<div class="main condition-row-2" ng-app="spec.poorTeenagers.list" ng-controller="Ctrl">
     <div class="list-condition">
         <div class="block">
             <div class="block-header">
@@ -45,6 +45,18 @@
                             <label>身份证号:</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="condition.idCard"/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-1-half">
+                            <label>慰问金额:</label>
+                        </div>
+                        <select ng-model="money" class="col-2-half" ng-change="moneyChange();">
+                            <option value="">全部</option>
+                            <option value="1">未慰问</option>
+                            <option value="2">1000元以下</option>
+                            <option value="3">1000-2000元</option>
+                            <option value="4">2000以上</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -78,12 +90,14 @@
                                 <td>基本情况</td>
                                 <td>备注</td>
                                 <td style="width: 120px;">录入时间</td>
+                                <td style="width: 120px;">慰问次数</td>
+                                <td style="width: 120px;">慰问金额</td>
                                 <td style="width: 80px;">操作</td>
                             </tr>
                             </thead>
                             <tbody class="table-body">
                             <tr ng-show="!beans || !beans.total">
-                                <td colspan="13" class="text-center">没有查询到数据！</td>
+                                <td colspan="15" class="text-center">没有查询到数据！</td>
                             </tr>
                             <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td>
@@ -100,6 +114,8 @@
                                 <td bo-text="foo.content|substr:20"></td>
                                 <td bo-text="foo.description|substr:10"></td>
                                 <td bo-text="foo.createdDatetime|eccrmDatetime"></td>
+                                <td bo-text="foo.condoleTimes"></td>
+                                <td bo-text="foo.condoleMoney"></td>
                                 <td>
                                     <a style="cursor:pointer" title="修改" ng-click="modify(foo.id)">
                                         <i class="icons edit"></i>

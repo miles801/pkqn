@@ -1,15 +1,14 @@
 package com.michael.spec.dao.impl;
 
 import com.michael.spec.bo.PoorTeenagersBo;
-import com.michael.spec.domain.PoorTeenagers;
 import com.michael.spec.dao.PoorTeenagersDao;
+import com.michael.spec.domain.PoorTeenagers;
 import com.ycrl.core.HibernateDaoHelper;
-import org.hibernate.criterion.Example;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.MatchMode;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
+
 import java.util.List;
 
 

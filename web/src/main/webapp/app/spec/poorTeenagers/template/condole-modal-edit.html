@@ -1,0 +1,72 @@
+<style>
+    .row {
+        margin: 0 0 5px 0;
+    }
+</style>
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header" ng-cloak>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">
+                    <span>{{type=='add'?'新增':(type=='modify'?'更新':'查看')}}慰问记录</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="form" class="form-horizontal" role="form">
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>青少年名称:</label>
+                        </div>
+                        <span class="col-8" ng-bind-template="{{beans.poorTeenagerName}}"></span>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>标题:</label>
+                        </div>
+                        <input type="text" class="col-8" ng-model="beans.title"
+                               validate validate-required validate-max-length="50"/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>慰问金额:</label>
+                        </div>
+                        <input type="text" class="col-8" ng-model="beans.money"
+                               validate validate-required validate-float/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>详细情况:</label>
+                        </div>
+                        <textarea rows="6" class="col-8" ng-model="beans.description"
+                                  validate validate-required validate-max-length="1000"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>慰问时间:</label>
+                        </div>
+                        <div class="col-8">
+                            <input class="col-12" type="text" ng-model="beans.occurDate" readonly
+                                   eccrm-my97="{}"/>
+                            <span class="add-on">
+                                <i class="icons icon clock"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" ng-cloak>
+                <button type="button" class="btn btn-default btn-primary" ng-if="type=='add'" ng-click="save();"
+                        ng-cloak
+                        ng-disabled="!form.$valid">保存
+                </button>
+                <button type="button" class="btn btn-default btn-primary" ng-if="type=='modify'" ng-click="update();"
+                        ng-cloak
+                        ng-disabled="!form.$valid">更新
+                </button>
+                <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

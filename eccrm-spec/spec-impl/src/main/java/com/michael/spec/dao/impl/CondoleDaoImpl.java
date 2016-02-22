@@ -6,6 +6,8 @@ import com.michael.spec.domain.Condole;
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
@@ -34,6 +36,7 @@ public class CondoleDaoImpl extends HibernateDaoHelper implements CondoleDao {
     public List<Condole> query(CondoleBo bo) {
         Criteria criteria = createCriteria(Condole.class);
         initCriteria(criteria, bo);
+        criteria.addOrder(Order.desc("occurDate"));
         return criteria.list();
     }
 
@@ -70,6 +73,15 @@ public class CondoleDaoImpl extends HibernateDaoHelper implements CondoleDao {
         return Integer.parseInt(createRowCountsCriteria(Condole.class)
                 .add(Restrictions.eq("poorTeenagerId", poorTeenagersId))
                 .uniqueResult() + "");
+    }
+
+    @Override
+    public Double condoleMoney(String poorTeenagersId) {
+        Assert.hasText(poorTeenagersId, "缺少参数：贫困青年ID不能为空!");
+        return (Double) createCriteria(Condole.class)
+                .setProjection(Projections.sum("money"))
+                .add(Restrictions.eq("poorTeenagerId", poorTeenagersId))
+                .uniqueResult();
     }
 
     private void initCriteria(Criteria criteria, CondoleBo bo) {

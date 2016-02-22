@@ -1,9 +1,11 @@
 package com.michael.spec.service;
 
-import com.ycrl.core.pager.PageVo;
 import com.michael.spec.bo.CondoleBo;
 import com.michael.spec.domain.Condole;
 import com.michael.spec.vo.CondoleVo;
+import com.ycrl.core.pager.PageVo;
+
+import java.util.List;
 
 /**
  * @author Michael
@@ -36,4 +38,11 @@ public interface CondoleService {
      */
     void deleteByIds(String[] ids);
 
+    /**
+     * 根据青年ID查询其对应的慰问记录
+     *
+     * @param teenagerId 青少年ID
+     * @return 慰问记录
+     */
+    List<CondoleVo> queryByTeenager(String teenagerId);
 }

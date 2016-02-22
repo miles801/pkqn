@@ -28,6 +28,8 @@
         <property name="income" column="INCOME" type="string" length="40"/>
         <property name="address" column="ADDRESS" type="string" length="100"/>
         <property name="content" column="CONTENT" type="text"/>
+        <property name="condoleMoney" column="CONDOLE_MONEY" type="double"/>
+        <property name="condoleTimes" column="CONDOLE_TIMES" type="int"/>
 
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>

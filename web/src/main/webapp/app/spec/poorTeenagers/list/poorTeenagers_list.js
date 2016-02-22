@@ -67,6 +67,33 @@
                 onUpdate: $scope.query
             });
         };
+
+        // 添加慰问记录
+        $scope.moneyChange = function () {
+            var money = $scope.money;
+            var condition = $scope.condition;
+            if (money == '') {
+                condition.condoleTimes = null;
+                condition.minMoney = null;
+                condition.maxMoney = null;
+            } else if (money == '1') {
+                condition.condoleTimes = 0;
+                condition.minMoney = null;
+                condition.maxMoney = null;
+            } else if (money == 2) {
+                condition.condoleTimes = null;
+                condition.minMoney = null;
+                condition.maxMoney = 1000;
+            } else if (money === 3) {
+                condition.condoleTimes = null;
+                condition.minMoney = 1000;
+                condition.maxMoney = 2000;
+            } else if (money == 4) {
+                condition.condoleTimes = null;
+                condition.minMoney = 2000;
+                condition.maxMoney = null;
+            }
+        };
         // 查看
         $scope.view = function (id) {
             CommonUtils.addTab({

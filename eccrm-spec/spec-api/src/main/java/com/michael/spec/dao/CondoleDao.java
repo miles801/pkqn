@@ -36,8 +36,17 @@ public interface CondoleDao {
 
     /**
      * 查询指定青年的慰问次数
+     *
      * @param poorTeenagersId 贫困青年ID
      * @return 慰问次数
      */
     int condoleCounts(String poorTeenagersId);
+
+    /**
+     * 查询指定青年的慰问总金额
+     *
+     * @param poorTeenagersId 贫困青年ID
+     * @return 慰问总金额
+     */
+    Double condoleMoney(String poorTeenagersId);
 }

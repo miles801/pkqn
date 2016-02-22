@@ -193,6 +193,13 @@
                         <div class="col-10-half">
                             <h3 class="text-center">慰问记录</h3>
                             <div class="block">
+                                <div class="block-header">
+                                    <div class="header-button">
+                                        <button type="button" class="btn btn-green btn-min" ng-click="addCondole()">
+                                            <span class="glyphicons disk_save"></span> 添加
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="block-content">
                                     <div class="table-responsive panel panel-table">
                                         <table class="table table-striped table-hover text-center">
@@ -200,10 +207,10 @@
                                             <tr>
                                                 <td style="width: 20px;">序号</td>
                                                 <td>标题</td>
-                                                <td>慰问品</td>
-                                                <td style="width: 120px;">慰问数量</td>
+                                                <td>慰问金额</td>
                                                 <td>详细情况</td>
-                                                <td style="width: 80px;">时间</td>
+                                                <td style="width: 80px;">发生日期</td>
+                                                <td style="width: 80px;">操作</td>
                                             </tr>
                                             </thead>
                                             <tbody class="table-body">
@@ -212,11 +219,23 @@
                                             </tr>
                                             <tr bindonce ng-repeat="foo in condoles" ng-cloak>
                                                 <td bo-text="$index+1"></td>
-                                                <td bo-text="foo.title"></td>
-                                                <td bo-text="foo.typeName"></td>
-                                                <td bo-text="foo.counts"></td>
+                                                <td>
+                                                    <a ng-click="viewCondole(foo.id);" bo-text="foo.title"
+                                                       class="cp"></a>
+                                                </td>
+                                                <td bo-text="foo.money"></td>
                                                 <td bo-text="foo.description"></td>
-                                                <td bo-text="foo.occurTime|eccrmDate"></td>
+                                                <td bo-text="foo.occurDate|eccrmDate"></td>
+                                                <td>
+                                                    <a style="cursor:pointer" title="编辑"
+                                                       ng-click="modifyCondole(foo.id)">
+                                                        <i class="icons edit"></i>
+                                                    </a>
+                                                    <a style="cursor:pointer" title="删除"
+                                                       ng-click="removeCondole(foo.id)">
+                                                        <i class="icons fork"></i>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
