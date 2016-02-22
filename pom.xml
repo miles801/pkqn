@@ -10,6 +10,7 @@
     <modules>
         <module>eccrm-core</module>
         <module>eccrm-base</module>
+        <module>eccrm-spec</module>
         <module>web</module>
     </modules>
 
