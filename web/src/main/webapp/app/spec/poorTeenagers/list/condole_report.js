@@ -19,7 +19,7 @@
         var timesChart = echarts.init(document.getElementById('timesPie'));
         var timesPieOption = {
             title: {
-                text: $scope.year + '年各区县慰问次数统计',
+                text: $scope.year + '年各县区慰问次数统计',
                 x: 'center'
             },
             tooltip: {
@@ -49,7 +49,7 @@
 
         var moneyPieOption = {
             title: {
-                text: $scope.year + '年各区县慰问金额统计',
+                text: $scope.year + '年各县区慰问金额统计',
                 x: 'center'
             },
             tooltip: {
@@ -80,7 +80,7 @@
 
         $scope.query = function () {
             var promise = CondoleService.analysis({year: $scope.year}, function (data) {
-                moneyPieOption.title.text = $scope.year + '年各区县慰问金额统计';
+                moneyPieOption.title.text = $scope.year + '年各县区慰问金额统计';
                 var legendData = [];
                 var moneySeries = [];
                 var timesSeries = [];
@@ -94,7 +94,7 @@
                 moneyChart.setOption(moneyPieOption);
 
 
-                timesPieOption.title.text = $scope.year + '年各区县慰问次数统计';
+                timesPieOption.title.text = $scope.year + '年各县区慰问次数统计';
                 timesPieOption.legend.data = legendData;
                 timesPieOption.series[0].data = timesSeries;
                 timesChart.setOption(timesPieOption);

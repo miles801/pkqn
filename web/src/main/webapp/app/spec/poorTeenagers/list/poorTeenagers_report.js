@@ -18,7 +18,7 @@
 
         var pieOptions = {
             title: {
-                text: $scope.year + '年各区县贫困青年统计',
+                text: $scope.year + '年各县区贫困青年统计',
                 x: 'center'
             },
             tooltip: {
@@ -49,7 +49,7 @@
 
         $scope.query = function () {
             var promise = PoorTeenagersService.analysis({year: $scope.year}, function (data) {
-                pieOptions.title.text = $scope.year + '年各区县贫困青年统计';
+                pieOptions.title.text = $scope.year + '年各县区贫困青年统计';
                 var legendData = [];
                 var moneySeries = [];
                 angular.forEach(data.data || [], function (o) {

@@ -61,7 +61,7 @@
                             <option value="4">2000以上</option>
                         </select>
                         <div class="form-label col-1-half" ng-cloak ng-if="isRootOrg">
-                            <label>区县:</label>
+                            <label>县区:</label>
                         </div>
                         <div class="col-2-half" id="orgId" ng-if="isRootOrg">
                             <input class="col-12" type="text" ng-model="orgName" readonly
