@@ -63,6 +63,15 @@ public class PoorTeenagersDaoImpl extends HibernateDaoHelper implements PoorTeen
         return (PoorTeenagers) getSession().get(PoorTeenagers.class, id);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Object[]> analysisTeenagers(int year) {
+        return getSession().createQuery("select c.orgId,c.orgName,count(c.id) from " + PoorTeenagers.class.getName()
+                + " c where year(c.createdDatetime)=:year group by c.orgId,c.orgName ")
+                .setParameter("year", year)
+                .list();
+    }
+
     private void initCriteria(Criteria criteria, PoorTeenagersBo bo) {
         Assert.notNull(criteria, "criteria must not be null!");
         CriteriaUtils.addCondition(criteria, bo);

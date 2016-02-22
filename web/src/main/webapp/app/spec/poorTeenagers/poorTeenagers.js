@@ -20,6 +20,10 @@
             // 根据id查询信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
 
+            // 按年统计分析
+            // 机构ID, 机构名称, 贫困青年个数
+            analysis: {method: 'GET', params: {method: 'analysis', year: '@year'}, isArray: false},
+
             // 分页查询
             pageQuery: {
                 method: 'POST',
@@ -42,6 +46,10 @@
 
             // 根据id查询信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
+
+            // 按年统计分析
+            // 机构ID, 机构名称, 慰问次数, 慰问金额
+            analysis: {method: 'GET', params: {method: 'analysis', year: '@year'}, isArray: false},
 
             // 根据青年ID查询
             queryByTeenager: {

@@ -5,6 +5,8 @@ import com.michael.spec.bo.PoorTeenagersBo;
 import com.michael.spec.domain.PoorTeenagers;
 import com.michael.spec.vo.PoorTeenagersVo;
 
+import java.util.List;
+
 /**
  * @author Michael
  * 
@@ -35,5 +37,13 @@ public interface PoorTeenagersService {
      * 批量删除
      */
     void deleteByIds(String[] ids);
+
+    /**
+     * 查询指定年的贫困青年信息
+     *
+     * @param year 年
+     * @return [机构ID，机构名称，个数]
+     */
+    List<Object[]> analysisTeenagers(int year);
 
 }

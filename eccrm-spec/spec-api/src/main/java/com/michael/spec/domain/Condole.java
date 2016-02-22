@@ -20,6 +20,10 @@ public class Condole extends CommonDomain {
     @NotNull
     private String poorTeenagerName;
 
+    // 冗余，报表需要
+    private String orgId;
+    private String orgName;
+
     @NotNull
     @Length(max = 50)
     private String title;
@@ -32,6 +36,22 @@ public class Condole extends CommonDomain {
     @NotNull
     private Date occurDate;
 
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
 
     public String getPoorTeenagerId() {
         return poorTeenagerId;

@@ -30,15 +30,23 @@ public class CondoleServiceImpl implements CondoleService {
     @Override
     public String save(Condole condole) {
         ValidatorUtils.validate(condole);
+        // 设置机构
+        PoorTeenagers poorTeenagers = poorTeenagersDao.findById(condole.getPoorTeenagerId());
+        Assert.notNull(poorTeenagers, "数据错误：贫困青年[" + condole.getPoorTeenagerId() + "]不存在!");
+        condole.setPoorTeenagerName(poorTeenagers.getName());
+        condole.setOrgId(poorTeenagers.getOrgId());
+        condole.setOrgName(poorTeenagers.getOrgName());
         String id = condoleDao.save(condole);
-        resetTeenagerCondole(condole.getPoorTeenagerId());
+        resetTeenagerCondole(condole.getPoorTeenagerId(), poorTeenagers);
         return id;
     }
 
-    private void resetTeenagerCondole(String teenagerId) {
+    private void resetTeenagerCondole(String teenagerId, PoorTeenagers poorTeenagers) {
         Assert.hasText(teenagerId, "重置慰问次数时：青年ID不能为空!");
-        PoorTeenagers poorTeenagers = poorTeenagersDao.findById(teenagerId);
-        Assert.notNull(poorTeenagers, "数据错误：贫困青年[" + teenagerId + "]不存在!");
+        if (poorTeenagers == null) {
+            poorTeenagers = poorTeenagersDao.findById(teenagerId);
+            Assert.notNull(poorTeenagers, "数据错误：贫困青年[" + teenagerId + "]不存在!");
+        }
         // 查询慰问次数
         int counts = condoleDao.condoleCounts(teenagerId);
         poorTeenagers.setCondoleTimes(counts);
@@ -57,7 +65,7 @@ public class CondoleServiceImpl implements CondoleService {
     public void update(Condole condole) {
         ValidatorUtils.validate(condole);
         condoleDao.update(condole);
-        resetTeenagerCondole(condole.getPoorTeenagerId());
+        resetTeenagerCondole(condole.getPoorTeenagerId(), null);
     }
 
     @Override
@@ -90,8 +98,13 @@ public class CondoleServiceImpl implements CondoleService {
             String poorTeenagerId = condole.getPoorTeenagerId();
             condoleDao.delete(condole);
             // 重置数量
-            resetTeenagerCondole(poorTeenagerId);
+            resetTeenagerCondole(poorTeenagerId, null);
         }
+    }
+
+    @Override
+    public List<Object[]> analysisCondole(int year) {
+        return condoleDao.analysisCondole(year);
     }
 
     @Override

@@ -174,6 +174,13 @@ public class PoorTeenagersCtrl extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/analysis", params = "year", method = RequestMethod.GET)
+    public void analysis(@RequestParam int year, HttpServletResponse response) {
+        List<Object[]> vos = poorTeenagersService.analysisTeenagers(year);
+        GsonUtils.printData(response, vos);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/delete", params = {"ids"}, method = RequestMethod.DELETE)
     public void deleteByIds(@RequestParam String ids, HttpServletResponse response) {
         String[] idArr = ids.split(",");

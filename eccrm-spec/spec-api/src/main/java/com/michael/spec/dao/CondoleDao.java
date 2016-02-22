@@ -49,4 +49,12 @@ public interface CondoleDao {
      * @return 慰问总金额
      */
     Double condoleMoney(String poorTeenagersId);
+
+    /**
+     * 统计指定年限的慰问次数
+     *
+     * @param year 年
+     * @return [机构ID, 机构名称, 慰问次数, 慰问金额]
+     */
+    List<Object[]> analysisCondole(int year);
 }

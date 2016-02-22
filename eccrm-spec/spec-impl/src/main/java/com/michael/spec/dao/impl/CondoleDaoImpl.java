@@ -84,6 +84,15 @@ public class CondoleDaoImpl extends HibernateDaoHelper implements CondoleDao {
                 .uniqueResult();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Object[]> analysisCondole(int year) {
+        return getSession().createQuery("select c.orgId,c.orgName,count(c.id),sum(c.money) from " + Condole.class.getName()
+                + " c where YEAR(c.occurDate)=:year group by c.orgId,c.orgName ")
+                .setParameter("year", year)
+                .list();
+    }
+
     private void initCriteria(Criteria criteria, CondoleBo bo) {
         Assert.notNull(criteria, "criteria must not be null!");
         CriteriaUtils.addCondition(criteria, bo);

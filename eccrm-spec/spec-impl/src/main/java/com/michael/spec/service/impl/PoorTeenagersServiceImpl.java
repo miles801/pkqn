@@ -86,6 +86,10 @@ public class PoorTeenagersServiceImpl implements PoorTeenagersService, BeanWrapC
         }
     }
 
+    @Override
+    public List<Object[]> analysisTeenagers(int year) {
+        return poorTeenagersDao.analysisTeenagers(year);
+    }
 
     @Override
     public void doCallback(PoorTeenagers poorTeenagers, PoorTeenagersVo vo) {

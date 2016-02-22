@@ -90,6 +90,12 @@ public class CondoleCtrl extends BaseController {
         List<CondoleVo> vos = condoleService.queryByTeenager(teenagerId);
         GsonUtils.printData(response, vos);
     }
+    @ResponseBody
+    @RequestMapping(value = "/analysis", params = "year", method = RequestMethod.GET)
+    public void analysis(@RequestParam int year, HttpServletResponse response) {
+        List<Object[]> vos = condoleService.analysisCondole(year);
+        GsonUtils.printData(response, vos);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/delete", params = {"ids"}, method = RequestMethod.DELETE)
