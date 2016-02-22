@@ -105,7 +105,9 @@
 
         // 导出数据
         $scope.exportData = function () {
-            alert('导出数据!');
+            var param = $.param(angular.extend({}, $scope.condition));
+            param = encodeURI(encodeURI(param));
+            window.open(CommonUtils.contextPathURL('/spec/poorTeenagers/export?' + param))
         };
     });
 

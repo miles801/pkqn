@@ -36,4 +36,5 @@ public interface LoginInfo {
     String TENEMENT = "tenementId";
 
     String LOGIN_DATETIME = "loginDatetime";
+    String ORG_NAME = "orgName";
 }

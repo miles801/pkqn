@@ -92,6 +92,7 @@ public class LoginCtrl {
             EmployeeVo empVo = SystemContainer.getInstance().getBean(EmployeeService.class).findById(empId);
             Assert.notNull(empVo, "登录失败：员工不存在!");
             session.setAttribute(LoginInfo.ORG, empVo.getOrgId());
+            session.setAttribute(LoginInfo.ORG_NAME, empVo.getOrgName());
             SecurityContext.set(empId, username, "1");
             SecurityContext.setEmpId(empId);
             SecurityContext.setEmpName(employeeName);
