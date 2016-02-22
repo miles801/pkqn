@@ -18,6 +18,7 @@ import eccrm.base.attachment.utils.ImageUtils;
 import eccrm.base.attachment.vo.AttachmentVo;
 import eccrm.utils.StringUtils;
 import eccrm.utils.UUIDGenerator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -141,6 +142,19 @@ public class AttachmentCtrl {
                 }
                 file.transferTo(tmp);
                 logger.info(SecurityContext.getUsername() + ("上传文件:" + fileName + " , 文件大小:" + AttachmentFormat.format(fileSize)));
+                if ("true".equals(request.getParameter("thumb"))) {
+                    int w = 80; // 默认宽高
+                    int h = 80;
+                    String width = request.getParameter("width");
+                    if (com.ycrl.utils.string.StringUtils.isNotEmpty(width)) {
+                        w = Integer.parseInt(width);
+                    }
+                    String height = request.getParameter("height");
+                    if (com.ycrl.utils.string.StringUtils.isNotEmpty(height)) {
+                        h = Integer.parseInt(height);
+                    }
+                    Thumbnails.of(tmp).size(w, h).toFile(tmp);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -237,6 +251,28 @@ public class AttachmentCtrl {
     public void deleteGet(@RequestParam String ids, HttpServletRequest request, HttpServletResponse response) {
         String idArr[] = ids.split(",");
         attachmentService.deleteByIds(idArr);
+        GsonUtils.printSuccess(response);
+    }
+
+    /**
+     * 图片压缩
+     *
+     * @param id     文件ID
+     * @param width  宽度
+     * @param height 高度
+     */
+    @RequestMapping(value = "/thumb", params = {"id", "width", "height"}, method = RequestMethod.POST)
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public void thumb(@RequestParam String id,
+                      @RequestParam int width,
+                      @RequestParam int height, HttpServletResponse response) {
+        File file = AttachmentProvider.getFile(id);
+        try {
+            Thumbnails.of(file).size(width, height).toFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         GsonUtils.printSuccess(response);
     }
 

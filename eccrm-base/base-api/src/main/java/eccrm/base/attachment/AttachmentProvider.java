@@ -115,7 +115,7 @@ public class AttachmentProvider {
     }
 
 
-    private static File getFile(String filename) {
+    public static File getFile(String filename) {
         Assert.hasText(filename, "文件名不能为空!");
         AttachmentService service = SystemContainer.getInstance().getBean(AttachmentService.class);
         Assert.notNull(service, String.format("没有获得附件服务接口的实例!%s", AttachmentService.class.getName()));

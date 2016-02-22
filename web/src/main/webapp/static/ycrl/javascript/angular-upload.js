@@ -91,7 +91,9 @@ UploadOption.prototype = {
     maxFile: 100,        // 允许上传的最大文件数
     bid: null,           // 业务ID，用于回显
     btype: null,         // 业务类型，在上传和回显时需要
-
+    thumbWidth: 60,        // 缩略图宽度
+    thumbHeight: 80,       // 缩略图高度
+    thumb: false,            // 是否启用缩略图
     /**
      * 初始化成功后要可执行的函数，this为当前配置对象
      */
@@ -363,10 +365,14 @@ SWFOption.prototype = {
                                     });
                                 }
                                 scope.options = options;
+                                var url = CommonUtils.contextPathURL('/attachment/upload2');
+                                if (options.thumb === true) {
+                                    url += '?thumb=' + options.thumb + '&width=' + options.thumbWidth + '&height=' + options.thumbHeight
+                                }
                                 options.swfOption = angular.extend(new SWFOption(), cfg.swfOption, {
                                     swf: uploadifySwfPath,
                                     formData: {businessType: btype},
-                                    uploader: CommonUtils.contextPathURL('/attachment/upload2'),
+                                    uploader: url,
                                     onUploadSuccess: function (file, data, response) {
                                         var obj = $.parseJSON(data);
                                         if (!(angular.isArray(obj) && obj.length > 0)) {

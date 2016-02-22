@@ -13,7 +13,7 @@
     app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, PoorTeenagersService,
                                      PoorTeenagersParam, Org, CondoleService, CondoleModal) {
 
-        var pageType = $('#pageType').val();
+        var pageType = $scope.pageType = $('#pageType').val();
         var id = $('#id').val();
 
         // 加载性别
@@ -41,6 +41,40 @@
             $scope.income = data;
             $scope.income.unshift({name: '请选择'});
         });
+
+        // 头像
+        $scope.uploadOptions = {
+            labelText: '头像',
+            maxFile: 1,
+            thumb: true,
+            thumbWidth: 50,
+            thumbHeight: 60,
+            showTable: false,
+            onSuccess: function (o) {
+                var id = o.id;
+                $('#imageId').html('<img style="height: 140px;width: 120px;" src="' + CommonUtils.contextPathURL('/attachment/temp/view?id=' + id) + '"/>');
+                $scope.$apply(function () {
+                    $scope.beans.picture = id;
+                });
+            },
+
+            onDelete: function () {
+                $('#imageId').html('');
+                $scope.beans.picture = null;
+            },
+            bid: id,
+            swfOption: {
+                fileSizeLimit: 1024,
+                fileTypeExts: "*.png;*.jpg"
+            }
+        };
+
+
+        // 移除头像
+        $scope.removePicture = function () {
+            $scope.uploadOptions.removeAll();
+            $scope.beans.picture = null;
+        };
 
         $scope.beans = {};
         // 如果不是根节点，则只能查询自己的机构的数据
@@ -101,6 +135,11 @@
             // 明细
             var promise = PoorTeenagersService.get({id: id}, function (data) {
                 $scope.beans = data.data || {};
+                // 头像
+                var imageId = $scope.beans.picture;
+                if (imageId) {
+                    $('#imageId').html('<img style="height: 140px;width: 120px;" src="' + CommonUtils.contextPathURL('/attachment/view?id=' + imageId) + '"/>');
+                }
             });
             CommonUtils.loading(promise, 'Loading...');
 
@@ -148,6 +187,7 @@
         } else if (pageType == 'modify') {
             $scope.load(id);
         } else if (pageType == 'detail') {
+            $scope.uploadOptions.readonly = true;
             $scope.load(id);
             $('input,textarea,select').attr('disabled', 'disabled');
         } else {

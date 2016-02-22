@@ -1,6 +1,7 @@
 package com.michael.spec.domain;
 
 import com.ycrl.base.common.CommonDomain;
+import eccrm.base.attachment.AttachmentSymbol;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import java.util.Date;
  *
  * @author Michael
  */
-public class PoorTeenagers extends CommonDomain {
+public class PoorTeenagers extends CommonDomain implements AttachmentSymbol{
 
     @NotNull(message = "姓名不能为空!")
     @Length(max = 20, message = "姓名最多20个字!")
@@ -248,5 +249,10 @@ public class PoorTeenagers extends CommonDomain {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String businessId() {
+        return getId();
     }
 }

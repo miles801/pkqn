@@ -16,8 +16,13 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-upload.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/app/org/org.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/jcrop/css/Jcrop.min.css">
+    <script type="text/javascript" src="<%=contextPath%>/vendor/jcrop/js/Jcrop.min.js"></script>
+
     <script type="text/javascript">
         window.angular.contextPathURL = "<%=contextPath%>";
     </script>
@@ -124,7 +129,8 @@
                             <label validate-error="form.idCard">身份证号:</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.idCard" name="idCard"
-                               validate validate-required validate-min-length="18" validate-max-length="18" validate-naming/>
+                               validate validate-required validate-min-length="18" validate-max-length="18"
+                               validate-naming/>
 
                         <div class="form-label col-1-half">
                             <label>所在学校:</label>
@@ -189,13 +195,25 @@
                     </div>
 
                     <div class="row">
+                        <div eccrm-upload="uploadOptions">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-1-half">&nbsp; </div>
+                        <div id="imageId" class="col" ng-show="beans.picture"
+                             style="border: 1px dashed #DAF3F5;padding: 5px 10px;"></div>
+                        <i class="icons icon fork cp" ng-show="beans.picture" ng-click="removePicture()"
+                           ng-cloak ng-if="pageType!=='detail'" style="margin-left: 8px;"></i>
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">&nbsp;</div>
                         <div class="col-10-half">
                             <h3 class="text-center">慰问记录</h3>
                             <div class="block">
                                 <div class="block-header">
                                     <div class="header-button">
-                                        <button type="button" class="btn btn-green btn-min" ng-click="addCondole()">
+                                        <button type="button" class="btn btn-green btn-min" ng-click="addCondole()"
+                                                ng-disabled="!beans.id">
                                             <span class="glyphicons disk_save"></span> 添加
                                         </button>
                                     </div>

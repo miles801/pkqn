@@ -9,9 +9,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/zTree/css/ztree.css">
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/app/org/org.js"></script>
     <script>
         window.angular.contextPathURL = '<%=contextPath%>';
     </script>
@@ -57,6 +60,16 @@
                             <option value="3">1000-2000元</option>
                             <option value="4">2000以上</option>
                         </select>
+                        <div class="form-label col-1-half" ng-cloak ng-if="isRootOrg">
+                            <label>区县:</label>
+                        </div>
+                        <div class="col-2-half" id="orgId" ng-if="isRootOrg">
+                            <input class="col-12" type="text" ng-model="orgName" readonly
+                                   ztree-single="orgOptions"/>
+                            <span class="add-on">
+                                <i class="icons icon search" ng-click="clearOrg();"></i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

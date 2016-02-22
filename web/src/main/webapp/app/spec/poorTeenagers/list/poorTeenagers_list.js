@@ -5,16 +5,30 @@
     var app = angular.module('spec.poorTeenagers.list', [
         'eccrm.angular',
         'eccrm.angularstrap',
+        'eccrm.angular.ztree',
+        'base.org',
         'spec.poorTeenagers'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, PoorTeenagersService) {
+    app.controller('Ctrl', function ($scope, CommonUtils, PoorTeenagersService, Org) {
         $scope.condition = {};
 
         // 如果不是根节点，则只能查询自己的机构的数据
         var orgId = CommonUtils.loginContext().orgId;
+        $scope.isRootOrg = true;
         if (orgId != 1) {
             $scope.condition.orgId = orgId;
+            $scope.isRootOrg = false;
+        } else {
+            $scope.orgOptions = Org.pick(function (o) {
+                $scope.condition.orgId = o.id;
+                $scope.orgName = o.name;
+            });
         }
+
+        $scope.clearOrg = function () {
+            $scope.condition.orgId = null;
+            $scope.orgName = null;
+        };
         //查询数据
         $scope.query = function () {
             $scope.pager.query();
