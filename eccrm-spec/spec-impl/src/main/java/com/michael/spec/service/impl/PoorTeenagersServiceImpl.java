@@ -72,6 +72,7 @@ public class PoorTeenagersServiceImpl implements PoorTeenagersService, BeanWrapC
     public PoorTeenagersVo findById(String id) {
         PoorTeenagers poorTeenagers = poorTeenagersDao.findById(id);
         return BeanWrapBuilder.newInstance()
+                .setCallback(this)
                 .wrap(poorTeenagers, PoorTeenagersVo.class);
     }
 

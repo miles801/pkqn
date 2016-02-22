@@ -123,6 +123,10 @@
             param = encodeURI(encodeURI(param));
             window.open(CommonUtils.contextPathURL('/spec/poorTeenagers/export?' + param))
         };
+        // 导出信息
+        $scope.exportInfo = function (id) {
+            window.open(CommonUtils.contextPathURL('/spec/poorTeenagers/exportInfo?id=' + id))
+        };
     });
 
 })(window, angular, jQuery);

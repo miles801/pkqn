@@ -7,7 +7,9 @@ import com.google.gson.JsonObject;
 import com.michael.poi.exp.ExportEngine;
 import com.michael.spec.bo.PoorTeenagersBo;
 import com.michael.spec.domain.PoorTeenagers;
+import com.michael.spec.service.CondoleService;
 import com.michael.spec.service.PoorTeenagersService;
+import com.michael.spec.vo.CondoleVo;
 import com.michael.spec.vo.PoorTeenagersVo;
 import com.ycrl.base.common.JspAccessType;
 import com.ycrl.core.pager.PageVo;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +41,9 @@ import java.util.List;
 public class PoorTeenagersCtrl extends BaseController {
     @Resource
     private PoorTeenagersService poorTeenagersService;
+
+    @Resource
+    private CondoleService condoleService;
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String toList() {
@@ -118,6 +124,50 @@ public class PoorTeenagersCtrl extends BaseController {
         response.setHeader("Content-disposition", disposition);
         try {
             new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("poorTeenagers.xlsx"), o);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/exportInfo", params = "id", method = RequestMethod.GET)
+    public void exportInfo(@RequestParam String id, HttpServletResponse response) {
+        PoorTeenagersVo vo = poorTeenagersService.findById(id);
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateStringConverter("yyyy年MM月dd日"))
+                .create();
+        JsonObject o = new JsonObject();
+        o.addProperty("name", vo.getName());
+        o.addProperty("sexName", vo.getSexName());
+        o.addProperty("mzName", vo.getMzName());
+        o.addProperty("zzmmName", vo.getZzmmName());
+        o.addProperty("birthday", new SimpleDateFormat("yyyy.MM.dd").format(vo.getBirthday()));
+        o.addProperty("phone", vo.getPhone());
+        o.addProperty("qq", vo.getQq());
+        o.addProperty("healthName", vo.getHealthName());
+        o.addProperty("idCard", vo.getIdCard());
+        o.addProperty("interest", vo.getInterest());
+        o.addProperty("orgName", vo.getOrgName());
+        o.addProperty("school", vo.getSchool());
+        o.addProperty("classes", vo.getClasses());
+        o.addProperty("parentName", vo.getParentName());
+        o.addProperty("incomeName", vo.getIncomeName());
+        o.addProperty("address", vo.getAddress());
+        o.addProperty("content", vo.getContent());
+
+        List<CondoleVo> vos = condoleService.queryByTeenager(id);
+        if (vos != null && vos.size() > 0) {
+            JsonElement element = gson.fromJson(gson.toJson(vos), JsonElement.class);
+            o.add("c", element);
+        }
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("贫困青年信息-" + vo.getName() + ".xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", disposition);
+        try {
+            new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("poorTeenagersInfo.xlsx"), o);
         } catch (IOException e) {
             e.printStackTrace();
         }

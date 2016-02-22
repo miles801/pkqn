@@ -130,6 +130,9 @@
                                 <td bo-text="foo.condoleTimes"></td>
                                 <td bo-text="foo.condoleMoney"></td>
                                 <td>
+                                    <a style="cursor:pointer" title="导出" ng-click="exportInfo(foo.id)">
+                                        <i class="icons download"></i>
+                                    </a>
                                     <a style="cursor:pointer" title="修改" ng-click="modify(foo.id)">
                                         <i class="icons edit"></i>
                                     </a>

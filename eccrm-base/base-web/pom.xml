@@ -42,7 +42,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ycrl.thirdparty</groupId>
+            <groupId>com.michael</groupId>
             <artifactId>poi-utils</artifactId>
             <version>1.1</version>
         </dependency>
