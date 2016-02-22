@@ -161,7 +161,7 @@
                         <div class="form-label col-1-half">
                             <label validate-error="form.orgName">区县:</label>
                         </div>
-                        <div class="col-2-half">
+                        <div class="col-2-half" id="orgId">
                             <input class="col-12" type="text" ng-model="beans.orgName" name="orgName" readonly
                                    ztree-single="orgOptions"
                                    validate validate-required/>

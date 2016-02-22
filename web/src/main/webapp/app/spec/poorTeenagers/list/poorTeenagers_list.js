@@ -10,6 +10,11 @@
     app.controller('Ctrl', function ($scope, CommonUtils, PoorTeenagersService) {
         $scope.condition = {};
 
+        // 如果不是根节点，则只能查询自己的机构的数据
+        var orgId = CommonUtils.loginContext().orgId;
+        if (orgId != 1) {
+            $scope.condition.orgId = orgId;
+        }
         //查询数据
         $scope.query = function () {
             $scope.pager.query();

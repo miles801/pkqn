@@ -39,8 +39,13 @@ public class Employee extends CommonDomain {
     private Date beginWorkDate;
     private String workType;
     private String duty;
+    // 直属机构
     private String orgId;
+    private String orgName;
+    // 直属岗位
     private String positionId;
+    private String positionName;
+
     private String wCountry;
     private String wProvience;
     private Organization organization;
@@ -303,5 +308,21 @@ public class Employee extends CommonDomain {
 
     public void setwAddress(String wAddress) {
         this.wAddress = wAddress;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
     }
 }

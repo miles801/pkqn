@@ -41,7 +41,14 @@
             $scope.income.unshift({name: '请选择'});
         });
 
-
+        $scope.beans = {};
+        // 如果不是根节点，则只能查询自己的机构的数据
+        var orgId = CommonUtils.loginContext().orgId;
+        if (orgId != 1) {
+            $scope.beans.orgId = orgId;
+            $scope.beans.orgName = CommonUtils.loginContext().orgName;
+            $('#orgId').children().attr('disabled', 'disabled');
+        }
         $scope.orgOptions = Org.pick(function (o) {
             $scope.beans.orgId = o.id;
             $scope.beans.orgName = o.name;
@@ -90,7 +97,7 @@
 
 
         if (pageType == 'add') {
-            $scope.beans = {sex: 'BP_MAN'};
+            $scope.beans.sex = 'BP_MAN';
         } else if (pageType == 'modify') {
             $scope.load(id);
         } else if (pageType == 'detail') {

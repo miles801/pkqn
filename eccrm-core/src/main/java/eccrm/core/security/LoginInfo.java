@@ -18,6 +18,8 @@ public interface LoginInfo {
      */
     String USER = "userId";
 
+    String ORG = "orgId";
+
     /**
      * 员工id
      */

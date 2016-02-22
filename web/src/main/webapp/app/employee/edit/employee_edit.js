@@ -28,8 +28,8 @@
         };
 
         $scope.OrgztreeOptions = OrgTree.dynamicTree(function (node) {
-            $scope.employee.organization = {id: node.id, name: node.name};
             $scope.employee.orgId = node.id;
+            $scope.employee.orgName = node.name;
         });
         //回到上一个页面
         $scope.back = CommonUtils.back;

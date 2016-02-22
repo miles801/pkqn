@@ -1,6 +1,7 @@
 package com.michael.spec.service.impl;
 
 import com.michael.spec.bo.PoorTeenagersBo;
+import com.michael.spec.dao.CondoleDao;
 import com.michael.spec.dao.PoorTeenagersDao;
 import com.michael.spec.domain.PoorTeenagers;
 import com.michael.spec.service.PoorTeenagersService;
@@ -11,6 +12,7 @@ import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
 import eccrm.base.parameter.service.ParameterContainer;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -23,6 +25,9 @@ import java.util.List;
 public class PoorTeenagersServiceImpl implements PoorTeenagersService, BeanWrapCallback<PoorTeenagers, PoorTeenagersVo> {
     @Resource
     private PoorTeenagersDao poorTeenagersDao;
+
+    @Resource
+    private CondoleDao condoleDao;
 
     @Override
     public String save(PoorTeenagers poorTeenagers) {
@@ -72,6 +77,8 @@ public class PoorTeenagersServiceImpl implements PoorTeenagersService, BeanWrapC
     public void deleteByIds(String[] ids) {
         if (ids == null || ids.length == 0) return;
         for (String id : ids) {
+            int counts = condoleDao.condoleCounts(id);
+            Assert.isTrue(counts == 0, "该记录无法删除!请先删除慰问记录!");
             poorTeenagersDao.deleteById(id);
         }
     }

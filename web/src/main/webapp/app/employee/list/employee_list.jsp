@@ -115,9 +115,9 @@ Date: 2014-10-15 14:47:37
                                          anyone-selected="anyone" ></div >
                                 </td >
                                 <td >姓名</td >
-                                <td >职务</td >
+                                <td >机构</td >
                                 <td >移动电话</td >
-                                <td >RTX</td >
+                                <td >账号</td >
                                 <td >状态</td >
                                 <td style="white-space: nowrap;text-align:center; width: 10px;" >操作</td >
                             </tr >
@@ -134,7 +134,7 @@ Date: 2014-10-15 14:47:37
                                     <a ng-click="detail(foo.id)"
                                        bo-text="foo.employeeName" ></a >
                                 </td >
-                                <td bo-text="foo.dutyName" ></td >
+                                <td bo-text="foo.orgName" ></td >
                                 <td bo-text="foo.mobile" ></td >
                                 <td bo-text="foo.extensionNumber" ></td >
                                 <td bo-text="foo.statusName" ></td >

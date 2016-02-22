@@ -1,15 +1,13 @@
 package eccrm.base.user.web;
 
 import com.google.gson.JsonObject;
-import com.michael.cache.redis.RedisServer;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.context.SecurityContext;
 import com.ycrl.utils.gson.GsonUtils;
 import com.ycrl.utils.gson.JsonObjectUtils;
-import com.ycrl.utils.string.RandomUtils;
-import eccrm.base.auth.domain.AccreditData;
-import eccrm.base.auth.service.AccreditDataService;
 import eccrm.base.auth.service.AccreditFuncService;
+import eccrm.base.employee.service.EmployeeService;
+import eccrm.base.employee.vo.EmployeeVo;
 import eccrm.base.user.service.*;
 import eccrm.base.user.vo.UserVo;
 import eccrm.core.security.LoginInfo;
@@ -17,10 +15,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.ShardedJedis;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -29,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author miles
@@ -90,6 +88,10 @@ public class LoginCtrl {
             session.setAttribute(LoginInfo.EMPLOYEE, empId);
             session.setAttribute(LoginInfo.EMPLOYEE_NAME, employeeName);
             session.setAttribute(LoginInfo.LOGIN_DATETIME, new Date().getTime());
+            // 获得员工信息
+            EmployeeVo empVo = SystemContainer.getInstance().getBean(EmployeeService.class).findById(empId);
+            Assert.notNull(empVo, "登录失败：员工不存在!");
+            session.setAttribute(LoginInfo.ORG, empVo.getOrgId());
             SecurityContext.set(empId, username, "1");
             SecurityContext.setEmpId(empId);
             SecurityContext.setEmpName(employeeName);
@@ -97,56 +99,14 @@ public class LoginCtrl {
 
             // 加入缓存
             SystemContainer systemContainer = SystemContainer.getInstance();
-            RedisServer redisServer = systemContainer.getBean(RedisServer.class);
-
-            ShardedJedis redisClient = redisServer.getRedisClient();
-            // 生成登录token
-            String token = RandomUtils.generate(6);
-            session.setAttribute("token", token);
-            redisClient.hset("login:", token, empId);
-
-            // 保存用户信息
-            redisClient.del("user:" + empId);
-            redisClient.hset("user:" + empId, empId, String.valueOf(new Date().getTime()));
 
             // 保存操作授权：PF,empId,资源编号的json
             AccreditFuncService funcService = systemContainer.getBean(AccreditFuncService.class);
             if (funcService == null) {
                 throw new RuntimeException("无法获得" + AccreditFuncService.class.getName() + "的实例对象，无法查询个人权限!");
             }
-            redisClient.del("PF:" + empId);
-            List<String> resourceCodes = funcService.queryPersonalResourceCode();
-            if (resourceCodes != null && !resourceCodes.isEmpty()) {
-                redisClient.sadd("PF:" + empId, resourceCodes.toArray(new String[resourceCodes.size()]));
-            }
 
             // 保存数据授权：PD:empId,资源编号,授权明细
-            redisClient.del("PD:" + empId);
-            AccreditDataService ads = systemContainer.getBean(AccreditDataService.class);
-            if (ads != null) {
-                List<AccreditData> accreditData = ads.queryPersonalAllDataResource(empId);
-                // key为数据资源的编号，value为数据资源对应的授权信息
-                Map<String, List<AccreditData>> accreditDataMap = new HashMap<String, List<AccreditData>>();
-                if (accreditData != null && !accreditData.isEmpty()) {
-                    for (AccreditData foo : accreditData) {
-                        String rc = foo.getResourceCode();
-                        List<AccreditData> tmp = accreditDataMap.get(rc);
-                        if (tmp == null) {
-                            tmp = new ArrayList<AccreditData>();
-                            accreditDataMap.put(rc, tmp);
-                        }
-                        tmp.add(foo);
-                    }
-                }
-                // 将授权信息缓存到redis中
-                for (Map.Entry<String, List<AccreditData>> entry : accreditDataMap.entrySet()) {
-                    String key = entry.getKey();
-                    String value = GsonUtils.toJson(entry.getValue());
-                    redisClient.hset("PD:" + empId, key, value);
-                }
-            }
-            redisClient.close();
-            // 加载角色的全部菜单和权限
             // 查询登录用户权限
             LoginSuccessEvent event = systemContainer.getBean(LoginSuccessEvent.class);
             if (event != null) {
@@ -155,7 +115,10 @@ public class LoginCtrl {
 
             //写入Cookie
             response.addCookie(new Cookie("eccrmContext.id", empId));
+            response.addCookie(new Cookie("eccrmContext.orgId", empVo.getOrgId()));
             try {
+                // 机构名称
+                response.addCookie(new Cookie("eccrmContext.orgName", URLEncoder.encode(URLEncoder.encode(empVo.getOrgName(), "utf-8"), "utf-8")));
                 // 员工名称
                 response.addCookie(new Cookie("eccrmContext.employeeName", URLEncoder.encode(URLEncoder.encode(employeeName, "utf-8"), "utf-8")));
                 // 用户名称

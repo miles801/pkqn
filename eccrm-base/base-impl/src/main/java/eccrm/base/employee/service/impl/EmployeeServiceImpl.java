@@ -254,13 +254,6 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
     @Override
     public void doCallback(Employee employee, EmployeeVo vo) {
-        if (employee.getOrgId() != null) {
-            Organization organization = SystemContainer.getInstance().getBean(OrganizationDao.class).findById(employee.getOrgId());
-            if (organization != null) {
-                vo.setOrganizationId(organization.getId());
-                vo.setOrganizationName(organization.getName());
-            }
-        }
         ParameterContainer parameterContainer = ParameterContainer.getInstance();
         if (!StringUtils.isBlank(vo.getDuty())) {//存在
             vo.setDutyName(parameterContainer.getBusinessName(ContactType.BP_ZHIW, vo.getDuty()));
@@ -270,22 +263,6 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         }
         if (!StringUtils.isBlank(vo.getStatus())) {
             vo.setStatusName(parameterContainer.getSystemName(ContactType.CONT_TYPE_STATUS, vo.getStatus()));
-        }
-        //联络方式中的字段转换
-        if (employee.getId() != null) {
-
-            ContactMethod contactMethod = SystemContainer.getInstance().getBean(ContactMethodDao.class)
-                    .findById(employee.getId());
-            if (contactMethod != null) {
-                vo.setExtensionNumber(contactMethod.getAftAddr());
-                String sup = contactMethod.getSupType();
-                if (sup != null && "PHONE".equals(sup)) {
-
-                    vo.setMobile(contactMethod.getAddress());
-                } else if (sup != null && "EMAIL".equals(sup)) {
-                    vo.setEmail(contactMethod.getAddress());
-                }
-            }
         }
     }
 
