@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>海航OA协同办公系统</title>
+    <title>银川市家庭经济困难青少年信息数据库</title>
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>
@@ -25,6 +25,9 @@
     <div id="header">
         <div class="top">
             <div class="logo"></div>
+            <span style=" color: #fff; font-size: 26px; margin-left: 65px; height: 60px; display: inline-block; line-height: 60px; ">
+                | 银川市家庭经济困难青少年数据库
+            </span>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
                     <img src="<%=contextPath%>/app/main/images/icon/h13.png" width="24" height="24" title="退出">

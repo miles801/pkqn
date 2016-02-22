@@ -108,12 +108,6 @@
             }
         };
 
-        // 待办任务
-        $scope.showTodo = function () {
-            hideColbar();
-            // 显示待办
-            $('#iframe').attr('src', 'workflow/todo');
-        };
 
         // 便签
         $scope.showNote = function () {
@@ -123,24 +117,6 @@
             $('#iframe').show().attr('src', 'tools/note')
         };
 
-        // 新闻公告
-        $scope.showNews = function (id, index) {
-            // 删掉现有数据
-            $scope.beans.splice(index, 1);
-
-            // 跳转到明细页面
-            hideColbar(function () {
-                CommonUtils.addTab({
-                    title: '公告明细',
-                    url: CommonUtils.contextPathURL('/base/news/detail?id=' + id),
-                    isRoot: true,
-                    canClose: false,
-                    targetObj: window
-                });
-
-            });
-
-        };
 
         $scope.updatePwd = function () {
             PasswordModal.modifyPwd({
@@ -149,29 +125,6 @@
                 }
             });
         };
-
-        var getMessage = function () {
-            $.ajax({
-                url: CommonUtils.contextPathURL('/servlet/message'),
-                timeout: 60 * 1000,
-                dataType: 'json',
-                success: function (data) {
-                    if (data && data.success && data.data) {
-                        var obj = $.parseJSON(data.data);
-                        AsideFactory.info({
-                            title: obj.newsTitle,
-                            content: obj.content || ''
-                        });
-                    }
-                    getMessage();
-                },
-                error: function () {
-                    //alert('错误');
-                    //getMessage();
-                }
-            });
-        };
-        //getMessage();
 
 
         // 当子菜单渲染完毕后

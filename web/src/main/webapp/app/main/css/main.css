@@ -78,12 +78,12 @@ body {
 #header .top .logo {
     overflow: hidden;
     height: 60px;
-    width: 300px;
-    top: 0;
+    width: 50px;
     left: 5px;
-    background: url('../images/logo.png') no-repeat 0 8px;
+    background: url('../images/logo.jpg') no-repeat 0 8px;
     position: absolute;
     z-index: 2;
+    background-size: contain;
 }
 
 #header .top .login {
