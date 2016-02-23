@@ -16,6 +16,7 @@ import com.ycrl.core.pager.PageVo;
 import com.ycrl.core.web.BaseController;
 import com.ycrl.utils.gson.DateStringConverter;
 import com.ycrl.utils.gson.GsonUtils;
+import eccrm.base.attachment.AttachmentProvider;
 import eccrm.core.security.LoginInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -154,7 +155,11 @@ public class PoorTeenagersCtrl extends BaseController {
         o.addProperty("incomeName", vo.getIncomeName());
         o.addProperty("address", vo.getAddress());
         o.addProperty("content", vo.getContent());
-
+        String picture = vo.getPicture();
+        boolean hasFile = AttachmentProvider.getFile(picture) != null;
+        if (picture != null && hasFile) {
+            o.addProperty("picture", AttachmentProvider.getFile(picture).getAbsolutePath());
+        }
         List<CondoleVo> vos = condoleService.queryByTeenager(id);
         if (vos != null && vos.size() > 0) {
             JsonElement element = gson.fromJson(gson.toJson(vos), JsonElement.class);

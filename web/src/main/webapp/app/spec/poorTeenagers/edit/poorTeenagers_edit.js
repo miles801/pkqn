@@ -47,8 +47,8 @@
             labelText: '头像',
             maxFile: 1,
             thumb: true,
-            thumbWidth: 50,
-            thumbHeight: 60,
+            thumbWidth: 120,
+            thumbHeight: 140,
             showTable: false,
             onSuccess: function (o) {
                 var id = o.id;
@@ -66,7 +66,7 @@
             },
             bid: id,
             swfOption: {
-                fileSizeLimit: 1024,
+                fileSizeLimit: 10 * 1000 * 1000,
                 fileTypeExts: "*.png;*.jpg"
             }
         };
