@@ -39,7 +39,7 @@ public interface CondoleService {
     void deleteByIds(String[] ids);
 
     /**
-     * 根据青年ID查询其对应的慰问记录
+     * 根据青少年ID查询其对应的慰问记录
      *
      * @param teenagerId 青少年ID
      * @return 慰问记录

@@ -35,17 +35,17 @@ public interface CondoleDao {
     void delete(Condole condole);
 
     /**
-     * 查询指定青年的慰问次数
+     * 查询指定青少年的慰问次数
      *
-     * @param poorTeenagersId 贫困青年ID
+     * @param poorTeenagersId 贫困青少年ID
      * @return 慰问次数
      */
     int condoleCounts(String poorTeenagersId);
 
     /**
-     * 查询指定青年的慰问总金额
+     * 查询指定青少年的慰问总金额
      *
-     * @param poorTeenagersId 贫困青年ID
+     * @param poorTeenagersId 贫困青少年ID
      * @return 慰问总金额
      */
     Double condoleMoney(String poorTeenagersId);

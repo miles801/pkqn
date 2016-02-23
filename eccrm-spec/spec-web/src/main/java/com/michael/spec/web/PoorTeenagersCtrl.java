@@ -116,7 +116,7 @@ public class PoorTeenagersCtrl extends BaseController {
         o.addProperty("orgName", (String) request.getSession().getAttribute(LoginInfo.ORG_NAME));
         String disposition = null;//
         try {
-            disposition = "attachment;filename=" + URLEncoder.encode("贫困青年数据.xlsx", "UTF-8");
+            disposition = "attachment;filename=" + URLEncoder.encode("贫困青少年数据.xlsx", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -160,7 +160,7 @@ public class PoorTeenagersCtrl extends BaseController {
         }
         String disposition = null;//
         try {
-            disposition = "attachment;filename=" + URLEncoder.encode("贫困青年信息-" + vo.getName() + ".xlsx", "UTF-8");
+            disposition = "attachment;filename=" + URLEncoder.encode("贫困青少年信息-" + vo.getName() + ".xlsx", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

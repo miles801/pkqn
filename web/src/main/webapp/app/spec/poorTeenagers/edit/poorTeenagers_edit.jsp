@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-    <title>编辑贫困青年</title>
+    <title>编辑贫困青少年</title>
     <meta content="text/html" charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
@@ -19,13 +19,21 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-upload.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/vendor/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/app/org/org.js"></script>
-
+    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/kindeditor-min.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/vendor/kindeditor-4.1.10/lang/zh_CN.js"></script>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/jcrop/css/Jcrop.min.css">
     <script type="text/javascript" src="<%=contextPath%>/vendor/jcrop/js/Jcrop.min.js"></script>
 
     <script type="text/javascript">
         window.angular.contextPathURL = "<%=contextPath%>";
     </script>
+
+    <style>
+        #picture .col-1-half {
+            width: 50px !important;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 <div class="main" ng-app="spec.poorTeenagers.edit" ng-controller="Ctrl">
@@ -63,6 +71,18 @@
                         <input type="hidden" id="pageType" value="${pageType}"/>
                         <input type="hidden" id="id" value="${id}"/>
                     </div>
+
+                    <div id="picture" style="position: absolute;width: 200px;height: 100px;left: 70%;">
+                        <%-- 头像 --%>
+                        <div eccrm-upload="uploadOptions">
+                        </div>
+                        <div style="position:absolute;top:5px;left: 45px;width: 180px;height: 80px;">
+                            <div id="imageId" class="col" ng-show="beans.picture"
+                                 style="border: 1px dashed #DAF3F5;padding: 5px 10px;"></div>
+                            <i class="icons icon fork cp col" ng-show="beans.picture" ng-click="removePicture()"
+                               ng-cloak ng-if="pageType!=='detail'" style="margin-left: 8px;"></i>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.name">姓名:</label>
@@ -75,14 +95,14 @@
                         <select ng-model="beans.sex" class="col-2-half" name="sex"
                                 ng-options="foo.value as foo.name for foo in sex" validate validate-required>
                         </select>
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.mz">民族:</label>
                         </div>
                         <select ng-model="beans.mz" class="col-2-half" name="mz"
                                 ng-options="foo.value as foo.name for foo in nation" validate validate-required>
                         </select>
-                    </div>
-                    <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.zzmm">政治面貌:</label>
                         </div>
@@ -90,6 +110,8 @@
                                 ng-options="foo.value as foo.name for foo in zzmm" validate validate-required>
                         </select>
 
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">
                             <label>出生年月:</label>
                         </div>
@@ -104,7 +126,6 @@
                             <label>年龄(周岁):</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.age" readonly/>
-
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
@@ -117,14 +138,14 @@
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.qq"
                                validate validate-max-length="20" validate-int/>
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.health">健康状况:</label>
                         </div>
                         <select ng-model="beans.health" class="col-2-half"
                                 ng-options="foo.value as foo.name for foo in health">
                         </select>
-                    </div>
-                    <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.idCard">身份证号:</label>
                         </div>
@@ -132,6 +153,8 @@
                                validate validate-required validate-min-length="18" validate-max-length="18"
                                validate-naming/>
 
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">
                             <label>所在学校:</label>
                         </div>
@@ -155,17 +178,17 @@
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.reason" name="reason"
                                validate validate-max-length="20"/>
+
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">
                             <label validate-error="form.income">家庭年收入:</label>
                         </div>
                         <select ng-model="beans.income" class="col-2-half"
                                 ng-options="foo.value as foo.name for foo in income">
                         </select>
-
-                    </div>
-                    <div class="row">
                         <div class="form-label col-1-half">
-                            <label validate-error="form.orgName">县区:</label>
+                            <label validate-error="form.orgName">县（市）区:</label>
                         </div>
                         <div class="col-2-half" id="orgId">
                             <input class="col-12" type="text" ng-model="beans.orgName" name="orgName" readonly
@@ -175,6 +198,9 @@
                                 <i class="icons icon search"></i>
                             </span>
                         </div>
+
+                    </div>
+                    <div class="row">
                         <div class="form-label col-1-half">
                             <label>地址:</label>
                         </div>
@@ -195,17 +221,6 @@
                     </div>
 
                     <div class="row">
-                        <div eccrm-upload="uploadOptions">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-label col-1-half">&nbsp; </div>
-                        <div id="imageId" class="col" ng-show="beans.picture"
-                             style="border: 1px dashed #DAF3F5;padding: 5px 10px;"></div>
-                        <i class="icons icon fork cp" ng-show="beans.picture" ng-click="removePicture()"
-                           ng-cloak ng-if="pageType!=='detail'" style="margin-left: 8px;"></i>
-                    </div>
-                    <div class="row">
                         <div class="form-label col-1-half">&nbsp;</div>
                         <div class="col-10-half">
                             <h3 class="text-center">慰问记录</h3>
@@ -224,16 +239,17 @@
                                             <thead class="table-header">
                                             <tr>
                                                 <td style="width: 20px;">序号</td>
-                                                <td>标题</td>
+                                                <td>慰问主题</td>
+                                                <td style="width: 80px;">慰问时间</td>
+                                                <td>参加人员</td>
                                                 <td>慰问金额</td>
                                                 <td>详细情况</td>
-                                                <td style="width: 80px;">发生日期</td>
                                                 <td style="width: 80px;">操作</td>
                                             </tr>
                                             </thead>
                                             <tbody class="table-body">
                                             <tr ng-show="!condoles.length">
-                                                <td colspan="6" class="text-center" style="border:0;">无慰问记录！</td>
+                                                <td colspan="7" class="text-center" style="border:0;">无慰问记录！</td>
                                             </tr>
                                             <tr bindonce ng-repeat="foo in condoles" ng-cloak>
                                                 <td bo-text="$index+1"></td>
@@ -241,9 +257,10 @@
                                                     <a ng-click="viewCondole(foo.id);" bo-text="foo.title"
                                                        class="cp"></a>
                                                 </td>
+                                                <td bo-text="foo.occurDate|eccrmDate"></td>
+                                                <td bo-text="foo.members"></td>
                                                 <td bo-text="foo.money"></td>
                                                 <td bo-text="foo.description"></td>
-                                                <td bo-text="foo.occurDate|eccrmDate"></td>
                                                 <td>
                                                     <a style="cursor:pointer" title="编辑"
                                                        ng-click="modifyCondole(foo.id)">

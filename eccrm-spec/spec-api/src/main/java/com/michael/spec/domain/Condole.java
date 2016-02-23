@@ -1,6 +1,7 @@
 package com.michael.spec.domain;
 
 import com.ycrl.base.common.CommonDomain;
+import eccrm.base.attachment.AttachmentSymbol;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
@@ -11,12 +12,12 @@ import java.util.Date;
  *
  * @author Michael
  */
-public class Condole extends CommonDomain {
+public class Condole extends CommonDomain implements AttachmentSymbol {
 
-    // 贫困青年ID
+    // 贫困青少年ID
     @NotNull
     private String poorTeenagerId;
-    // 贫困青年名称
+    // 贫困青少年名称
     @NotNull
     private String poorTeenagerName;
 
@@ -25,8 +26,12 @@ public class Condole extends CommonDomain {
     private String orgName;
 
     @NotNull
-    @Length(max = 50)
+    @Length(max = 40)
     private String title;
+
+    // 参与人
+    @Length(max = 40)
+    private String members;
 
     // 慰问金额
     @NotNull
@@ -36,6 +41,14 @@ public class Condole extends CommonDomain {
     @NotNull
     private Date occurDate;
 
+
+    public String getMembers() {
+        return members;
+    }
+
+    public void setMembers(String members) {
+        this.members = members;
+    }
 
     public String getOrgId() {
         return orgId;
@@ -91,5 +104,10 @@ public class Condole extends CommonDomain {
 
     public void setOccurDate(Date occurDate) {
         this.occurDate = occurDate;
+    }
+
+    @Override
+    public String businessId() {
+        return getId();
     }
 }

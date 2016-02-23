@@ -2,6 +2,14 @@
     .row {
         margin: 0 0 5px 0;
     }
+
+    [eccrm-upload] .col-1-half {
+        width: 25% !important;
+    }
+
+    [eccrm-upload] .col-10-half {
+        width: 66.66666666666667% !important;
+    }
 </style>
 <div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" style="width: 800px;">
@@ -16,32 +24,17 @@
                 <form name="form" class="form-horizontal" role="form">
                     <div class="row">
                         <div class="form-label col-3">
-                            <label>青少年名称:</label>
+                            <label>姓名:</label>
                         </div>
                         <span class="col-8" ng-bind-template="{{beans.poorTeenagerName}}"></span>
                     </div>
                     <div class="row">
                         <div class="form-label col-3">
-                            <label>标题:</label>
+                            <label validate-error="form.title">慰问主题:</label>
                         </div>
-                        <input type="text" class="col-8" ng-model="beans.title"
-                               validate validate-required validate-max-length="50"/>
+                        <select ng-model="beans.title" ng-options="foo.value as foo.name for foo in titles" class="col-8"
+                                validate validate-required name="title"></select>
                     </div>
-                    <div class="row">
-                        <div class="form-label col-3">
-                            <label>慰问金额:</label>
-                        </div>
-                        <input type="text" class="col-8" ng-model="beans.money"
-                               validate validate-required validate-float/>
-                    </div>
-                    <div class="row">
-                        <div class="form-label col-3">
-                            <label>详细情况:</label>
-                        </div>
-                        <textarea rows="6" class="col-8" ng-model="beans.description"
-                                  validate validate-required validate-max-length="1000"></textarea>
-                    </div>
-
                     <div class="row">
                         <div class="form-label col-3">
                             <label>慰问时间:</label>
@@ -52,6 +45,31 @@
                             <span class="add-on">
                                 <i class="icons icon clock"></i>
                             </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>慰问金额:</label>
+                        </div>
+                        <input type="text" class="col-8" ng-model="beans.money"
+                               validate validate-required validate-float/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>参与人员:</label>
+                        </div>
+                        <input type="text" class="col-8" ng-model="beans.members"
+                               validate validate-max-length="40"/>
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-3">
+                            <label>详细情况:</label>
+                        </div>
+                        <textarea rows="6" id="description" class="col-8" ng-model="beans.description"
+                                  validate validate-required validate-max-length="1000"></textarea>
+                    </div>
+                    <div class="row">
+                        <div eccrm-upload="uploadOptions">
                         </div>
                     </div>
                 </form>

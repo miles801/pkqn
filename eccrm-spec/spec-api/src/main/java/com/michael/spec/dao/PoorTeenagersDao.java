@@ -35,7 +35,7 @@ public interface PoorTeenagersDao {
     void delete(PoorTeenagers poorTeenagers);
 
     /**
-     * 查询指定年的贫困青年信息
+     * 查询指定年的贫困青少年信息
      *
      * @param year 年
      * @return [机构ID，机构名称，个数]

@@ -5,7 +5,7 @@
 %>
 <html lang="en">
 <head>
-    <title>贫困青年</title>
+    <title>贫困青少年</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">

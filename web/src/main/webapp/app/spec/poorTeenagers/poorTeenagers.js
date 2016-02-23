@@ -1,5 +1,5 @@
 /**
- * 贫困青年
+ * 贫困青少年
  * Created by Michael on 2016-02-21 11:17:58.
  */
 (function (angular) {
@@ -21,7 +21,7 @@
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
 
             // 按年统计分析
-            // 机构ID, 机构名称, 贫困青年个数
+            // 机构ID, 机构名称, 贫困青少年个数
             analysis: {method: 'GET', params: {method: 'analysis', year: '@year'}, isArray: false},
 
             // 分页查询
@@ -39,10 +39,10 @@
     app.service('CondoleService', function (CommonUtils, $resource) {
         return $resource(CommonUtils.contextPathURL('/spec/condole/:method'), {}, {
             // 保存
-            save: {method: 'POST', params: {method: 'save'}, isArray: false},
+            save: {method: 'POST', params: {method: 'save', attachmentIds: '@attachmentIds'}, isArray: false},
 
             // 更新
-            update: {method: 'POST', params: {method: 'update'}, isArray: false},
+            update: {method: 'POST', params: {method: 'update', attachmentIds: '@attachmentIds'}, isArray: false},
 
             // 根据id查询信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
@@ -51,7 +51,7 @@
             // 机构ID, 机构名称, 慰问次数, 慰问金额
             analysis: {method: 'GET', params: {method: 'analysis', year: '@year'}, isArray: false},
 
-            // 根据青年ID查询
+            // 根据青少年ID查询
             queryByTeenager: {
                 method: 'GET',
                 params: {method: 'queryByTeenager', teenagerId: '@teenagerId'},
@@ -70,7 +70,7 @@
         })
     });
 
-    app.service('CondoleModal', function (CommonUtils, ModalFactory, $modal, AlertFactory, CondoleService) {
+    app.service('CondoleModal', function (CommonUtils, ModalFactory, $modal, AlertFactory, CondoleService, PoorTeenagersParam) {
         var pageTypes = ['add', 'modify', 'view'];
         var common = function (options, callback) {
             var pageType = options.type;
@@ -90,9 +90,26 @@
 
             var $scope = modal.$scope;
 
+            // 初始化数据对象
+            $scope.beans = {};
+
+            // 加载主题
+            PoorTeenagersParam.title(function (data) {
+                $scope.titles = data;
+                // 新增页面默认选中第一个
+                if (pageType == 'add') {
+                    $scope.beans.title = data[0].value;
+                }
+            });
+            // 页面类型
             $scope.type = pageType;
+
+            // 保存
             $scope.save = function () {
-                var promise = CondoleService.save($scope.beans, function (data) {
+                var o = angular.extend({}, $scope.beans);
+                o.attachmentIds = $scope.uploadOptions.getAttachment().join(',');
+                var promise = CondoleService.save(o, function (data) {
+                    o = null;
                     if (data.success) {
                         if (angular.isFunction(callback)) {
                             callback();
@@ -105,8 +122,12 @@
                 CommonUtils.loading(promise);
             };
 
+            // 更新
             $scope.update = function () {
-                var promise = CondoleService.update($scope.beans, function (data) {
+                var o = angular.extend({}, $scope.beans);
+                o.attachmentIds = $scope.uploadOptions.getAttachment().join(',');
+                var promise = CondoleService.update(o, function (data) {
+                    o = null;
                     if (data.success) {
                         if (callback && angular.isFunction(callback)) {
                             callback();
@@ -130,13 +151,23 @@
                 CommonUtils.loading(promise);
             };
 
+            // 附件上传
+            $scope.uploadOptions = CommonUtils.defer();
+            ModalFactory.afterShown(modal, function () {
+                $scope.uploadOptions.resolve({
+                    bid: options.id,
+                    btype: 'condole',
+                    readonly: pageType == 'view'
+                });
+            });
+
 
             if (pageType == 'add') {
-                $scope.beans = {
+                angular.extend($scope.beans, {
                     poorTeenagerId: teenagerId,
                     poorTeenagerName: options.teenagerName,
                     occurDate: new Date().getTime()
-                };
+                })
             } else if (pageType == 'modify') {
                 load();
             } else if (pageType == 'view') {
@@ -144,6 +175,7 @@
                     $('.modal').find('input,select,textarea').attr('disabled', 'disabled');
                 });
             }
+
         };
         return {
             add: function (teenagerId, teenagerName, callback) {
@@ -194,6 +226,12 @@
              */
             income: function (callback) {
                 ParameterLoader.loadBusinessParam('FAMARY_INCOME', callback);
+            },
+            /**
+             * 慰问主题
+             */
+            title: function (callback) {
+                ParameterLoader.loadBusinessParam('CONDOLE_TITLE', callback);
             }
         };
     });

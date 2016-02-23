@@ -54,12 +54,14 @@
                 var id = o.id;
                 $('#imageId').html('<img style="height: 140px;width: 120px;" src="' + CommonUtils.contextPathURL('/attachment/temp/view?id=' + id) + '"/>');
                 $scope.$apply(function () {
+                    $scope.beans.attachmentIds = id;
                     $scope.beans.picture = id;
                 });
             },
 
             onDelete: function () {
                 $('#imageId').html('');
+                $scope.beans.attachmentIds = null;
                 $scope.beans.picture = null;
             },
             bid: id,
@@ -101,6 +103,7 @@
                     } else {
                         $scope.form.$setValidity('committed', false);
                     }
+                    CommonUtils.addTab('update');
                 } else {
                     AlertFactory.saveError($scope, data);
                 }
@@ -114,7 +117,8 @@
                 if (data && data['success'] == true) { // 更新成功
                     AlertFactory.success(null, '更新成功!');
                     $scope.form.$setValidity('committed', false);
-                    CommonUtils.back();
+                    CommonUtils.addTab('update');
+                    CommonUtils.delay(CommonUtils.back, 3000);
                 } else {
                     AlertFactory.updateError($scope, data);
                 }

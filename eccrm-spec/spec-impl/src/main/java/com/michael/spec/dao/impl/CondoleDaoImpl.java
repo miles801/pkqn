@@ -69,7 +69,7 @@ public class CondoleDaoImpl extends HibernateDaoHelper implements CondoleDao {
 
     @Override
     public int condoleCounts(String poorTeenagersId) {
-        Assert.hasText(poorTeenagersId, "缺少参数：贫困青年ID不能为空!");
+        Assert.hasText(poorTeenagersId, "缺少参数：贫困青少年ID不能为空!");
         return Integer.parseInt(createRowCountsCriteria(Condole.class)
                 .add(Restrictions.eq("poorTeenagerId", poorTeenagersId))
                 .uniqueResult() + "");
@@ -77,7 +77,7 @@ public class CondoleDaoImpl extends HibernateDaoHelper implements CondoleDao {
 
     @Override
     public Double condoleMoney(String poorTeenagersId) {
-        Assert.hasText(poorTeenagersId, "缺少参数：贫困青年ID不能为空!");
+        Assert.hasText(poorTeenagersId, "缺少参数：贫困青少年ID不能为空!");
         return (Double) createCriteria(Condole.class)
                 .setProjection(Projections.sum("money"))
                 .add(Restrictions.eq("poorTeenagerId", poorTeenagersId))

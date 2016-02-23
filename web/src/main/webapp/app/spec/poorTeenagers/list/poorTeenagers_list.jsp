@@ -5,7 +5,7 @@
 %>
 <html lang="en">
 <head>
-    <title>贫困青年</title>
+    <title>贫困青少年</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
@@ -61,7 +61,7 @@
                             <option value="4">2000以上</option>
                         </select>
                         <div class="form-label col-1-half" ng-cloak ng-if="isRootOrg">
-                            <label>县区:</label>
+                            <label>县（市）区:</label>
                         </div>
                         <div class="col-2-half" id="orgId" ng-if="isRootOrg">
                             <input class="col-12" type="text" ng-model="orgName" readonly

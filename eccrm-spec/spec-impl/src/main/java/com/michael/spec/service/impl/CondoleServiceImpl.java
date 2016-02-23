@@ -8,8 +8,10 @@ import com.michael.spec.domain.PoorTeenagers;
 import com.michael.spec.service.CondoleService;
 import com.michael.spec.vo.CondoleVo;
 import com.ycrl.core.beans.BeanWrapBuilder;
+import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
+import eccrm.base.parameter.service.ParameterContainer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -20,7 +22,7 @@ import java.util.List;
  * @author Michael
  */
 @Service("condoleService")
-public class CondoleServiceImpl implements CondoleService {
+public class CondoleServiceImpl implements CondoleService, BeanWrapCallback<Condole, CondoleVo> {
     @Resource
     private CondoleDao condoleDao;
 
@@ -32,7 +34,7 @@ public class CondoleServiceImpl implements CondoleService {
         ValidatorUtils.validate(condole);
         // 设置机构
         PoorTeenagers poorTeenagers = poorTeenagersDao.findById(condole.getPoorTeenagerId());
-        Assert.notNull(poorTeenagers, "数据错误：贫困青年[" + condole.getPoorTeenagerId() + "]不存在!");
+        Assert.notNull(poorTeenagers, "数据错误：贫困青少年[" + condole.getPoorTeenagerId() + "]不存在!");
         condole.setPoorTeenagerName(poorTeenagers.getName());
         condole.setOrgId(poorTeenagers.getOrgId());
         condole.setOrgName(poorTeenagers.getOrgName());
@@ -42,10 +44,10 @@ public class CondoleServiceImpl implements CondoleService {
     }
 
     private void resetTeenagerCondole(String teenagerId, PoorTeenagers poorTeenagers) {
-        Assert.hasText(teenagerId, "重置慰问次数时：青年ID不能为空!");
+        Assert.hasText(teenagerId, "重置慰问次数时：青少年ID不能为空!");
         if (poorTeenagers == null) {
             poorTeenagers = poorTeenagersDao.findById(teenagerId);
-            Assert.notNull(poorTeenagers, "数据错误：贫困青年[" + teenagerId + "]不存在!");
+            Assert.notNull(poorTeenagers, "数据错误：贫困青少年[" + teenagerId + "]不存在!");
         }
         // 查询慰问次数
         int counts = condoleDao.condoleCounts(teenagerId);
@@ -99,6 +101,7 @@ public class CondoleServiceImpl implements CondoleService {
             condoleDao.delete(condole);
             // 重置数量
             resetTeenagerCondole(poorTeenagerId, null);
+            // 删除附件
         }
     }
 
@@ -113,6 +116,12 @@ public class CondoleServiceImpl implements CondoleService {
         CondoleBo bo = new CondoleBo();
         bo.setPoorTeenagerId(teenagerId);
         List<Condole> condoles = condoleDao.query(bo);
-        return BeanWrapBuilder.newInstance().wrapList(condoles, CondoleVo.class);
+        return BeanWrapBuilder.newInstance().setCallback(this).wrapList(condoles, CondoleVo.class);
+    }
+
+    @Override
+    public void doCallback(Condole condole, CondoleVo vo) {
+        ParameterContainer container = ParameterContainer.getInstance();
+        vo.setTitleName(container.getBusinessName("CONDOLE_TITLE", condole.getTitle()));
     }
 }

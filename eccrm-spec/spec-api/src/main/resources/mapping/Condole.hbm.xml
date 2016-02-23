@@ -13,6 +13,7 @@
         <property name="title" column="TITLE" type="string" length="100" not-null="true"/>
         <property name="money" column="MONEY" type="double" not-null="true"/>
         <property name="occurDate" column="OCCUR_DATE" type="timestamp" not-null="true"/>
+        <property name="members" column="MEMBERS" type="string" length="40" />
         <property name="orgId" column="ORG_ID" type="string" length="40" />
         <property name="orgName" column="ORG_NAME" type="string" length="40"/>
         <property name="description" column="DESCRIPTION" type="string" length="1000"/>
