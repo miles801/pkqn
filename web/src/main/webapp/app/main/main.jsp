@@ -117,13 +117,7 @@
 
         <div class="center">
             <marquee direction="left" onmouseover="this.stop()" onmouseout="this.start()">
-                <span bindonce ng-repeat="foo in beans" ng-repeat-finish="scrollRenderFinish" ng-cloak>
-                    <span style="padding: 0 10px;color:#ffffff"> 【<span bo-text="foo.categoryName"></span>】
-                        <a style="cursor: pointer;" ng-click="showNews(foo.id);">
-                            <span style="color: #4591CD" bo-text="foo.title | substr:20"></span>
-                        </a>
-                    </span>
-                </span>
+                *** 内部资料,注意保密! ***
             </marquee>
         </div>
         <div class="right" style="width: 100px;">
