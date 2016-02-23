@@ -254,7 +254,7 @@
                                             <tr bindonce ng-repeat="foo in condoles" ng-cloak>
                                                 <td bo-text="$index+1"></td>
                                                 <td>
-                                                    <a ng-click="viewCondole(foo.id);" bo-text="foo.title"
+                                                    <a ng-click="viewCondole(foo.id);" bo-text="foo.titleName"
                                                        class="cp"></a>
                                                 </td>
                                                 <td bo-text="foo.occurDate|eccrmDate"></td>
