@@ -137,6 +137,8 @@ public class PoorTeenagersCtrl extends BaseController {
         JsonObject o = new JsonObject();
         o.addProperty("name", vo.getName());
         o.addProperty("sexName", vo.getSexName());
+        o.addProperty("age", vo.getAge());
+        o.addProperty("reason", vo.getReason());
         o.addProperty("mzName", vo.getMzName());
         o.addProperty("zzmmName", vo.getZzmmName());
         o.addProperty("birthday", new SimpleDateFormat("yyyy.MM.dd").format(vo.getBirthday()));
