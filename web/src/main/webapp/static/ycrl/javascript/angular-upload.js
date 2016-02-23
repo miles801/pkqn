@@ -94,6 +94,7 @@ UploadOption.prototype = {
     thumbWidth: 60,        // 缩略图宽度
     thumbHeight: 80,       // 缩略图高度
     thumb: false,            // 是否启用缩略图
+    showUrl: false,
     /**
      * 初始化成功后要可执行的函数，this为当前配置对象
      */
@@ -283,6 +284,18 @@ SWFOption.prototype = {
                                 })
                         });
                     };
+
+                    scope.showImage = function (id, name) {
+                        art.dialog({
+                            lock: true,
+                            title: name,
+                            width: 600,
+                            height: 400,
+                            opacity: 0.87,	// 透明度
+                            content: '<img style="height: 100%;width: 100%;" src="' + CommonUtils.contextPathURL('/attachment/download?id=' + id) + '" alt="' + name + '"/>',
+                            cancel: true
+                        });
+                    };
                     // 初始化插件
                     var init = function () {
                         // 修改标识位，表示已经初始化过一次
@@ -360,6 +373,10 @@ SWFOption.prototype = {
                                     $http.get(url).success(function (data) {
                                         data = data.data || [];
                                         angular.forEach(data, function (o) {
+                                            var end = o.fileName.substr(o.fileName.lastIndexOf('.') + 1);
+                                            if ("jpg|JPG|png|PNG|jpeg|gif|bmp".indexOf(end) > -1) {
+                                                o.isImage = true;
+                                            }
                                             scope.attachments.push(o);
                                         });
                                     });
@@ -382,6 +399,10 @@ SWFOption.prototype = {
 
                                         // 获得附件信息
                                         scope.$apply(function () {
+                                            var end = obj[0].fileName.substr(obj[0].fileName.lastIndexOf('.') + 1);
+                                            if ("jpg|JPG|png|PNG|jpeg|gif|bmp".indexOf(end) > -1) {
+                                                obj[0].isImage = true;
+                                            }
                                             scope.attachments.push(obj[0]);
                                         });
 
