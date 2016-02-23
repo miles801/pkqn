@@ -19,10 +19,12 @@ import eccrm.base.attachment.vo.AttachmentVo;
 import eccrm.utils.StringUtils;
 import eccrm.utils.UUIDGenerator;
 import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -136,11 +138,6 @@ public class AttachmentCtrl {
             String id = UUIDGenerator.generate();
             try {
                 File tmp = AttachmentHolder.newInstance().getTempFile(id);
-                boolean result = tmp.mkdirs();
-                if (!result) {
-                    throw new RuntimeException("附件创建失败!" + tmp.getAbsolutePath());
-                }
-                file.transferTo(tmp);
                 logger.info(SecurityContext.getUsername() + ("上传文件:" + fileName + " , 文件大小:" + AttachmentFormat.format(fileSize)));
                 if ("true".equals(request.getParameter("thumb"))) {
                     int w = 80; // 默认宽高
@@ -153,7 +150,14 @@ public class AttachmentCtrl {
                     if (com.ycrl.utils.string.StringUtils.isNotEmpty(height)) {
                         h = Integer.parseInt(height);
                     }
-                    Thumbnails.of(tmp).size(w, h).toFile(tmp);
+                    logger.info(String.format("图片[%s]压缩:宽%d,高%d", fileName, w, h));
+                    File tmpFile = AttachmentHolder.newInstance().getTempFile(id + ".png");
+                    Thumbnails.of(file.getInputStream()).forceSize(w, h).toFile(tmpFile);
+                    FileUtils.moveFile(tmpFile, tmp);
+                } else {
+                    Assert.isTrue(tmp.createNewFile(), "附件上传失败：附件文件无法成功创建!");
+
+                    file.transferTo(tmp);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

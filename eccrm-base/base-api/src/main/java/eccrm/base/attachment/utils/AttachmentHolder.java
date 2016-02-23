@@ -79,6 +79,10 @@ public class AttachmentHolder {
      */
     public File getTempFile(String filename) {
         Assert.hasText(filename, "文件名不能为空!");
+        // 如果临时目录不存在，则重新创建
+        if (!new File(tempDir).exists()) {
+            new File(tempDir).mkdirs();
+        }
         return new File(tempDir + "/" + filename);
     }
 
