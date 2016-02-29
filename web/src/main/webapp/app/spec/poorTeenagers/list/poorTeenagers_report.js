@@ -28,7 +28,8 @@
             legend: {
                 x: 'right',
                 y: 'bottom',
-                orient: 'vertical'
+                orient: 'vertical',
+                show: false
             },
             series: [
                 {
