@@ -209,7 +209,7 @@
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>基本情况描述:</label>
+                            <label>基本情况:</label>
                         </div>
                         <textarea class="col-10-half" rows="10" ng-model="beans.content"></textarea>
                     </div>

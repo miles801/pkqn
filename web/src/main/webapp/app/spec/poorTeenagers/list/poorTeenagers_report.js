@@ -26,8 +26,9 @@
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                orient: 'vertical',
-                left: 'left'
+                x: 'right',
+                y: 'bottom',
+                orient: 'vertical'
             },
             series: [
                 {
