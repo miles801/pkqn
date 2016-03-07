@@ -36,7 +36,7 @@
                     <img src="<%=contextPath%>/app/main/images/icon/h7.png" width="24" height="24" title="更改密码">
                 </a>
             </div>
-            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">共青团银川市委员会</span>
+            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">共青团银川市委员会  市扶贫办</span>
         </div>
     </div>
     <div id="main">
