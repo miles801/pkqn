@@ -16,16 +16,20 @@
     ]).factory('eccrmHttpInterceptor', ['$q', '$injector', function ($q, $injector) {
         return function (promise) {
             return promise.then(function (response) {
+                var defer = $q.defer();
                 var data = angular.isObject(response) && response.data;
                 if (angular.isObject(data) && data.error == true) {
+                    defer.reject(response);
                     var AlertFactory = $injector.get('AlertFactory');
                     if (angular.isFunction(AlertFactory.error)) {
                         AlertFactory.error(null, data.message, '');
                     } else {
                         alert(data.message);
                     }
+                } else {
+                    defer.resolve(response);
                 }
-                return response;
+                return defer.promise;
             });
         }
     }
@@ -49,43 +53,68 @@
             return {
                 //优先使用msg，然后才是使用scope.content
                 success: function (scope, msg, title) {
-                    msg = $sce.trustAsHtml(msg || scope.content || '');
-                    title = title || (scope && scope.title) || '成功!';
-                    var foo = $alert(angular.extend({}, defaults, {scope: scope, type: 'success'}));
+                    if (typeof scope == 'string') {
+                        title = msg;
+                        msg = scope;
+                    }
+                    msg = $sce.trustAsHtml(msg || '');
+                    title = title || '成功!';
+                    var foo = $alert(angular.extend({}, defaults, {type: 'success', duration: 2}));
                     change.call(foo.$scope, msg, title);
                 },
                 warning: function (scope, msg, title) {
-                    msg = $sce.trustAsHtml(msg || scope.content || '');
-                    title = title || (scope && scope.title) || '警告!';
+                    if (typeof scope == 'string') {
+                        title = msg;
+                        msg = scope;
+                    }
+                    msg = $sce.trustAsHtml(msg || '');
+                    title = title || '警告!';
                     var foo = $alert(angular.extend({}, defaults, {type: 'warning'}));
                     change.call(foo.$scope, msg, title);
                 },
                 info: function (scope, msg, title) {
-                    msg = $sce.trustAsHtml(msg || scope.content || '');
-                    title = title || (scope && scope.title) || '提示!';
-                    var foo = $alert(angular.extend({}, defaults, {type: 'info'}));
+                    if (typeof scope == 'string') {
+                        title = msg;
+                        msg = scope;
+                    }
+                    msg = $sce.trustAsHtml(msg || '');
+                    title = title || '提示!';
+                    var foo = $alert(angular.extend({}, defaults, {type: 'info', duration: 3}));
                     change.call(foo.$scope, msg, title);
                 },
                 error: function (scope, msg, title) {
-                    msg = $sce.trustAsHtml(msg || scope.content || '');
-                    title = title || (scope && scope.title) || '错误!';
+                    if (typeof scope == 'string') {
+                        title = msg;
+                        msg = scope;
+                    }
+                    msg = $sce.trustAsHtml(msg || '');
+                    title = title || '错误!';
                     var foo = $alert(angular.extend({}, defaults, {type: 'danger', duration: false}));
                     change.call(foo.$scope, msg, title);
                 },
                 saveError: function (scope, data) {
-                    var msg = $sce.trustAsHtml(data.error || data.fail || '');
+                    if (typeof scope === 'string') {
+                        data = scope;
+                    }
+                    var msg = $sce.trustAsHtml(data.message);
                     var title = '保存失败';
-                    var foo = $alert(angular.extend({}, defaults, {type: 'danger'}));
+                    var foo = $alert(angular.extend({}, defaults, {type: 'danger', duration: false}));
                     change.call(foo.$scope, msg, title);
                 },
                 updateError: function (scope, data) {
-                    var msg = $sce.trustAsHtml(data.error || data.fail || '');
+                    if (typeof scope === 'string') {
+                        data = scope;
+                    }
+                    var msg = $sce.trustAsHtml(data.message);
                     var title = '更新失败';
-                    var foo = $alert(angular.extend({}, defaults, {type: 'danger'}));
+                    var foo = $alert(angular.extend({}, defaults, {type: 'danger', duration: false}));
                     change.call(foo.$scope, msg, title);
                 },
                 deleteError: function (scope, data) {
-                    var msg = $sce.trustAsHtml(data.error || data.fail || '');
+                    if (typeof scope === 'string') {
+                        data = scope;
+                    }
+                    var msg = $sce.trustAsHtml(data.message);
                     var title = '删除失败';
                     var foo = $alert(angular.extend({}, defaults, {type: 'danger', duration: false}));
                     change.call(foo.$scope, msg, title);
