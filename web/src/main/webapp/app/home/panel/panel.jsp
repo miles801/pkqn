@@ -118,6 +118,11 @@
                                        style="width: 110px;">
                                         <span class="glyphicons plus"></span> 完善个人信息
                                     </a>
+                                    <a type="button" class="btn btn-blue"
+                                       ng-click="printInfo();"
+                                       style="width: 110px;">
+                                        <span class="glyphicons plus"></span> 打印个人信息
+                                    </a>
                                 </div>
                             </div>
                         </div>
