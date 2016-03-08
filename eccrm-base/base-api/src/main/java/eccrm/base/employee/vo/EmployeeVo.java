@@ -14,6 +14,7 @@ public class EmployeeVo extends CommonVo {
     private String employeeCode;
     private String employeeName;
     private String gender;
+    private String genderName;
     private Date birthday;
     private String contry;
     private String provience;
@@ -26,6 +27,7 @@ public class EmployeeVo extends CommonVo {
     private String idType;
     private String idNo;
     private String nation;
+    private String nationName;
     private String zzmm;
     private String marriage;
     private String xueli;
@@ -50,6 +52,50 @@ public class EmployeeVo extends CommonVo {
     private String statusName;
     private Boolean isBlank;//是否为白名单
     private String busiTypeName;
+    private String tel;
+    private String qq;
+
+    private String picture;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getGenderName() {
+        return genderName;
+    }
+
+    public void setGenderName(String genderName) {
+        this.genderName = genderName;
+    }
+
+    public String getNationName() {
+        return nationName;
+    }
+
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
+    }
 
     public String getBusiTypeName() {
         return busiTypeName;

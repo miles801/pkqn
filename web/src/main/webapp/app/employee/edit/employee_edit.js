@@ -12,18 +12,21 @@
         // 性别
         EmployeeConstant.sex(function (data) {
             $scope.sex = data;
+            $scope.sex.unshift({name: '请选择...'});
         });
-        // 职务
-        EmployeeConstant.duty(function (data) {
-            $scope.dutys = data;
+        // 加载民族
+        EmployeeConstant.nation(function (data) {
+            $scope.nation = data;
+            $scope.nation.unshift({name: '请选择'});
         });
-        // 状态
-        EmployeeConstant.status(function (data) {
-            $scope.EmpStatus = data;
+        // 加载政治面貌
+        EmployeeConstant.zzmm(function (data) {
+            $scope.zzmm = data;
+            $scope.zzmm.unshift({name: '请选择'});
         });
 
         $scope.employee = {
-            status: "0",
+            status: "2",
             gender: "BP_MAN"
         };
 
@@ -41,23 +44,35 @@
         $scope.uploadOptions = {
             labelText: '头像',
             maxFile: 1,
+            thumb: true,
+            thumbWidth: 120,
+            thumbHeight: 140,
+            showTable: false,
             onSuccess: function (o) {
                 var id = o.id;
                 $('#imageId').html('<img style="height: 140px;width: 120px;" src="' + CommonUtils.contextPathURL('/attachment/temp/view?id=' + id) + '"/>');
                 $scope.$apply(function () {
-                    $scope.employee.imageId = id;
+                    $scope.employee.attachmentIds = id;
+                    $scope.employee.picture = id;
                 });
             },
 
             onDelete: function () {
                 $('#imageId').html('');
-                $scope.employee.imageId = null;
+                $scope.employee.attachmentIds = null;
+                $scope.employee.picture = null;
             },
             bid: id,
             swfOption: {
-                fileSizeLimit: 1024,
+                fileSizeLimit: 10 * 1000 * 1000,
                 fileTypeExts: "*.png;*.jpg"
             }
+        };
+
+        // 移除头像
+        $scope.removePicture = function () {
+            $scope.uploadOptions.removeAll();
+            $scope.employee.picture = null;
         };
 
         //保存
@@ -100,7 +115,8 @@
                     name: $scope.employee.organizationName
                 };
 
-                var imageId = $scope.employee.imageId;
+                // 头像
+                var imageId = $scope.employee.picture;
                 if (imageId) {
                     $('#imageId').html('<img style="height: 140px;width: 120px;" src="' + CommonUtils.contextPathURL('/attachment/view?id=' + imageId) + '"/>');
                 }

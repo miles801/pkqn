@@ -42,10 +42,14 @@
     <div id="main">
         <div class="leftbar">
             <div class="LB_container">
+                <a title="首页" ng-click="showHome();">
+                    <img src="<%=contextPath%>/app/main/images/home.png" alt="首页"/>
+                </a>
                 <a bindonce bo-title="menu.name" ng-repeat="menu in menus" ng-repeat-finish
-                   bo-class="{'current':$index===0}" ng-click="showChildren(menu);">
+                   ng-click="showChildren(menu);">
                     <img ng-src="<%=contextPath%>/attachment/download?id={{menu.icon}}" ng-cloak
-                         bo-if="menu.icon"/>
+                         bo-if="menu.icon"
+                    />
                 </a>
             </div>
             <div class="btnT"></div>

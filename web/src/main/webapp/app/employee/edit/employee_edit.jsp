@@ -33,7 +33,7 @@
             <div class="block-header">
                     <span class="header-text">
                         <span class="glyphicons info-sign"></span>
-                        <span>员工档案</span>
+                        <span>个人档案</span>
                     </span>
                     <span class="header-button">
                         <button type="button" class="btn btn-sm btn-green btn-min"
@@ -58,18 +58,23 @@
                             <input type="hidden" id="id" value="${id}"/>
                             <input type="hidden" id="pageType" value="${pageType}"/>
                         </div>
+                        <div id="picture" style="position: absolute;width: 200px;height: 100px;left: 70%;">
+                            <%-- 头像 --%>
+                            <div eccrm-upload="uploadOptions">
+                            </div>
+                            <div style="position:absolute;top:5px;left: 45px;width: 180px;height: 80px;">
+                                <div id="imageId" class="col" ng-show="employee.picture"
+                                     style="border: 1px dashed #DAF3F5;padding: 5px 10px;"></div>
+                                <i class="icons icon fork cp col" ng-show="employee.picture" ng-click="removePicture()"
+                                   ng-cloak ng-if="pageType!=='detail'" style="margin-left: 8px;"></i>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="form-label col-1-half">
                                 <label validate-error="form.employeeName">姓名:</label>
                             </div>
                             <input class="col-2-half" type="text" name="employeeName" validate validate-required
                                    validate-max-length="15" ng-model="employee.employeeName"/>
-
-                            <div class="form-label col-1-half">
-                                <label validate-error="form.employeeCode">工号:</label>
-                            </div>
-                            <input class="col-2-half" type="text" name="employeeCode" validate validate-required validate-max-length="15"
-                                   ng-model="employee.employeeCode"/>
 
                             <div class="form-label col-1-half">
                                 <label>性别:</label>
@@ -84,66 +89,76 @@
 
                         <div class="row">
                             <div class="form-label col-1-half">
-                                <label>所属机构:</label>
+                                <label>所属县区:</label>
                             </div>
                             <div class="col-2-half">
                                 <input type="text" class="col-12" ztree-single="OrgztreeOptions"
-                                       ng-model="employee.organization.name"/>
-                                <input type="hidden" ng-model="employee.organization.id"/>
+                                       ng-model="employee.orgName"/>
                                     <span class="add-on">
-                                       <i class="icons circle_fork icon" title="清空" ng-click="employee..organization.id=null;employee.organization.name=null;"></i>
+                                       <i class="icons circle_fork icon" title="清空"
+                                          ng-click="employee..organization.id=null;employee.organization.name=null;"></i>
                                     </span>
                             </div>
 
                             <div class="form-label col-1-half">
-                                <label>移动电话:</label>
+                                <label>手机号码:</label>
                             </div>
                             <input class="col-2-half" type="text" validate validate-int validate-max-length="20"
                                    ng-model="employee.mobile"/>
-
-                            <div class="form-label col-1-half">
-                                <label>电子邮箱:</label>
-                            </div>
-                            <input class="col-2-half" type="text" validate validate-email validate-max-length="40"
-                                   ng-model="employee.email"/>
                         </div>
                         <div class="row">
+
+                            <div class="form-label col-1-half">
+                                <label>座机号:</label>
+                            </div>
+                            <input class="col-2-half" type="text" validate validate-max-length="20" validate-int
+                                   ng-model="employee.tel"/>
+
                             <div class="form-label col-1-half">
                                 <label>职务:</label>
                             </div>
                             <input class="col-2-half" type="text" validate validate-max-length="40"
                                    ng-model="employee.duty"/>
 
+                        </div>
+
+                        <div class="row">
                             <div class="form-label col-1-half">
-                                <label>职位:</label>
+                                <label>民族:</label>
                             </div>
-                            <input class="col-2-half" type="text" validate validate-max-length="40"
-                                   ng-model="employee.post"/>
+                            <select ng-model="employee.nation" class="col-2-half"
+                                    ng-options="foo.value as foo.name for foo in nation">
+                            </select>
+                            <div class="form-label col-1-half">
+                                <label>政治面貌:</label>
+                            </div>
+                            <select ng-model="employee.zzmm" class="col-2-half"
+                                    ng-options="foo.value as foo.name for foo in zzmm">
+                            </select>
+
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
-                                <label>备注:</label>
+                                <label>邮箱:</label>
+                            </div>
+                            <input class="col-6-half" type="text" validate validate-max-length="100"
+                                   ng-model="employee.email"/>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>地址:</label>
+                            </div>
+                            <input class="col-6-half" type="text" validate validate-max-length="100"
+                                   ng-model="employee.address"/>
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>基本情况:</label>
                             </div>
                             <textarea rows="6" class="col-10-half" ng-model="employee.description"
                                       validate validate-max-length="500"></textarea>
-                        </div>
-                        <div class="row">
-                            <div eccrm-upload="uploadOptions">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">&nbsp; </div>
-                            <div id="imageId" class="col" ng-show="employee.imageId"
-                                 style="border: 1px dashed #DAF3F5;padding: 5px 10px;"></div>
-                        </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label validate-error="form.status">状态:</label>
-                            </div>
-                            <select ng-model="employee.status" name="status" ng-options="foo.value as foo.name for foo in EmpStatus" validate validate-required
-                                    class="col-2-half">
-                                <option value="">请选择</option>
-                            </select>
                         </div>
                     </form>
                 </div>

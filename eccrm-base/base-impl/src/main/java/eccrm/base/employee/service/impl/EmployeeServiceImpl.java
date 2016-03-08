@@ -1,37 +1,25 @@
 package eccrm.base.employee.service.impl;
 
-import com.ycrl.core.SystemContainer;
-import com.ycrl.core.beans.BeanHelper;
+import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
-import com.ycrl.core.exception.NullParamException;
 import com.ycrl.core.pager.PageVo;
-import eccrm.base.employee.bo.BlankListBo;
 import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.BlankListDao;
-import eccrm.base.employee.dao.ContactMethodDao;
 import eccrm.base.employee.dao.EmployeeDao;
-import eccrm.base.employee.domain.BlankList;
-import eccrm.base.employee.domain.ContactMethod;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.employee.service.ContactType;
 import eccrm.base.employee.service.EmployeeOrgRelService;
 import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.employee.vo.EmployeeVo;
-import eccrm.base.org.dao.OrganizationDao;
-import eccrm.base.org.domain.Organization;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.bo.PositionEmpBo;
 import eccrm.base.position.dao.PositionDao;
 import eccrm.base.position.dao.PositionEmpDao;
-import eccrm.base.position.domain.Position;
 import eccrm.base.position.domain.PositionEmp;
 import eccrm.base.position.service.PositionEmpService;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.jws.WebMethod;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         vo.setTotal(total);
         if (total == 0) return vo;
         List<Employee> employees = employeesDao.query(bo);
-        vo.setData(BeanHelper.wrapList(employees, this));
+        vo.setData(BeanWrapBuilder.newInstance().setCallback(this).wrapList(employees, EmployeeVo.class));
         return vo;
     }
 
@@ -88,7 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         vo.setTotal(total);
         if (total == 0) return vo;
         List<Employee> employees = employeesDao.query(bo);
-        vo.setData(BeanHelper.wrapList(employees, this));
+        vo.setData(BeanWrapBuilder.newInstance().setCallback(this).wrapList(employees, EmployeeVo.class));
         return vo;
     }
 
@@ -126,23 +114,17 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
             employees = employeesDao.query(bo);
 
         }
-        return BeanHelper.wrapList(employees, this);
+        return BeanWrapBuilder.newInstance().setCallback(this)
+                .wrapList(employees, EmployeeVo.class);
     }
 
     @Override
     public EmployeeVo findById(String id) {
-        return wrap(employeesDao.findById(id));
+        return BeanWrapBuilder.newInstance().setCallback(this)
+                .wrap(employeesDao.findById(id), EmployeeVo.class);
     }
 
-    @Override
-    public EmployeeVo findRTX(String extensionNumber) {
-        return wrap(employeesDao.findByRtxId(extensionNumber));
-    }
 
-    @Override
-    public EmployeeVo findByCode(String id) {
-        return wrap(employeesDao.findByCode(id));
-    }
 
     @Override
     public List<Employee> queryByOrgId(String id) {
@@ -164,106 +146,20 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         }
     }
 
-    @Override
-    public EmployeeVo wrap(Employee employee) {
-        if (employee == null) return null;
-        // FIXME 这里存在性能问题
-        EmployeeVo vo = new EmployeeVo();
-        BeanUtils.copyProperties(employee, vo);
-        if (employee.getOrgId() != null) {
-            Organization organization = SystemContainer.getInstance().getBean(OrganizationDao.class).findById(employee.getOrgId());
-            if (organization != null) {
-                vo.setOrganizationId(organization.getId());
-                vo.setOrganizationName(organization.getName());
-            }
-        }
-        ParameterContainer parameterContainer = ParameterContainer.getInstance();
-        if (!StringUtils.isBlank(vo.getDuty())) {//存在
-            vo.setDutyName(parameterContainer.getBusinessName(ContactType.BP_ZHIW, vo.getDuty()));
-        }
-        if (!StringUtils.isBlank(vo.getWorkType())) {
-            vo.setWorkTypeName(parameterContainer.getBusinessName(ContactType.BP_EMPTYPE, vo.getWorkType()));
-        }
-        if (!StringUtils.isBlank(vo.getStatus())) {
-            vo.setStatusName(parameterContainer.getBusinessName("BP_YGZT", vo.getStatus()));
-        }
-        //联络方式中的字段转换
-        if (employee.getId() != null) {
-
-            ContactMethod contactMethod = SystemContainer.getInstance().getBean(ContactMethodDao.class)
-                    .findById(employee.getId());
-            if (contactMethod != null) {
-                vo.setExtensionNumber(contactMethod.getAftAddr());
-                String sup = contactMethod.getSupType();
-                if (sup != null && "PHONE".equals(sup)) {
-
-                    vo.setMobile(contactMethod.getAddress());
-                } else if (sup != null && "EMAIL".equals(sup)) {
-                    vo.setEmail(contactMethod.getAddress());
-                }
-            }
-        }
-        return vo;
-    }
-
-    @WebMethod
-    @Override
-    public EmployeeVo queryByMobile(String mobile) {
-        EmployeeVo empVo = new EmployeeVo();
-        if (!StringUtils.isBlank(mobile)) {
-            throw new NullParamException("电话号码不能为空!");
-        }
-        //步骤1：根据号码到员工表中查询数据(临时表)
-        EmployeeBo empBo = new EmployeeBo();
-        empBo.setMobile(mobile);
-        empBo.setStatus("2");
-        List<Employee> empList = employeesDao.query(empBo);
-        if (empList != null && empList.size() > 0) {
-            Employee employee = empList.get(0);
-            String empId = employee.getId();//员工id
-            empVo.setId(empId);
-            empVo.setEmployeeName(employee.getEmployeeName());
-            empVo.setMobile(employee.getMobile());
-            //步骤2：根据员工id到岗位员工中间表查询，因为要获取岗位表中id，和白名单中的岗位id匹配（循环匹配）
-            List<EmployeeVo> employees = new ArrayList<EmployeeVo>();
-            PositionEmpBo bo = new PositionEmpBo();
-            bo.setEmpId(empId);
-            List<PositionEmp> positionEmps = positionEmpDao.query(bo);
-            if (positionEmps != null && positionEmps.size() > 0) {
-                for (PositionEmp posEmp : positionEmps) {
-                    String positionId = posEmp.getPositionId();//岗位id
-                    //步骤3:根据岗位id查询，是否为白名单,如果blankList大于0是白名单
-                    BlankListBo blankListBo = new BlankListBo();
-                    blankListBo.setDutyId(positionId);
-                    List<BlankList> blankList = blankListDao.query(blankListBo);//只会存在一个
-                    if (blankList != null && blankList.size() > 0) {//该岗位是白名单
-                        BlankList blank = blankList.get(0);
-                        Position position = positionDao.findById(blank.getDutyId());
-                        Organization organization = position.getOrganization();
-                        empVo.setOrgId(organization.getId());
-                        empVo.setIsBlank(true);
-                        break;
-                    }
-                }
-            } else {
-                empVo.setIsBlank(false);
-            }
-        }
-        return empVo;
-    }
 
     @Override
     public void doCallback(Employee employee, EmployeeVo vo) {
         ParameterContainer parameterContainer = ParameterContainer.getInstance();
-        if (!StringUtils.isBlank(vo.getDuty())) {//存在
-            vo.setDutyName(parameterContainer.getBusinessName(ContactType.BP_ZHIW, vo.getDuty()));
-        }
-        if (!StringUtils.isBlank(vo.getWorkType())) {
-            vo.setWorkTypeName(parameterContainer.getBusinessName(ContactType.BP_EMPTYPE, vo.getWorkType()));
-        }
-        if (!StringUtils.isBlank(vo.getStatus())) {
-            vo.setStatusName(parameterContainer.getSystemName(ContactType.CONT_TYPE_STATUS, vo.getStatus()));
-        }
+        // 职务
+        vo.setDutyName(parameterContainer.getBusinessName(ContactType.BP_ZHIW, vo.getDuty()));
+        // 工作类型
+        vo.setWorkTypeName(parameterContainer.getBusinessName(ContactType.BP_EMPTYPE, vo.getWorkType()));
+        // 状态
+        vo.setStatusName(parameterContainer.getSystemName(ContactType.CONT_TYPE_STATUS, vo.getStatus()));
+        // 性别
+        vo.setGenderName(parameterContainer.getBusinessName("BP_SEX", employee.getGender()));
+        // 民族
+        vo.setNationName(parameterContainer.getBusinessName("BP_NATION", employee.getNation()));
     }
 
     @Override
@@ -281,6 +177,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         return employeesDao.findById(employID);
     }
 
+
     @Override
     public PageVo permissionPageQuery(EmployeeBo bo) {
         if (bo == null) {
@@ -289,4 +186,5 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         bo.setPermission(true);
         return query(bo);
     }
+
 }

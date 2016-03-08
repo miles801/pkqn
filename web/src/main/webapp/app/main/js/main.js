@@ -52,15 +52,19 @@
                     // 包含子节点的根元素
                     data = data.data || [];
                     $scope.menus = data;
-                    if (data.length > 0 && data[0]) {
-                        $scope.showChildren(data[0] || {});
-                    }
+                    $scope.showHome();  // 显示首页
                     defer.resolve(data);
                 })
                 .error(function (data) {
                     defer.reject(data);
                 });
         });
+        $scope.showHome = function () {
+            hideColbar(function () {
+                $tab.hide();
+                $iframe.attr('src', CommonUtils.contextPathURL('/app/home/panel/panel.jsp')).show();
+            });
+        };
 
         // 切换显示子菜单
         $scope.showChildren = function (menu) {
@@ -127,16 +131,8 @@
         };
 
 
-        // 当子菜单渲染完毕后
-        $scope.$on('subFinish', function () {
-            // 取出第一项，触发click事件
-            $('#accordian').find('ul li:eq(0) h3').trigger('click');
-            $('#iframe').attr('src', CommonUtils.contextPathURL('/blank.html'));
-        });
         // 当菜单渲染完毕后要执行的操作
         $scope.$on('ngRepeatFinish', function () {
-            // 添加默认项
-            $('#main .leftbar .LB_container a:eq(0)', window.document.body).addClass('current');
 
             // 初始化菜单翻动
             //leftbar禁止双击选中

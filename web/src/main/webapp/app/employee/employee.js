@@ -11,9 +11,9 @@
     app.service('EmployeeService', function ($resource, CommonUtils) {
         return $resource(CommonUtils.contextPathURL('/base/employee/:method/:id'), {}, {
             //保存
-            save: {method: 'POST', params: {method: 'save', attachmentIds: '@imageId'}, isArray: false},
+            save: {method: 'POST', params: {method: 'save', attachmentIds: '@picture'}, isArray: false},
             //更新
-            update: {method: 'PUT', params: {method: 'update', attachmentIds: '@imageId'}, isArray: false},
+            update: {method: 'PUT', params: {method: 'update', attachmentIds: '@picture'}, isArray: false},
 
             //根据id查询人员管理信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
@@ -62,7 +62,7 @@
                     callback(data.data || []);
                 });
             },
-            // 民族
+            // 国家
             country: function (callback) {
                 Parameter.businessItems('BP_COUNTRY', function (data) {
                     callback(data.data || []);

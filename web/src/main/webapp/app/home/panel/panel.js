@@ -16,7 +16,7 @@
         EmployeeService.get({id: id}, function (data) {
             data = data.data || {};
             $scope.beans = data;
-            var imageId = data.imageId;
+            var imageId = data.picture;
             if (imageId) {
                 $('#imageId').html('<img src="' + CommonUtils.contextPathURL('/attachment/view?id=' + imageId) + '" width="150" height="180">');
             } else {

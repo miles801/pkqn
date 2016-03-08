@@ -1,6 +1,7 @@
 package eccrm.base.employee.domain;
 
 import com.ycrl.base.common.CommonDomain;
+import eccrm.base.attachment.AttachmentSymbol;
 import eccrm.base.org.domain.Organization;
 
 import javax.validation.constraints.NotNull;
@@ -10,18 +11,22 @@ import java.util.Date;
  * Created by qy on 14-10-15.
  */
 
-public class Employee extends CommonDomain {
+public class Employee extends CommonDomain implements AttachmentSymbol {
     // 常量：职务
     public static final String PARAM_DUTY = "BP_ZHIW";
     private String employeeCode;
     @NotNull
     private String employeeName;
+    // 性别
     private String gender;
+    // 出生年月
     private Date birthday;
     private String contry;
     private String provience;
     private String city;
     private String mobile;
+    private String tel;
+    private String qq;
     private String email;
     /**
      * 分机号（作为RTX账号使用）
@@ -55,6 +60,37 @@ public class Employee extends CommonDomain {
     private String wRegion;
     private String wAddress;
 
+    // 头像
+    private String picture;
+
+    @Override
+    public String businessId() {
+        return getId();
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
 
     public String getPositionId() {
         return positionId;

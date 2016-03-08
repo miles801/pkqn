@@ -78,13 +78,6 @@ public class EmployeeCtrl extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/RTX", params = {"extensionNumber"}, method = RequestMethod.GET)
-    public void findRTX(@RequestParam String extensionNumber, HttpServletResponse response) {
-        EmployeeVo vo = employeeServices.findRTX(extensionNumber);
-        GsonUtils.printData(response, vo);
-    }
-
-    @ResponseBody
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public void findById(@PathVariable String id, HttpServletResponse response) {
         EmployeeVo vo = employeeServices.findById(id);
