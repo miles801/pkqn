@@ -63,7 +63,9 @@ public class LoginFilter implements Filter {
             }
         }
 
-        if (requestUri.equals(request.getContextPath() + "/login") || requestUri.startsWith(request.getContextPath() + "/index.html")) {
+        String contextPath = request.getContextPath();
+        if (requestUri.startsWith(contextPath + "/login") || requestUri.startsWith(contextPath + "/index.html")
+                || requestUri.startsWith(contextPath + "/base/user/register")) {
             logger.info("without login request uri:" + requestUri);
             filterChain.doFilter(request, response);
             return;
@@ -100,7 +102,7 @@ public class LoginFilter implements Filter {
             PersonalPermissionContext.remove();
             return;
         }
-        response.sendRedirect(request.getContextPath() + defaultLoginHtml);
+        response.sendRedirect(contextPath + defaultLoginHtml);
     }
 
     private Cookie addCookie(String key, String value) {

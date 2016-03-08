@@ -15,6 +15,9 @@
             //更新
             update: {method: 'PUT', params: {method: 'update'}, isArray: false},
 
+            // 注册新用户
+            register: {method: 'POST', params: {method: 'register'}, isArray: false},
+
             //根据id查询账户信息
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
 

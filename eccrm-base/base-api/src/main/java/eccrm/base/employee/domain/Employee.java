@@ -3,6 +3,7 @@ package eccrm.base.employee.domain;
 import com.ycrl.base.common.CommonDomain;
 import eccrm.base.org.domain.Organization;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -13,6 +14,7 @@ public class Employee extends CommonDomain {
     // 常量：职务
     public static final String PARAM_DUTY = "BP_ZHIW";
     private String employeeCode;
+    @NotNull
     private String employeeName;
     private String gender;
     private Date birthday;

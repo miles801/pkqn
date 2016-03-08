@@ -45,6 +45,21 @@ public class UserCtrl extends BaseController {
         return "base/user/edit/user_edit";
     }
 
+    // 跳转到注册页面
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String toRegister() {
+        return "base/user/user_register";
+    }
+
+    // 注册
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
+    public void register(HttpServletRequest request, HttpServletResponse response) {
+        User user = GsonUtils.wrapDataToEntity(request, User.class);
+        userService.register(user);
+        GsonUtils.printSuccess(response);
+    }
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public void save(HttpServletRequest request, HttpServletResponse response) {

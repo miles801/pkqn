@@ -23,6 +23,14 @@ public interface UserService extends VoWrapper<User, UserVo> {
      */
     String save(User user);
 
+    /**
+     * 注册
+     * 同时保存用户和员工信息
+     *
+     * @param user 用户
+     */
+    void register(User user);
+
     void update(User user);
 
     PageVo query(UserBo bo);

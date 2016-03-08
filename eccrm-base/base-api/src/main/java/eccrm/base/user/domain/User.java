@@ -7,6 +7,7 @@ import eccrm.core.enums.EnumClass;
 import eccrm.core.enums.EnumSymbol;
 
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -14,7 +15,9 @@ import java.util.Date;
  * @datetime 2014-03-14
  */
 public class User extends CrmBaseDomain implements EnumSymbol {
+    @NotNull(message = "用户名不能为空!")
     private String username;
+    @NotNull(message = "密码不能为空!")
     private String password;
     /**
      * 密码的失效时间

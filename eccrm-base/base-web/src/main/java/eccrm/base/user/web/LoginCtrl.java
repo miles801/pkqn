@@ -119,7 +119,9 @@ public class LoginCtrl {
             response.addCookie(new Cookie("eccrmContext.orgId", empVo.getOrgId()));
             try {
                 // 机构名称
-                response.addCookie(new Cookie("eccrmContext.orgName", URLEncoder.encode(URLEncoder.encode(empVo.getOrgName(), "utf-8"), "utf-8")));
+                if (com.ycrl.utils.string.StringUtils.isNotEmpty(empVo.getOrgName())) {
+                    response.addCookie(new Cookie("eccrmContext.orgName", URLEncoder.encode(URLEncoder.encode(empVo.getOrgName(), "utf-8"), "utf-8")));
+                }
                 // 员工名称
                 response.addCookie(new Cookie("eccrmContext.employeeName", URLEncoder.encode(URLEncoder.encode(employeeName, "utf-8"), "utf-8")));
                 // 用户名称

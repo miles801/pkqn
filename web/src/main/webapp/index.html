@@ -293,9 +293,11 @@
                        placeholder="输入密码"/>
             </div>
             <div id="remember">
-                <label>
+                <label style="display: inline">
                     <input type="checkbox" ng-model="remember" tabindex="4"/>
                 </label>
+                <span style="position: absolute; top: 2px;right:15px; font-size: 14px; line-height: 18px; font-family: '微软雅黑',serif; cursor: pointer; border-bottom: 1px solid #fff;"
+                      ng-click="register();">团干部注册</span>
             </div>
             <div id="submit">
                 <input type="button" ng-disabled="form.$invalid || busy" ng-click="login();"
@@ -338,6 +340,20 @@
             $scope.user = {
                 code: '上海优创',
                 username: username
+            };
+            $scope.register = function () {
+                artDialog({
+                    title: '团干部注册',
+                    padding: '10px 10px',
+                    margin: 0,
+                    lock: true,
+                    background: '#000', // 背景色
+                    opacity: 0.5,	// 透明度
+                    height: 350,
+                    width: 600,
+                    content: '<iframe src="base/user/register" style="border:none;padding: 0;margin:0;width: 500px;height: 350px;"></iframe>'
+                });
+
             };
             $scope.login = function () {
                 if (!$scope.user.username) {
@@ -382,7 +398,9 @@
                                 }
                                 focused && focused.focus();
                             }
-                    )
+                    ).error(function (data) {
+                        console.dir(data);
+                    });
                 }
             };
 

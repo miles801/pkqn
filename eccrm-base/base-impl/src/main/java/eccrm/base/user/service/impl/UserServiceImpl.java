@@ -2,11 +2,13 @@ package eccrm.base.user.service.impl;
 
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.context.SecurityContext;
+import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
 import com.ycrl.utils.gson.ResponseData;
+import eccrm.base.employee.dao.EmployeeDao;
+import eccrm.base.employee.domain.Employee;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.tenement.dao.TenementDao;
-import eccrm.base.tenement.domain.Tenement;
 import eccrm.base.user.bo.UserBo;
 import eccrm.base.user.dao.PasswordPolicyDao;
 import eccrm.base.user.dao.UserDao;
@@ -51,6 +53,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserGroupDao userGroupDao;
 
+    @Resource
+    private EmployeeDao employeeDao;
+
     @Override
     public String save(User user) {
         PasswordPolicy passwordPolicy = policyDao.get();
@@ -74,6 +79,30 @@ public class UserServiceImpl implements UserService {
         // 保存用户与组的关联关系
         saveGroups(user, user.getGroupIds());
         return userId;
+    }
+
+    @Override
+    public void register(User user) {
+        Assert.notNull(user);
+        Assert.hasText(user.getEmployeeName(), "注册失败：姓名不能为空!");
+        // 保存员工
+        Employee employee = new Employee();
+        String empId = UUIDGenerator.generate();
+        employee.setId(empId);
+        employee.setEmployeeName(user.getEmployeeName());
+        employeeDao.save(employee);
+
+        // 保存用户
+        user.setEmployeeId(empId);
+        user.setEmployeeName(employee.getEmployeeName());
+        user.setStatus(UserStatus.ACTIVE.getValue());
+        user.setTenementId("1");
+        ValidatorUtils.validate(user);
+        // 验证用户名是否重复
+        User oldUser = userDao.findByUsername(user.getUsername());
+        Assert.isNull(oldUser, "注册失败：用户名已经存在!");
+
+        userDao.save(user);
     }
 
     /**
@@ -214,18 +243,11 @@ public class UserServiceImpl implements UserService {
         if (password == null || "".equals(password.trim())) {
             throw new RuntimeException("用户登录时,密码不能为空!");
         }
-        if (tenementCode == null || "".equals(tenementCode.trim())) {
-            throw new RuntimeException("用户登录时,没有获得租户的编号!");
-        }
         //租户不存在
-        Tenement tenement = tenementDao.findByCode(tenementCode);
         ValidateResult result = new ValidateResult();
-        if (tenement == null) {
-            result.setCode(LoginErrorCode.ERROR_TENEMENT);
-            return result;
-        }
-        SecurityContext.set(null, null, tenement.getId());
-        result.setTenementId(tenement.getId());
+        String tenementId = "1";
+        SecurityContext.set(null, null, tenementId);
+        result.setTenementId(tenementId);
         User user = userDao.findByUsername(username);
         if (user == null) {
             result.setCode(LoginErrorCode.ERROR_USER);
