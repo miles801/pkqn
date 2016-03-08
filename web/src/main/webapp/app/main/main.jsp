@@ -26,7 +26,7 @@
         <div class="top">
             <div class="logo"></div>
             <span style=" color: #fff; font-size: 26px; margin-left: 65px; height: 60px; display: inline-block; line-height: 60px; ">
-                | 银川市“青春护苗”工程家庭经济困难青少年数据库
+                | “红、黄、蓝”结对帮扶数据库
             </span>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
@@ -36,7 +36,7 @@
                     <img src="<%=contextPath%>/app/main/images/icon/h7.png" width="24" height="24" title="更改密码">
                 </a>
             </div>
-            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">共青团银川市委员会  市扶贫办</span>
+            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">共青团银川市委员会</span>
         </div>
     </div>
     <div id="main">

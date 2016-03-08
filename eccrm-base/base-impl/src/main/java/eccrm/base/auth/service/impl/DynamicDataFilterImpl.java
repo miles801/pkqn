@@ -1,14 +1,12 @@
 package eccrm.base.auth.service.impl;
 
-import com.michael.cache.redis.RedisCommand;
-import com.michael.cache.redis.RedisServer;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.hibernate.filter.DynamicDataFilter;
 import com.ycrl.core.hibernate.filter.FilterFieldType;
-import com.ycrl.utils.gson.GsonUtils;
 import eccrm.base.auth.domain.AccreditData;
 import eccrm.base.auth.domain.AccreditDataType;
+import eccrm.base.auth.service.PersonalPermissionContext;
 import eccrm.base.menu.service.DataResourceContext;
 import eccrm.base.position.dao.PositionEmpDao;
 import eccrm.base.position.domain.PositionEmp;
@@ -18,12 +16,8 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>动态数据过滤接口的实现</p>
@@ -55,17 +49,11 @@ public class DynamicDataFilterImpl implements DynamicDataFilter {
 
 
         // 获得个人被授予的所有的数据权限
-        RedisServer redisServer = SystemContainer.getInstance().getBean(RedisServer.class);
-        String value = redisServer.execute(new RedisCommand<String>() {
-            @Override
-            public String invoke(ShardedJedis shardedJedis, ShardedJedisPool pool) {
-                return shardedJedis.hget("PD:" + SecurityContext.getEmpId(), filterName);
-            }
-        });
-        if (com.ycrl.utils.string.StringUtils.isNotEmpty(value)) {
+        Map<String, List<AccreditData>> accreditDataMap = PersonalPermissionContext.getDataResource();
+        if (accreditDataMap != null && !accreditDataMap.isEmpty()) {
             // 根据过滤器名称获取指定的数据授权列表
-            AccreditData[] accreditDataList = GsonUtils.fromJson(value, AccreditData[].class);
-            if (accreditDataList != null && accreditDataList.length > 0) {
+            List<AccreditData> accreditDataList = accreditDataMap.get(filterName);
+            if (accreditDataList != null && accreditDataList.size() > 0) {
                 // 设置标志位，表示已经设置了权限
                 hasGrant = true;
                 boolean hasPosition = false;

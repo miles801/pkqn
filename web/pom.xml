@@ -35,6 +35,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>贫困青少年</finalName>
+        <finalName>bangfu</finalName>
     </build>
 </project>
