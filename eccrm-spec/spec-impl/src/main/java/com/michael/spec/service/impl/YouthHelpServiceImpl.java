@@ -30,10 +30,11 @@ public class YouthHelpServiceImpl implements YouthHelpService {
     @Override
     public String save(YouthHelp youthHelp) {
         ValidatorUtils.validate(youthHelp);
-        String id = youthHelpDao.save(youthHelp);
-        // 更新帮扶次数
         Youth youth = youthDao.findById(youthHelp.getYouthId());
         Assert.notNull(youth, "添加帮扶记录失败!闲散青年不存在!请刷新后重试!");
+        youthHelp.setYouthName(youth.getName());
+        String id = youthHelpDao.save(youthHelp);
+        // 更新帮扶次数
         Integer times = youth.getHelpTimes();
         youth.setHelpTimes(times + 1);
         youth.setLastHelpDate(youthHelp.getOccurDate());

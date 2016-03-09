@@ -108,7 +108,11 @@
             });
         };
 
-        $scope.viewHelpLog = function (youthId, state) {
+        $scope.viewHelpLog = function (youthId, name) {
+            CommonUtils.addTab({
+                title: '帮扶记录-' + name,
+                url: 'app/spec/youth/edit/youthHelp_view.jsp?youthId=' + youthId
+            })
         };
         // 年龄改变
         $scope.ageChange = function () {

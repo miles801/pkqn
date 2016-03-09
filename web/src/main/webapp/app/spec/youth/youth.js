@@ -64,6 +64,9 @@
             // 更新
             update: {method: 'POST', params: {method: 'update', attachmentIds: '@attachmentIds'}, isArray: false},
 
+            // 根据ID查询
+            get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
+
             // 分页查询
             queryByYouth: {
                 method: 'GET',

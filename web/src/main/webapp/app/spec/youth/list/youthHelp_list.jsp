@@ -155,7 +155,7 @@
                                     <a style="cursor:pointer" title="解除帮扶" ng-click="helpFail(foo.id,foo.state)">
                                         <i class="icons fork"></i>
                                     </a>
-                                    <a style="cursor:pointer" title="帮扶记录" ng-click="viewHelpLog(foo.id,foo.state)">
+                                    <a style="cursor:pointer" title="帮扶记录" ng-click="viewHelpLog(foo.id,foo.name)">
                                         <i class="icons note"></i>
                                     </a>
                                 </td>
