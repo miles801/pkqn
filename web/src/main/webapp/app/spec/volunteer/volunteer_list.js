@@ -5,10 +5,22 @@
     var app = angular.module('spec.volunteer.list', [
         'eccrm.angular',
         'eccrm.angularstrap',
+        'eccrm.angular.ztree',
+        'base.org',
         'spec.volunteer'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, VolunteerService) {
+    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, VolunteerService, Org) {
         $scope.condition = {};
+
+        $scope.orgTree = Org.pick(function (o) {
+            $scope.condition.orgId = o.id;
+            $scope.orgName = o.name;
+        });
+
+        $scope.clearOrg = function () {
+            $scope.condition.orgId = null;
+            $scope.orgName = null;
+        };
 
         //查询数据
         $scope.query = function () {

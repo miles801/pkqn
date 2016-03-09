@@ -11,9 +11,12 @@
     <meta content="text/html" charset="utf-8">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
+    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/zTree/css/ztree.css">
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/app/org/org.js"></script>
 
     <script type="text/javascript">
         window.angular.contextPathURL = "<%=contextPath%>";
@@ -88,11 +91,22 @@
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.phone"
                                validate validate-max-length="40" validate-int/>
+
+                        <div class="form-label col-1-half">
+                            <label>所属县区:</label>
+                        </div>
+                        <div class="col-2-half">
+                            <input class="col-12" type="text" ng-model="beans.orgName" readonly ztree-single="orgTree"/>
+                            <span class="add-on">
+                                <i class="icons icon fork" title="清除" ng-click="clearOrg();"></i>
+                            </span>
+                        </div>
                         <div class="form-label col-1-half">
                             <label>录入人:</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.ownerName"
                                readonly/>
+
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">

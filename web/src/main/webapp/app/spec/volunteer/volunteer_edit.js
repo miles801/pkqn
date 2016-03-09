@@ -5,14 +5,26 @@
     var app = angular.module('spec.volunteer.edit', [
         'spec.volunteer',
         'eccrm.angular',
+        'eccrm.angular.ztree',
+        'base.org',
         'eccrm.angularstrap'
     ]);
 
     app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory,
-                                     VolunteerService, VolunteerParam) {
+                                     VolunteerService, VolunteerParam, Org) {
 
         var pageType = $scope.pageType = $('#pageType').val();
         var id = $('#id').val();
+
+        $scope.orgTree = Org.pick(function (o) {
+            $scope.beans.orgId = o.id;
+            $scope.beans.orgName = o.name;
+        });
+
+        $scope.clearOrg = function () {
+            $scope.beans.orgId = null;
+            $scope.beans.orgName = null;
+        };
 
         // 加载性别
         VolunteerParam.sex(function (data) {
