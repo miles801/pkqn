@@ -58,4 +58,42 @@ public interface YouthService {
      * @param id 青年ID
      */
     void clearOwner(String id);
+
+
+    /**
+     * 帮扶成功（状态改为“帮扶成功—待审核”）
+     * 之前的状态只能是“已配对”
+     *
+     * @param youthId 青年ID
+     */
+    void confirmSuccess(String youthId);
+
+    /**
+     * 审核”帮扶成功-待审核“的青年
+     *
+     * @param youthId
+     */
+    void success(String youthId);
+
+    /**
+     * 解除帮扶（状态改为“接触帮扶-待审核”）
+     *
+     * @param youthId 青年ID
+     */
+    void confirmFail(String youthId);
+
+    /**
+     * 审核”帮扶成功-待审核“的青年
+     *
+     * @param youthId
+     */
+    void fail(String youthId);
+
+    /**
+     * 退回到“已配对”
+     *
+     * @param youthId 青年ID
+     * @param reason  原因
+     */
+    void back(String youthId, String reason);
 }

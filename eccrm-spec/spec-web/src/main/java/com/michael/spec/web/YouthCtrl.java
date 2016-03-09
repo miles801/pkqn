@@ -205,4 +205,42 @@ public class YouthCtrl extends BaseController {
             e.printStackTrace();
         }
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/confirmSuccess", params = {"youthId"}, method = RequestMethod.POST)
+    public void confirmSuccess(@RequestParam String youthId, HttpServletResponse response) {
+        youthService.confirmSuccess(youthId);
+        GsonUtils.printSuccess(response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/confirmFail", params = {"youthId"}, method = RequestMethod.POST)
+    public void confirmFail(@RequestParam String youthId, HttpServletResponse response) {
+        youthService.confirmFail(youthId);
+        GsonUtils.printSuccess(response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/success", params = {"youthId"}, method = RequestMethod.POST)
+    public void success(@RequestParam String youthId, HttpServletResponse response) {
+        youthService.success(youthId);
+        GsonUtils.printSuccess(response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/fail", params = {"youthId"}, method = RequestMethod.POST)
+    public void fail(@RequestParam String youthId, HttpServletResponse response) {
+        youthService.fail(youthId);
+        GsonUtils.printSuccess(response);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/back", method = RequestMethod.POST)
+    public void back(HttpServletRequest request, HttpServletResponse response) {
+        Youth youth = GsonUtils.wrapDataToEntity(request, Youth.class);
+        Assert.notNull(youth, "操作失败!数据不能为空!");
+        youthService.back(youth.getId(), youth.getReason());
+        GsonUtils.printSuccess(response);
+    }
 }

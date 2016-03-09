@@ -9,13 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css">
-    <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/zTree/css/ztree.css">
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/jquery-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-ztree-all.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/app/org/org.js"></script>
-    <script type="text/javascript" src="<%=contextPath%>/app/employee/employee-modal.js"></script>
     <script>
         window.angular.contextPathURL = '<%=contextPath%>';
     </script>
@@ -43,7 +39,7 @@
     </style>
 </head>
 <body>
-<div class="main condition-row-2" ng-app="spec.youth.list" ng-controller="Ctrl">
+<div class="main condition-row-2" ng-app="spec.youth.audit" ng-controller="Ctrl">
     <div class="list-condition">
         <div class="block">
             <div class="block-header">
@@ -74,10 +70,8 @@
                         </div>
                         <select ng-model="condition.state" class="col-2-half">
                             <option value="">全部</option>
-                            <option value="RED">红色</option>
-                            <option value="YELLOW">黄色</option>
-                            <option value="BLUE">蓝色</option>
-                            <option value="GRAY">灰色</option>
+                            <option value="BLUE_WAIT">蓝色（待审核）</option>
+                            <option value="GRAY_WAIT">灰色（待审核）</option>
                         </select>
                     </div>
                     <div class="row">
@@ -91,16 +85,6 @@
                             <option value="3">16-20</option>
                             <option value="4">21-25</option>
                         </select>
-                        <div class="form-label col-1-half" ng-cloak ng-if="isRootOrg">
-                            <label>县（市）区:</label>
-                        </div>
-                        <div class="col-2-half" id="orgId" ng-if="isRootOrg">
-                            <input class="col-12" type="text" ng-model="orgName" readonly
-                                   ztree-single="orgOptions"/>
-                            <span class="add-on">
-                                <i class="icons icon search" ng-click="clearOrg();"></i>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -132,7 +116,6 @@
                                 <td>手机号</td>
                                 <td>QQ</td>
                                 <td>所属县区</td>
-                                <td>负责人</td>
                                 <td>基本情况</td>
                                 <td>状态</td>
                                 <td style="width: 100px;">帮扶次数</td>
@@ -142,7 +125,7 @@
                             </thead>
                             <tbody class="table-body">
                             <tr ng-show="!beans || !beans.total">
-                                <td colspan="16" class="text-center">没有查询到数据！</td>
+                                <td colspan="15" class="text-center">没有查询到数据！</td>
                             </tr>
                             <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td>
@@ -157,27 +140,26 @@
                                 <td bo-text="foo.mobile"></td>
                                 <td bo-text="foo.qq"></td>
                                 <td bo-text="foo.orgName"></td>
-                                <td bo-text="foo.ownerName"></td>
                                 <td bo-text="foo.content|substr:20"></td>
                                 <td bo-title="foo.stateName">
-                                    <button class="btn btn-icon" ng-class="{'btn-danger':foo.state=='RED','btn-primary':foo.state=='BLUE',
-                                    'btn-gray':foo.state=='GRAY','btn-yellow':foo.state=='YELLOW','btn-audit':foo.state=='BLUE_WAIT'||foo.state=='GRAY_WAIT'}"
+                                    <button class="btn btn-icon"
+                                            ng-class="{'btn-audit':foo.state=='BLUE_WAIT'||foo.state=='GRAY_WAIT'}"
                                             bo-text="foo.stateName"></button>
                                 </td>
                                 <td bo-text="foo.helpTimes||0"></td>
                                 <td bo-text="foo.createdDatetime|eccrmDatetime"></td>
                                 <td>
-                                    <a style="cursor:pointer" title="导出" ng-click="exportInfo(foo.id)">
-                                        <i class="icons download"></i>
+                                    <a style="cursor:pointer" title="帮扶成功" ng-click="helpSuccess(foo.id,foo.state)">
+                                        <i class="icons ok"></i>
                                     </a>
-                                    <a style="cursor:pointer" title="修改" ng-click="modify(foo.id)">
-                                        <i class="icons edit"></i>
-                                    </a>
-                                    <a style="cursor:pointer" title="删除" ng-click="remove(foo.id)">
+                                    <a style="cursor:pointer" title="解除帮扶" ng-click="helpFail(foo.id,foo.state)">
                                         <i class="icons fork"></i>
                                     </a>
-                                    <a style="cursor:pointer" title="配对/取消配对" ng-click="matchEmp(foo.id,foo.state)">
-                                        <i class="icons user"></i>
+                                    <a style="cursor:pointer" title="打回" ng-click="helpBack(foo.id,foo.name)">
+                                        <i class="icons refresh"></i>
+                                    </a>
+                                    <a style="cursor:pointer" title="帮扶记录" ng-click="viewHelpLog(foo.id,foo.state)">
+                                        <i class="icons note"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -192,5 +174,5 @@
 </div>
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/spec/youth/youth.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/app/spec/youth/list/youth_list.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/spec/youth/list/youth_audit.js"></script>
 </html>

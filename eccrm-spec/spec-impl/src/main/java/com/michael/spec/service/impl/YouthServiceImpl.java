@@ -2,6 +2,7 @@ package com.michael.spec.service.impl;
 
 import com.michael.spec.bo.YouthBo;
 import com.michael.spec.dao.YouthDao;
+import com.michael.spec.dao.YouthHelpDao;
 import com.michael.spec.dao.YouthRelationDao;
 import com.michael.spec.domain.Youth;
 import com.michael.spec.domain.YouthRelation;
@@ -29,6 +30,9 @@ public class YouthServiceImpl implements YouthService, BeanWrapCallback<Youth, Y
 
     @Resource
     private YouthRelationDao youthRelationDao;
+
+    @Resource
+    private YouthHelpDao youthHelpDao;
 
     @Override
     public String save(Youth youth) {
@@ -104,7 +108,8 @@ public class YouthServiceImpl implements YouthService, BeanWrapCallback<Youth, Y
             // 删除家庭关系
             youthRelationDao.deleteByYouth(id);
 
-            //FIXME 删除帮扶记录
+            // 删除帮扶记录
+            youthHelpDao.deleteByYouth(id);
 
             // 删除自身
             youthDao.deleteById(id);
@@ -144,6 +149,54 @@ public class YouthServiceImpl implements YouthService, BeanWrapCallback<Youth, Y
         return total != null && total > 0;
     }
 
+
+    @Override
+    public void confirmFail(String youthId) {
+        Assert.hasText(youthId, "接触帮扶失败!没有获得青年ID!");
+        Youth youth = youthDao.findById(youthId);
+        Assert.notNull(youth, "接触帮扶失败!青年不存在!请刷新后重试!");
+        Assert.isTrue(Youth.STATE_MATCHED.equals(youth.getState()), "非法操作!只有“已配对”状态的数据才可以更改!");
+        youth.setState(Youth.STATE_FAIL_WAIT);
+    }
+
+    @Override
+    public void confirmSuccess(String youthId) {
+        Assert.hasText(youthId, "接触帮扶失败!没有获得青年ID!");
+        Youth youth = youthDao.findById(youthId);
+        Assert.notNull(youth, "接触帮扶失败!青年不存在!请刷新后重试!");
+        Assert.isTrue(Youth.STATE_MATCHED.equals(youth.getState()), "非法操作!只有“已配对”状态的数据才可以更改!");
+        youth.setState(Youth.STATE_SUCCESS_WAIT);
+    }
+
+    @Override
+    public void fail(String youthId) {
+        Assert.hasText(youthId, "接触帮扶失败!没有获得青年ID!");
+        Youth youth = youthDao.findById(youthId);
+        Assert.notNull(youth, "接触帮扶失败!青年不存在!请刷新后重试!");
+        Assert.isTrue(Youth.STATE_FAIL_WAIT.equals(youth.getState()), "非法操作!只有“接触帮扶-待审核”状态的数据才可以更改!");
+        youth.setState(Youth.STATE_FAIL_WAIT);
+    }
+
+    @Override
+    public void success(String youthId) {
+        Assert.hasText(youthId, "接触帮扶失败!没有获得青年ID!");
+        Youth youth = youthDao.findById(youthId);
+        Assert.notNull(youth, "接触帮扶失败!青年不存在!请刷新后重试!");
+        Assert.isTrue(Youth.STATE_SUCCESS_WAIT.equals(youth.getState()), "非法操作!只有“帮扶成功-待审核”状态的数据才可以更改!");
+        youth.setState(Youth.STATE_SUCCESS);
+    }
+
+    @Override
+    public void back(String youthId, String reason) {
+        Assert.hasText(youthId, "退回失败!没有获得青年ID!");
+        Youth youth = youthDao.findById(youthId);
+        Assert.notNull(youth, "退回失败!青年不存在!请刷新后重试!");
+        Assert.isTrue(Youth.STATE_SUCCESS_WAIT.equals(youth.getState()) || Youth.STATE_FAIL_WAIT.equals(youth.getState()), "非法操作!只有“待审核”状态的数据才可以打回!");
+        youth.setState(Youth.STATE_MATCHED);
+        Assert.hasText(reason, "退回失败!请填写退回的理由!");
+        youth.setReason(reason);
+    }
+
     @Override
     public void doCallback(Youth youth, YouthVo vo) {
         ParameterContainer parameterContainer = ParameterContainer.getInstance();
@@ -156,4 +209,6 @@ public class YouthServiceImpl implements YouthService, BeanWrapCallback<Youth, Y
         // 状态
         vo.setStateName(parameterContainer.getBusinessName("YOUTH_STATE", youth.getState()));
     }
+
+
 }

@@ -39,9 +39,70 @@
                 isArray: false
             },
 
+            // 成功
+            confirmSuccess: {method: 'POST', params: {method: 'confirmSuccess', youthId: '@youthId'}, isArray: false},
+            // 审核成功
+            successSuccess: {method: 'POST', params: {method: 'success', youthId: '@youthId'}, isArray: false},
+            // 失败
+            confirmFail: {method: 'POST', params: {method: 'confirmFail', youthId: '@youthId'}, isArray: false},
+            // 审核失败
+            fail: {method: 'POST', params: {method: 'fail', youthId: '@youthId'}, isArray: false},
+            // 打回
+            //  需要id和reason属性
+            back: {method: 'POST', params: {method: 'back'}, isArray: false},
+
             // 根据id字符串（使用逗号分隔多个值）
             deleteByIds: {method: 'DELETE', params: {method: 'delete', ids: '@ids'}, isArray: false}
         })
+    });
+
+    app.service('YouthHelpService', function (CommonUtils, $resource) {
+        return $resource(CommonUtils.contextPathURL('/spec/youth/help/:method'), {}, {
+            // 保存
+            save: {method: 'POST', params: {method: 'save', attachmentIds: '@attachmentIds'}, isArray: false},
+
+            // 更新
+            update: {method: 'POST', params: {method: 'update', attachmentIds: '@attachmentIds'}, isArray: false},
+
+            // 分页查询
+            queryByYouth: {
+                method: 'GET',
+                params: {method: 'queryByYouth', youthId: '@youthId', limit: '@limit', start: '@start'},
+                isArray: false
+            },
+
+            // 根据id字符串（使用逗号分隔多个值）
+            deleteByIds: {method: 'DELETE', params: {method: 'delete', ids: '@ids'}, isArray: false}
+        })
+    });
+
+    app.service('YouthModal', function (CommonUtils, ModalFactory, $modal, AlertFactory, YouthService) {
+        return {
+            back: function (youthId, youthName, callback) {
+                var modal = $modal({
+                    backdrop: 'static',
+                    template: CommonUtils.contextPathURL('/app/spec/youth/template/youthAudit-modal.html')
+                });
+                var $scope = modal.$scope;
+
+                $scope.beans = {
+                    id: youthId
+                };
+                $scope.save = function () {
+                    $scope.form.$setValidity('committed', false);
+                    var promise = YouthService.back($scope.beans, function () {
+                        AlertFactory.success('打回成功!');
+                        if (angular.isFunction(callback)) {
+                            callback();
+                        }
+                        CommonUtils.delay(function () {
+                            modal.destroy();
+                        }, 2000);
+                    });
+                    CommonUtils.loading(promise);
+                };
+            }
+        }
     });
 
     app.service('YouthParam', function (ParameterLoader) {

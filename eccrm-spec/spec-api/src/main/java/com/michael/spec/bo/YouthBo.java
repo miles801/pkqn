@@ -5,6 +5,8 @@ import com.ycrl.core.hibernate.criteria.Condition;
 import com.ycrl.core.hibernate.criteria.LikeModel;
 import com.ycrl.core.hibernate.criteria.MatchModel;
 
+import java.util.List;
+
 /**
  * @author Michael
  */
@@ -42,9 +44,40 @@ public class YouthBo implements BO {
 
     @Condition
     private String state;
+    @Condition(matchMode = MatchModel.IN, target = "state")
+    private List<String> states;
 
+    // 不使用权限
+    private boolean noPermission = true;
+
+
+    public List<String> getStates() {
+        return states;
+    }
+
+    public void setStates(List<String> states) {
+        this.states = states;
+    }
+
+    public Integer getHelpTimes() {
+        return helpTimes;
+    }
+
+    public void setHelpTimes(Integer helpTimes) {
+        this.helpTimes = helpTimes;
+    }
+
+    public boolean isNoPermission() {
+        return noPermission;
+    }
+
+    public void setNoPermission(boolean noPermission) {
+        this.noPermission = noPermission;
+    }
 
     @Condition(matchMode = MatchModel.GE)
+
+
     private Integer helpTimes;
 
     public String getName() {

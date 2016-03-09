@@ -9,31 +9,24 @@
             <div class="modal-header" ng-cloak>
                 <button type="button" class="close" ng-click="$hide()">&times;</button>
                 <h4 class="modal-title">
-                    <span ng-cloak>{{pageType=='add'?'新增':(pageType=='modify'?'pageType':'查看')}}家庭关系</span>
+                    <span ng-cloak>审核打回</span>
                 </h4>
             </div>
             <div class="modal-body">
                 <form name="form" class="form-horizontal" role="form">
                     <div class="row">
                         <div class="form-label col-3">
-                            <label>姓名:</label>
+                            <label>打回原因:</label>
                         </div>
-                        <span class="col-8" ng-bind-template="{{beans.poorTeenagerName}}"></span>
+                        <textarea ng-model="beans.reason" class="col-8" rows="10"
+                                  validate validate-required validate-max-length="100"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer" ng-cloak>
-                <button type="button" class="btn btn-default btn-primary" ng-if="type=='add'" ng-click="save();"
+                <button type="button" class="btn btn-default btn-primary" ng-click="save();"
                         ng-cloak
-                        ng-disabled="!form.$valid">保存
-                </button>
-                <button type="button" class="btn btn-default btn-primary" ng-if="type=='add'" ng-click="save();"
-                        ng-cloak
-                        ng-disabled="!form.$valid">保存并新增
-                </button>
-                <button type="button" class="btn btn-default btn-primary" ng-if="type=='modify'" ng-click="update();"
-                        ng-cloak
-                        ng-disabled="!form.$valid">更新
+                        ng-disabled="!form.$valid">打回
                 </button>
                 <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
             </div>

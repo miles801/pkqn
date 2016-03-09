@@ -45,9 +45,18 @@ public class YouthVo extends CommonVo {
     // 最后一次帮扶时间
     private Date lastHelpDate;
 
+    private String reason;
 
     // 家庭关系
     private List<YouthRelation> relations;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public List<YouthRelation> getRelations() {
         return relations;

@@ -32,14 +32,24 @@ public class YouthDaoImpl extends HibernateDaoHelper implements YouthDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Youth> query(YouthBo bo) {
-        Criteria criteria = createCriteria(Youth.class, "YOUTH_FILTER", "creatorId", FilterFieldType.EMPLOYEE);
+        Criteria criteria = null;
+        if (bo != null && bo.isNoPermission()) {
+            criteria = createCriteria(Youth.class);
+        } else {
+            criteria = createCriteria(Youth.class, "YOUTH_FILTER", "creatorId", FilterFieldType.EMPLOYEE);
+        }
         initCriteria(criteria, bo);
         return criteria.list();
     }
 
     @Override
     public Long getTotal(YouthBo bo) {
-        Criteria criteria = createRowCountsCriteria(Youth.class, "YOUTH_FILTER", "creatorId", FilterFieldType.EMPLOYEE);
+        Criteria criteria = null;
+        if (bo != null && bo.isNoPermission()) {
+            criteria = createRowCountsCriteria(Youth.class);
+        } else {
+            criteria = createRowCountsCriteria(Youth.class, "YOUTH_FILTER", "creatorId", FilterFieldType.EMPLOYEE);
+        }
         initCriteria(criteria, bo);
         return (Long) criteria.uniqueResult();
     }

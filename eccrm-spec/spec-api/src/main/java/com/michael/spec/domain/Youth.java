@@ -18,7 +18,9 @@ public class Youth extends CommonDomain implements AttachmentSymbol {
     public static final String STATE_NO_MATCH = "RED";
     public static final String STATE_MATCHED = "YELLOW";
     public static final String STATE_SUCCESS = "BLUE";
+    public static final String STATE_SUCCESS_WAIT = "BLUE_WAIT";
     public static final String STATE_FAIL = "GRAY";
+    public static final String STATE_FAIL_WAIT = "GRAY_WAIT";
 
     @NotNull(message = "姓名不能为空!")
     private String name;
@@ -55,9 +57,21 @@ public class Youth extends CommonDomain implements AttachmentSymbol {
     // 最后一次帮扶时间
     private Date lastHelpDate;
 
+    // 打回原因
+    private String reason;
+
     // 家庭关系
     @Transient
     private List<YouthRelation> relations;
+
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
     public List<YouthRelation> getRelations() {
         return relations;
