@@ -40,4 +40,14 @@ public interface YouthHelpDao {
      * @param youthId 青年ID
      */
     void deleteByYouth(String youthId);
+
+
+    /**
+     * 统计指定年份，指定月份的工作进度
+     *
+     * @param year  年份
+     * @param month 月份
+     * @return [负责人名称、负责人职务、青年名称、性别、年龄、电话、帮扶标题、状态]
+     */
+    List<Object[]> workMonthReport(int year, int month);
 }

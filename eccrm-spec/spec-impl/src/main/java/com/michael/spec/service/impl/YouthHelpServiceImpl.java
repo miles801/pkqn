@@ -10,6 +10,7 @@ import com.michael.spec.vo.YouthHelpVo;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
+import eccrm.base.parameter.service.ParameterContainer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -85,5 +86,19 @@ public class YouthHelpServiceImpl implements YouthHelpService {
         }
     }
 
-
+    @Override
+    public List<Object[]> workMonthReport(int year, int month) {
+        List<Object[]> data = youthHelpDao.workMonthReport(year, month);
+        ParameterContainer container = ParameterContainer.getInstance();
+        for (Object[] o : data) {
+            o[3] = container.getBusinessName("BP_SEX", (String) o[3]);
+            String state = (String) o[7];
+            if (Youth.STATE_FAIL.equals(state) || Youth.STATE_SUCCESS.equals(state)) {
+                o[7] = "否";
+            } else {
+                o[7] = "是";
+            }
+        }
+        return data;
+    }
 }

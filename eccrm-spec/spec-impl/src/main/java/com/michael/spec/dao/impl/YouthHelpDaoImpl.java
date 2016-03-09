@@ -71,6 +71,16 @@ public class YouthHelpDaoImpl extends HibernateDaoHelper implements YouthHelpDao
         return (YouthHelp) getSession().get(YouthHelp.class, id);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Object[]> workMonthReport(int year, int month) {
+        return getSession().createSQLQuery("select y.owner_name,e.duty,y.name,y.sex,y.age,y.mobile,h.title,y.y_state,h.OCCUR_DATE from spec_youth y join spec_youth_help h on y.id=h.YOUTH_ID join sys_emp e on y.OWNER_ID=e.id " +
+                "where year(h.OCCUR_DATE)=? and month(h.OCCUR_DATE)=?")
+                .setParameter(0, year)
+                .setParameter(1, month)
+                .list();
+    }
+
     private void initCriteria(Criteria criteria, YouthHelpBo bo) {
         Assert.notNull(criteria, "criteria must not be null!");
         CriteriaUtils.addCondition(criteria, bo);

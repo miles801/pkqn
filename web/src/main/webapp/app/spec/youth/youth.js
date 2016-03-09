@@ -67,6 +67,9 @@
             // 根据ID查询
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
 
+            // 月度工作汇报
+            workReport: {method: 'GET', params: {method: 'workReport', year: '@year', month: '@month'}, isArray: false},
+
             // 分页查询
             queryByYouth: {
                 method: 'GET',
