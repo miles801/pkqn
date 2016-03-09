@@ -30,7 +30,7 @@
             clearOwner: {method: 'POST', params: {method: 'clearOwner', id: '@id'}, isArray: false},
 
             // 统计各个状态的闲散青年个数
-            analysis: {method: 'GET', params: {method: 'analysis', year: '@year'}, isArray: false},
+            analysis: {method: 'GET', params: {method: 'analysis'}, isArray: false},
 
             // 分页查询
             pageQuery: {
@@ -42,7 +42,7 @@
             // 成功
             confirmSuccess: {method: 'POST', params: {method: 'confirmSuccess', youthId: '@youthId'}, isArray: false},
             // 审核成功
-            successSuccess: {method: 'POST', params: {method: 'success', youthId: '@youthId'}, isArray: false},
+            success: {method: 'POST', params: {method: 'success', youthId: '@youthId'}, isArray: false},
             // 失败
             confirmFail: {method: 'POST', params: {method: 'confirmFail', youthId: '@youthId'}, isArray: false},
             // 审核失败

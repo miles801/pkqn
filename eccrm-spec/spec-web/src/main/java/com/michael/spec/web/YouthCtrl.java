@@ -243,4 +243,11 @@ public class YouthCtrl extends BaseController {
         youthService.back(youth.getId(), youth.getReason());
         GsonUtils.printSuccess(response);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/analysis", method = RequestMethod.GET)
+    public void analysis(HttpServletRequest request, HttpServletResponse response) {
+        List<Object[]> data = youthService.analysis();
+        GsonUtils.printData(response, data);
+    }
 }

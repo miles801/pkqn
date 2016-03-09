@@ -198,6 +198,11 @@ public class YouthServiceImpl implements YouthService, BeanWrapCallback<Youth, Y
     }
 
     @Override
+    public List<Object[]> analysis() {
+        return youthDao.analysis();
+    }
+
+    @Override
     public void doCallback(Youth youth, YouthVo vo) {
         ParameterContainer parameterContainer = ParameterContainer.getInstance();
         // 性别

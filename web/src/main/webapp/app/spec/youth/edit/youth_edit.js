@@ -93,14 +93,12 @@
             $scope.form.$setValidity('committed', false);
             var promise = YouthService.save($scope.beans, function (data) {
                 AlertFactory.success('保存成功!');
-                if (createNew === true) {
-                    $scope.beans = {};
-                    $scope.beans.sex = 'BP_MAN';
-                    $scope.beans.orgId = CommonUtils.loginContext().orgId;
-                    $scope.beans.orgName = CommonUtils.loginContext().orgName;
-                    $scope.form.$setValidity('committed', true);
-                }
                 CommonUtils.addTab('update');
+                if (createNew === true) {
+                    CommonUtils.delay(function () {
+                        window.location.reload();
+                    }, 2000);
+                }
             });
             CommonUtils.loading(promise, '保存中...');
         };

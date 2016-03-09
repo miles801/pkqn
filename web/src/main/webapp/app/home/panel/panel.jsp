@@ -16,6 +16,7 @@
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/static/ycrl/javascript/angular-strap-all.js"></script>
     <script type="text/javascript" src="<%=contextPath%>/vendor/jquery-v1.8.3/jquery.md5.js"></script>
+    <script type="text/javascript" src="<%=contextPath%>/vendor/echart/echarts.min.js"></script>
 
     <script type="text/javascript">
         window.angular.contextPathURL = '<%=contextPath%>';
@@ -25,49 +26,6 @@
             margin: 0;
             padding: 0;
             font-size: 14px;
-        }
-
-        #clockbox {
-            height: 100px;
-            width: 610px;
-        <!-- border: 1 px solid #ccc -->
-        }
-
-        .clean {
-            clear: both
-        }
-
-        #timebox {
-            height: 100%;
-            width: 300px;
-            padding-right: 20px;
-            float: left;
-
-        }
-
-        #datebox {
-            height: 100%;
-            width: 300px;
-            float: left;
-            border-left: 2px solid #ccc;
-            padding-left: 20px;
-        }
-
-        #time_part {
-            font-size: 75px;
-            font-weight: bolder;
-            float: right;
-            margin-left: -10px;;
-        }
-
-        #second_part {
-            font-size: 45px;
-            font-weight: bolder;
-        }
-
-        #week_part, #date_part {
-            font-size: 32px;
-            font-weight: bolder;
         }
 
         .mybtn .btn-blue {
@@ -91,52 +49,58 @@
             <tr>
                 <td style="width: 180px;" id="imageId">
                 </td>
-                <td>
-                    <p>姓名：{{beans.employeeName}}</p>
+                <td style="width: 200px;">
+                    <div ng-cloak>
+                        <p>姓名：{{beans.employeeName}}</p>
 
-                    <p>性别：{{beans.genderName}}</p>
+                        <p>性别：{{beans.genderName}}</p>
 
-                    <p>职务：{{beans.duty}}</p>
+                        <p>职务：{{beans.duty}}</p>
 
-                    <p>民族：{{beans.nationName}}</p>
+                        <p>民族：{{beans.nationName}}</p>
 
-                    <p>所属县区：{{beans.orgName}}</p>
+                        <p>所属县区：{{beans.orgName}}</p>
+
+                        <p>配对状态：{{beans.matched?'已配对':'未配对'}}</p>
+                    </div>
 
                 </td>
+                <td style="float: right;" id="image2">
+                </td>
+                <td style="width: 200px;">
+                    <div ng-cloak ng-if="youth">
+                        <p>姓名：{{youth.name}}</p>
+
+                        <p>性别：{{youth.sexName}}</p>
+
+                        <p>年龄：{{youth.age}}</p>
+
+                        <p>电话：{{youth.mobile}}</p>
+
+                        <p>民族：{{youth.nationName}}</p>
+                    </div>
+                </td>
                 <td style="width: 150px;">
-                    <div id="clockbox" style="padding: 5px;">
-                        <div id="timebox">
-                            <div id="time_part" style="float:right;"></div>
-                        </div>
-                        <div id="datebox">
-                            <div id="week_part"></div>
-                            <div id="date_part"></div>
-                            <div style="margin-top: 20px;">
-                                <div class="row mybtn">
-                                    <a type="button" class="btn btn-blue"
-                                       href="<%=contextPath%>/base/employee/modify/<%=userId%>"
-                                       style="width: 110px;">
-                                        <span class="glyphicons plus"></span> 完善个人信息
-                                    </a>
-                                    <a type="button" class="btn btn-blue"
-                                       ng-click="printInfo();"
-                                       style="width: 110px;">
-                                        <span class="glyphicons plus"></span> 打印个人信息
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row mybtn">
+                        <a type="button" class="btn btn-blue"
+                           href="<%=contextPath%>/base/employee/modify/<%=userId%>"
+                           style="width: 110px;">
+                            <span class="glyphicons plus"></span> 完善个人信息
+                        </a>
                     </div>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+    <div class="row" id="report">
+    </div>
 </div>
 </body>
-<script type="text/javascript" src="<%=contextPath%>/app/home/panel/panel.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/employee/employee.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/base/user/user.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/spec/youth/youth.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/home/panel/panel.js"></script>
 </html>
 
 

@@ -79,4 +79,15 @@ public class YouthDaoImpl extends HibernateDaoHelper implements YouthDao {
         CriteriaUtils.addCondition(criteria, bo);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Object[]> analysis() {
+        return getSession().createSQLQuery("select s.ORG_ID,s.ORG_NAME,count(s.id) as total," +
+                "(select count(id) from spec_youth where Y_STATE='RED' and s.ORG_ID=ORG_ID) AS RED," +
+                "(select count(id) from spec_youth where Y_STATE IN('YELLOW','GRAY_WAIT','BLUE_WAIT') and s.ORG_ID=ORG_ID) AS YELLOW," +
+                "(select count(id) from spec_youth where Y_STATE='BLUE' and s.ORG_ID=ORG_ID) AS BLUE," +
+                "(select count(id) from spec_youth where Y_STATE='GRAY' and s.ORG_ID=ORG_ID) AS GRAY" +
+                " from spec_youth s group by s.ORG_ID,s.ORG_NAME")
+                .list();
+    }
 }

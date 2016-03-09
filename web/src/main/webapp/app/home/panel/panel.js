@@ -4,12 +4,13 @@
         'eccrm.angular',
         'eccrm.angularstrap',
         'eccrm.base.employee',
-        'eccrm.base.user'
+        'eccrm.base.user',
+        'spec.youth'
     ]);
 
 
     //
-    app.controller('BaseCtrl', function (User, EmployeeService, $scope, $modal, CommonUtils, AlertFactory) {
+    app.controller('BaseCtrl', function ($http, User, EmployeeService, $scope, CommonUtils, AlertFactory, YouthService) {
         $scope.beans = {};
         $scope.isShow = false;
         var id = $('#userId').val();
@@ -24,14 +25,79 @@
                 } else {
                     $('#imageId').html('<img src="' + CommonUtils.contextPathURL('/style/standard/images/default_tx.png') + '" width="150" height="180">');
                 }
+
+                // 查询匹配状态
+                YouthService.pageQuery({ownerId: id, states: ['YELLOW', 'BLUE_WAIT', 'GRAY_WAIT']}, function (o) {
+                    o = o.data || {total: 0, data: []};
+                    if (o.total < 1) {
+                        $scope.beans.matched = false;
+                    } else {
+                        $scope.beans.matched = o.data[0].id;
+                        $scope.youth = o.data[0];
+                        if ($scope.youth.picture) {
+                            $('#image2').html('<img src="' + CommonUtils.contextPathURL('/attachment/view?id=' + $scope.youth.picture) + '" width="150" height="180">');
+                        } else {
+                            $('#image2').html('<img src="' + CommonUtils.contextPathURL('/style/standard/images/default_tx.png') + '" width="150" height="180">');
+                        }
+                    }
+                });
             });
             CommonUtils.loading(promise);
         };
 
-        $scope.printInfo = function () {
-            alert('待实现');
-            window.open = CommonUtils.contextPathURL('/spec/');
-        };
+        // 拥有查看报表的权限
+        $scope.hasReportPermission = false;
+        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=YOUTH_REPORT'))
+            .success(function (data) {
+                if (data.data) {
+                    // 获取报表数据
+                    var promise = YouthService.analysis(function (data) {
+                        var $report = $('#report');
+
+                        angular.forEach(data.data || [], function (o) {
+                            var node = $('<div style="height: 350px;width: 400px;float: left;margin: 10px 20px;" ></div>');
+                            $report.append(node);
+                            var pie = echarts.init(node[0]);
+                            var options = {
+                                title: {
+                                    text: o[1] + '闲散青年帮扶统计',
+                                    x: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                                },
+                                legend: {
+                                    orient: 'vertical',
+                                    left: 'left',
+                                    data: ['未配对', '帮扶中', '帮扶成功', '解除帮扶']
+                                },
+                                color: ['#c12e2a', '#fcf61b', '#428bca', '#a2aeae'],
+                                series: [
+                                    {
+                                        name: '闲散青年人数(个)',
+                                        type: 'pie',
+                                        radius: '55%',
+                                        data: (function () {
+                                            var arr = [];
+                                            arr.push({name: '未配对', value: o[3]});
+                                            arr.push({name: '帮扶中', value: o[4]});
+                                            arr.push({name: '帮扶成功', value: o[5]});
+                                            arr.push({name: '解除帮扶', value: o[6]});
+                                            return arr;
+                                        })(),
+                                        center: ['50%', '60%']
+                                    }
+                                ]
+                            };
+                            pie.setOption(options);
+                        })
+                    });
+                    CommonUtils.loading(promise);
+                }
+
+            });
+
         loadEmployee();
 
     });

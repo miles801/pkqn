@@ -5,6 +5,8 @@ import com.michael.spec.domain.Youth;
 import com.michael.spec.vo.YouthVo;
 import com.ycrl.core.pager.PageVo;
 
+import java.util.List;
+
 /**
  * @author Michael
  */
@@ -96,4 +98,18 @@ public interface YouthService {
      * @param reason  原因
      */
     void back(String youthId, String reason);
+
+    /**
+     * 统计各区县各状态青少年总数
+     * [
+     * 0:区县ID
+     * 1：区县名称
+     * 2：总记录数
+     * 3：未配对
+     * 4：正在帮扶
+     * 5：帮扶成功
+     * 6：解除帮扶
+     * ]
+     */
+    List<Object[]> analysis();
 }
