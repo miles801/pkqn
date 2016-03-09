@@ -2,6 +2,7 @@ package eccrm.base.employee.dao.impl;
 
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.exception.Argument;
+import com.ycrl.core.hibernate.filter.FilterFieldType;
 import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
@@ -43,35 +44,13 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> querys(EmployeeBo bo, String ids) {
-        String sql = "from " + Employee.class.getName() + " e where 1=1";
-        if (bo.getEmployeeName() != null) {
-            sql += " and e.employeeName like'%" + bo.getEmployeeName() + "%' ";
-        }
-        if (bo.getMobile() != null) {
-            sql += " and e.mobile='" + bo.getMobile() + "'";
-        }
-        if (bo.getEmail() != null) {
-            sql += " and e.email='%" + bo.getEmail() + "%'";
-        }
-        if (bo.getStatus() != null) {
-            sql += " and e.status='" + bo.getStatus() + "'";
-        }
-        if (ids != null) {
-            sql += " and id in(" + ids + ")";
-        }
-
-        return (List<Employee>) getSession().createQuery(sql).list();
-    }
-
-    @Override
     public long getTotal(EmployeeBo bo) {
         Criteria criteria = null;
-        /*if (bo.getPermission() != null && bo.getPermission()) {
-            criteria = createRowCountsCriteria(Employee.class, FILTER_NAME, "id", FilterFieldType.EMPLOYEE);
+        if (bo.getPermission() != null && bo.getPermission()) {
+            criteria = createRowCountsCriteria(Employee.class, FILTER_NAME, "orgId", FilterFieldType.ORG);
         } else {
-        }*/
-        criteria = createRowCountsCriteria(Employee.class);
+            criteria = createRowCountsCriteria(Employee.class);
+        }
         initCriteria(criteria, bo);
         return (Long) criteria.uniqueResult();
     }
@@ -102,11 +81,11 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
      */
     private Criteria getDefaultCriteria(EmployeeBo bo) {
         Criteria criteria = null;
-        /*if (bo.getPermission() != null && bo.getPermission()) {
-            criteria = createCriteria(Employee.class, FILTER_NAME, "id", FilterFieldType.EMPLOYEE);
+        if (bo.getPermission() != null && bo.getPermission()) {
+            criteria = createCriteria(Employee.class, FILTER_NAME, "orgId", FilterFieldType.ORG);
         } else {
-        }*/
-        criteria = createCriteria(Employee.class);
+            criteria = createCriteria(Employee.class);
+        }
         initCriteria(criteria, bo);
         return criteria;
     }

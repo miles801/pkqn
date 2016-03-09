@@ -11,7 +11,6 @@ import eccrm.base.employee.service.BlankListService;
 import eccrm.base.employee.service.BlankListType;
 import eccrm.base.employee.vo.BlankListVo;
 import eccrm.base.employee.vo.EmployeeVo;
-import eccrm.base.org.domain.Organization;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.service.PositionService;
 import eccrm.base.position.vo.PositionVo;
@@ -143,22 +142,6 @@ public class BlankListServiceImpl implements BlankListService, BeanWrapCallback<
     private List<EmployeeVo> wrapEmployeeToVo(List<Employee> employees) {
         return BeanWrapBuilder.newInstance()
                 .addProperties(new String[]{"id", "employeeName", "employeeCode", "mobile", "duty"})
-                .setCallback(new BeanWrapCallback<Employee, EmployeeVo>() {
-                    @Override
-                    public void doCallback(Employee emp, EmployeeVo vo) {
-                        // 设置组织机构
-                        List<Organization> organizations = blankListDao.queryBlankListEmpDept(emp.getId());
-                        if (organizations != null && !organizations.isEmpty()) {
-                            Organization org = organizations.get(0);
-                            vo.setOrganizationId(org.getId());
-                            vo.setOrganizationName(org.getName());
-                        }
-                        // 职务
-                        if (org.apache.commons.lang3.StringUtils.isNotEmpty(emp.getDuty())) {
-                            vo.setDutyName(ParameterContainer.getInstance().getBusinessName(Employee.PARAM_DUTY, emp.getDuty()));
-                        }
-                    }
-                })
                 .wrapList(employees, EmployeeVo.class);
     }
 

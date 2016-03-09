@@ -44,8 +44,6 @@ public class EmployeeVo extends CommonVo {
     private String employeeId;
     private String wCountry;
     private String wProvience;
-    private String organizationId;
-    private String organizationName;
     private String wCity;
     private String wRegion;
     private String wAddress;
@@ -55,7 +53,25 @@ public class EmployeeVo extends CommonVo {
     private String tel;
     private String qq;
 
+    private String positionId;
+    private String positionName;
     private String picture;
+
+    public String getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
 
     public String getPicture() {
         return picture;
@@ -359,22 +375,6 @@ public class EmployeeVo extends CommonVo {
 
     public void setwProvience(String wProvience) {
         this.wProvience = wProvience;
-    }
-
-    public String getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
     }
 
     public String getwCity() {

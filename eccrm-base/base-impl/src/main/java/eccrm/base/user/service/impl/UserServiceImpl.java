@@ -1,5 +1,6 @@
 package eccrm.base.user.service.impl;
 
+import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.context.SecurityContext;
 import com.ycrl.core.hibernate.validator.ValidatorUtils;
@@ -8,6 +9,8 @@ import com.ycrl.utils.gson.ResponseData;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.parameter.service.ParameterContainer;
+import eccrm.base.position.dao.PositionDao;
+import eccrm.base.position.domain.Position;
 import eccrm.base.tenement.dao.TenementDao;
 import eccrm.base.user.bo.UserBo;
 import eccrm.base.user.dao.PasswordPolicyDao;
@@ -90,8 +93,16 @@ public class UserServiceImpl implements UserService {
         String empId = UUIDGenerator.generate();
         employee.setId(empId);
         employee.setEmployeeName(user.getEmployeeName());
+        employee.setStatus("2");
+        employee.setTenementId("1");
+        // 设置员工的岗位（注册时默认添加到编号为TGB的岗位）
+        PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
+        List<Position> positions = positionDao.findByCode("TGB");
+        if (positions != null && !positions.isEmpty()) {
+            employee.setPositionId(positions.get(0).getId());
+            employee.setPositionName(positions.get(0).getName());
+        }
         employeeDao.save(employee);
-
         // 保存用户
         user.setEmployeeId(empId);
         user.setEmployeeName(employee.getEmployeeName());

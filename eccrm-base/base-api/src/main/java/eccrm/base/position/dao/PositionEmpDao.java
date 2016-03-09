@@ -37,6 +37,15 @@ public interface PositionEmpDao {
     List<PositionEmp> findByPositionID(String positionId);
 
     /**
+     * 判断指定的关联关系是否存在
+     * @param orgId 机构ID
+     * @param positionId 岗位ID
+     * @param empId 员工ID
+     * @return 存在：true，不存在：false
+     */
+    boolean exists(String orgId, String positionId, String empId);
+
+    /**
      * 查询岗位下员工的ID列表
      *
      * @param positionIds 岗位ID列表

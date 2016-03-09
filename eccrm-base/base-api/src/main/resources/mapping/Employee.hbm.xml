@@ -48,6 +48,8 @@
         <property name="duty" column="DUTY" type="string" length="40"/>
         <property name="orgId" column="ORG_ID" type="string" length="40"/>
         <property name="orgName" column="ORG_NAME" type="string" length="40"/>
+        <property name="positionId" column="POSITION_ID" type="string" length="40"/>
+        <property name="positionName" column="POSITION_NAME" type="string" length="40"/>
         <property name="mobile" column="MOBILE" type="string" length="40"/>
         <property name="email" column="EMAIL" type="string" length="40"/>
         <property name="qq" column="QQ" type="string" length="20"/>

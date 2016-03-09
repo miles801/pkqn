@@ -81,6 +81,19 @@ public class PositionEmpDaoImpl extends HibernateDaoHelper implements PositionEm
     }
 
     @Override
+    public boolean exists(String orgId, String positionId, String empId) {
+        Assert.hasText(orgId, "缺少参数：机构ID!");
+        Assert.hasText(positionId, "缺少参数：岗位ID!");
+        Assert.hasText(empId, "缺少参数：员工ID!");
+        Long total = (Long) createRowCountsCriteria(PositionEmp.class)
+                .add(Restrictions.eq("orgId", orgId))
+                .add(Restrictions.eq("positionId", positionId))
+                .add(Restrictions.eq("empId", empId))
+                .uniqueResult();
+        return total != null && total > 0;
+    }
+
+    @Override
     public List<PositionEmp> findByPositionID(String positionId) {
 
         Argument.isEmpty(positionId, "查询岗位ID不能为空");

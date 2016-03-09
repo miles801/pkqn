@@ -22,7 +22,6 @@ public interface EmployeeDao {
 
     List<Employee> query(EmployeeBo bo);
 
-    List<Employee> querys(EmployeeBo bo, String ids);
 
     long getTotal(EmployeeBo bo);
 

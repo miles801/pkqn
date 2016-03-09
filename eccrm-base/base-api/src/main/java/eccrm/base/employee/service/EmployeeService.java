@@ -18,8 +18,6 @@ public interface EmployeeService {
 
     PageVo query(EmployeeBo bo);
 
-    List<EmployeeVo> querys(EmployeeBo bo);
-
     EmployeeVo findById(String id);
 
     void deleteByIds(String... ids);

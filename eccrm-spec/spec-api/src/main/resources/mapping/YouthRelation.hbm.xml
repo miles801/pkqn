@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.michael.spec" auto-import="false">
+    <class name="com.michael.spec.domain.YouthRelation" table="SPEC_YOUTH_REL">
+        <id name="id" column="id" length="40">
+            <generator class="uuid"/>
+        </id>
+
+        <property name="youthId" column="YOUTH_ID" type="string" length="40" not-null="true"/>
+        <property name="name" column="NAME" type="string" length="40" not-null="true"/>
+        <property name="relation" column="RELATION" type="string" length="40"/>
+        <property name="age" column="AGE" type="int"/>
+        <property name="education" column="EDUCATION" type="string" length="40"/>
+        <property name="duty" column="DUTY" type="string" length="40"/>
+        <property name="phone" column="PHONE" type="string" length="40"/>
+
+        <property name="description" column="DESCRIPTION" type="string" length="2000"/>
+        <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>
+        <property name="creatorName" column="CREATOR_NAME" type="string" length="40"/>
+        <property name="createdDatetime" column="CREATED_DATETIME" type="timestamp" update="false"/>
+    </class>
+</hibernate-mapping>

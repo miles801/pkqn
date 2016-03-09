@@ -3,8 +3,8 @@ package eccrm.base.employee.service.impl;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.utils.string.StringUtils;
 import eccrm.base.employee.bo.EmployeeBo;
-import eccrm.base.employee.dao.BlankListDao;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.employee.service.ContactType;
@@ -12,7 +12,6 @@ import eccrm.base.employee.service.EmployeeOrgRelService;
 import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.employee.vo.EmployeeVo;
 import eccrm.base.parameter.service.ParameterContainer;
-import eccrm.base.position.bo.PositionEmpBo;
 import eccrm.base.position.dao.PositionDao;
 import eccrm.base.position.dao.PositionEmpDao;
 import eccrm.base.position.domain.PositionEmp;
@@ -20,7 +19,6 @@ import eccrm.base.position.service.PositionEmpService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,17 +38,37 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     @Resource
     private PositionDao positionDao;
 
-    @Resource
-    private BlankListDao blankListDao;
-
     @Override
     public String save(Employee employee) {
         String id = employeesDao.save(employee);
+        // 保存关联关系
+        String positionId = employee.getPositionId();
+        String orgId = employee.getOrgId();
+        if (!StringUtils.hasEmpty(positionId, orgId)) {
+            PositionEmp pe = new PositionEmp();
+            pe.setPositionId(positionId);
+            pe.setOrgId(orgId);
+            pe.setEmpId(id);
+            positionEmpDao.save(pe);
+        }
         return id;
     }
 
     @Override
     public void update(Employee employee) {
+        // 保存关联关系
+        String positionId = employee.getPositionId();
+        String orgId = employee.getOrgId();
+        if (!StringUtils.hasEmpty(positionId, orgId)) {
+            boolean exists = positionEmpDao.exists(orgId, positionId, employee.getId());
+            if (!exists) {
+                PositionEmp pe = new PositionEmp();
+                pe.setPositionId(positionId);
+                pe.setOrgId(orgId);
+                pe.setEmpId(employee.getId());
+                positionEmpDao.save(pe);
+            }
+        }
         employeesDao.update(employee);
     }
 
@@ -81,49 +99,10 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     }
 
     @Override
-    public List<EmployeeVo> querys(EmployeeBo bo) {
-        List<PositionEmp> positionEmps = new ArrayList<PositionEmp>();
-        List<Employee> employees = new ArrayList<Employee>();
-        String ids = null;
-        if (bo.getOrgId() != null || bo.getPositionId() != null) {
-            PositionEmpBo positionEmpBo = new PositionEmpBo();
-            if (bo.getOrgId() != null) {
-                positionEmpBo.setOrgId(bo.getOrgId());
-            }
-            if (bo.getPositionId() != null) {
-                positionEmpBo.setPositionId(bo.getPositionId());
-            }
-            positionEmps = positionEmpDao.query(positionEmpBo);
-            if (positionEmps != null) {
-                if (positionEmps.size() > 0) {
-                    for (int i = 0; i < positionEmps.size(); i++) {
-                        if (i != positionEmps.size() - 1) {
-                            ids = "'" + positionEmps.get(i).getEmpId() + "',";
-                        } else {
-                            ids = "'" + positionEmps.get(i).getEmpId() + "'";
-                        }
-                    }
-                    employees = employeesDao.querys(bo, ids);
-
-                }
-            } else {
-                employees = null;
-            }
-
-        } else {
-            employees = employeesDao.query(bo);
-
-        }
-        return BeanWrapBuilder.newInstance().setCallback(this)
-                .wrapList(employees, EmployeeVo.class);
-    }
-
-    @Override
     public EmployeeVo findById(String id) {
         return BeanWrapBuilder.newInstance().setCallback(this)
                 .wrap(employeesDao.findById(id), EmployeeVo.class);
     }
-
 
 
     @Override
