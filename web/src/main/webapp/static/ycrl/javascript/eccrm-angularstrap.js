@@ -188,6 +188,22 @@
     angular.module('eccrm.angularstrap.modal', ['mgcrea.ngStrap', 'eccrm.angular'])
         .factory('ModalFactory', ['$modal', '$sce', 'CommonUtils', function ($modal, $sce, CommonUtils) {
             return {
+                alert: function (title, content) {
+                    $modal({
+                        title: title,
+                        content: content
+                    });
+                },
+                open: function ($scope, url) {
+                    var options = {};
+                    if (arguments.length == 1 && typeof arguments[0] === 'object') {
+                        options = $scope;
+                    } else {
+                        options.scope = $scope;
+                        options.template = url;
+                    }
+                    return $modal(options);
+                },
                 //使用方式：
                 //ModalFactory.confirm({
                 //    content:'',//要提示的内容
