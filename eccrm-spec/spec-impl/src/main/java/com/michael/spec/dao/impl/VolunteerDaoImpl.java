@@ -5,6 +5,7 @@ import com.michael.spec.dao.VolunteerDao;
 import com.michael.spec.domain.Volunteer;
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
+import com.ycrl.core.hibernate.filter.FilterFieldType;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
@@ -31,14 +32,14 @@ public class VolunteerDaoImpl extends HibernateDaoHelper implements VolunteerDao
     @Override
     @SuppressWarnings("unchecked")
     public List<Volunteer> query(VolunteerBo bo) {
-        Criteria criteria = createCriteria(Volunteer.class);
+        Criteria criteria = createCriteria(Volunteer.class, "PD_VOLUNTEER", "ownerId", FilterFieldType.EMPLOYEE);
         initCriteria(criteria, bo);
         return criteria.list();
     }
 
     @Override
     public Long getTotal(VolunteerBo bo) {
-        Criteria criteria = createRowCountsCriteria(Volunteer.class);
+        Criteria criteria = createRowCountsCriteria(Volunteer.class, "PD_VOLUNTEER", "ownerId", FilterFieldType.EMPLOYEE);
         initCriteria(criteria, bo);
         return (Long) criteria.uniqueResult();
     }
