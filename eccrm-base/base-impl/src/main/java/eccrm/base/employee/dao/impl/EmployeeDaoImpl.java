@@ -7,7 +7,10 @@ import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,8 +41,6 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
             bo = new EmployeeBo();
         }
         Criteria criteria = getDefaultCriteria(bo);
-        // 默认排序
-        criteria.addOrder(Order.asc("extensionNumber"));
         return criteria.list();
     }
 
