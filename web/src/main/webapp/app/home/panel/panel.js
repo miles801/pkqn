@@ -57,14 +57,24 @@
                     // 获取报表数据
                     var promise = YouthService.analysis(function (data) {
                         var $report = $('#report');
-
-                        angular.forEach(data.data || [], function (o) {
+                        data = data.data || [];
+                        var total = ['', '全区县', 0, 0, 0, 0, 0, 0];
+                        angular.forEach(data, function (o, index) {
+                            total[2] += o[2];
+                            total[3] += o[3];
+                            total[4] += o[4];
+                            total[5] += o[5];
+                            total[6] += o[6];
+                        });
+                        data.unshift(total);
+                        angular.forEach(data, function (o) {
                             var node = $('<div style="height: 350px;width: 400px;float: left;margin: 10px 20px;" ></div>');
                             $report.append(node);
                             var pie = echarts.init(node[0]);
                             var options = {
                                 title: {
                                     text: o[1] + '闲散青年帮扶统计',
+                                    subtext: '总计-' + o[2] + '个',
                                     x: 'center'
                                 },
                                 tooltip: {
