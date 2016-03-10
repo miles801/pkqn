@@ -26,6 +26,7 @@
 
         // 如果不是根节点，则只能查询自己的机构的数据
         var orgId = CommonUtils.loginContext().orgId;
+        var orgName = CommonUtils.loginContext().orgName;
         $scope.isRootOrg = true;
         if (orgId != 1) {
             $scope.condition.orgId = orgId;
@@ -147,7 +148,7 @@
         $scope.matchEmp = function (id, state) {
             // 配对
             if (state == 'RED') {
-                EmployeeModal.pickEmployee({}, function (emp) {
+                EmployeeModal.pickEmployee({condition: {orgId: orgId, orgName: orgName}}, function (emp) {
                     // 判断是否已经匹配过了
                     var promise = YouthService.matchOwner({
                         id: id,

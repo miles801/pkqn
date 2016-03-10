@@ -25,11 +25,16 @@
 
         .btn-gray {
             background-color: #a2aeae;
+            color: #6A0202 !important;
         }
 
         .btn-yellow {
             background-color: #fcf61b;
             color: #1A0202 !important;
+        }
+
+        .btn-wait {
+            background-color: #fc8946;
         }
     </style>
 </head>
@@ -126,7 +131,7 @@
                             </tr>
                             <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td>
-                                    <a ng-click="view(foo.id)" class="cp" bo-text="foo.name"></a>
+                                    <a ng-click="view(foo.id,foo.name)" class="cp" bo-text="foo.name"></a>
                                 </td>
                                 <td bo-text="foo.sexName"></td>
                                 <td bo-text="foo.birthday|eccrmDate"></td>
@@ -140,7 +145,7 @@
                                 <td bo-text="foo.content|substr:20"></td>
                                 <td bo-title="foo.stateName">
                                     <button class="btn btn-icon" ng-class="{'btn-danger':foo.state=='RED','btn-primary':foo.state=='BLUE',
-                                    'btn-gray':foo.state=='GRAY','btn-yellow':foo.state=='YELLOW'}"
+                                    'btn-gray':foo.state=='GRAY','btn-yellow':foo.state=='YELLOW','btn-wait':foo.state=='BLUE_WAIT'||foo.state=='GRAY_WAIT'}"
                                             bo-text="foo.stateName"></button>
                                 </td>
                                 <td bo-text="foo.helpTimes||0"></td>

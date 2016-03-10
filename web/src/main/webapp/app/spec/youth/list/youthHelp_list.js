@@ -112,7 +112,14 @@
             CommonUtils.addTab({
                 title: '帮扶记录-' + name,
                 url: 'app/spec/youth/edit/youthHelp_view.jsp?youthId=' + youthId
-            })
+            });
+        };
+
+        $scope.view = function (youthId, name) {
+            CommonUtils.addTab({
+                title: '青年信息-' + name,
+                url: '/spec/youth/detail?id=' + youthId
+            });
         };
         // 年龄改变
         $scope.ageChange = function () {

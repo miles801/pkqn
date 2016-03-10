@@ -78,12 +78,11 @@
                     // 清空查询条件
                     $scope.clear = function () {
                         $scope.condition = {};
-                        $scope.orgName = null;
                     };
 
                     $scope.clearOrg = function () {
                         $scope.condition.orgId = null;
-                        $scope.orgName = null;
+                        $scope.condition.orgName = null;
                     };
 
                     // 查询

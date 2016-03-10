@@ -7,6 +7,7 @@ import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import com.ycrl.core.hibernate.filter.FilterFieldType;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -39,6 +40,7 @@ public class YouthDaoImpl extends HibernateDaoHelper implements YouthDao {
             criteria = createCriteria(Youth.class, "YOUTH_FILTER", "creatorId", FilterFieldType.EMPLOYEE);
         }
         initCriteria(criteria, bo);
+        criteria.addOrder(Order.desc("modifiedDatetime"));
         return criteria.list();
     }
 
