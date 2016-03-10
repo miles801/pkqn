@@ -26,21 +26,25 @@
                     $('#imageId').html('<img src="' + CommonUtils.contextPathURL('/style/standard/images/default_tx.png') + '" width="150" height="180">');
                 }
 
-                // 查询匹配状态
-                YouthService.pageQuery({ownerId: id, states: ['YELLOW', 'BLUE_WAIT', 'GRAY_WAIT']}, function (o) {
-                    o = o.data || {total: 0, data: []};
-                    if (o.total < 1) {
-                        $scope.beans.matched = false;
-                    } else {
-                        $scope.beans.matched = o.data[0].id;
-                        $scope.youth = o.data[0];
-                        if ($scope.youth.picture) {
-                            $('#image2').html('<img src="' + CommonUtils.contextPathURL('/attachment/view?id=' + $scope.youth.picture) + '" width="150" height="180">');
+                if (!$scope.beans.orgId) {
+                    AlertFactory.error('请先完善个人信息!(选择“所属县区”，更新后请重新登录!)')
+                } else {
+                    // 查询匹配状态
+                    YouthService.pageQuery({ownerId: id, states: ['YELLOW', 'BLUE_WAIT', 'GRAY_WAIT']}, function (o) {
+                        o = o.data || {total: 0, data: []};
+                        if (o.total < 1) {
+                            $scope.beans.matched = false;
                         } else {
-                            $('#image2').html('<img src="' + CommonUtils.contextPathURL('/style/standard/images/default_tx.png') + '" width="150" height="180">');
+                            $scope.beans.matched = o.data[0].id;
+                            $scope.youth = o.data[0];
+                            if ($scope.youth.picture) {
+                                $('#image2').html('<img src="' + CommonUtils.contextPathURL('/attachment/view?id=' + $scope.youth.picture) + '" width="150" height="180">');
+                            } else {
+                                $('#image2').html('<img src="' + CommonUtils.contextPathURL('/style/standard/images/default_tx.png') + '" width="150" height="180">');
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
             CommonUtils.loading(promise);
         };

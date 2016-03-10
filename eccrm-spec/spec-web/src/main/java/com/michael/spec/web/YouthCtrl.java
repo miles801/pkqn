@@ -15,6 +15,7 @@ import com.ycrl.core.pager.PageVo;
 import com.ycrl.core.web.BaseController;
 import com.ycrl.utils.gson.DateStringConverter;
 import com.ycrl.utils.gson.GsonUtils;
+import com.ycrl.utils.string.StringUtils;
 import eccrm.base.attachment.AttachmentProvider;
 import eccrm.core.security.LoginInfo;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -179,18 +179,19 @@ public class YouthCtrl extends BaseController {
         o.addProperty("content", vo.getContent());
         o.addProperty("birthday", new SimpleDateFormat("yyyy.MM.dd").format(vo.getBirthday()));
         String picture = vo.getPicture();
-        boolean hasFile = AttachmentProvider.getFile(picture) != null;
-        if (picture != null && hasFile) {
-            o.addProperty("picture", AttachmentProvider.getFile(picture).getAbsolutePath());
+        if (StringUtils.isNotEmpty(picture)) {
+            boolean hasFile = AttachmentProvider.getFile(picture) != null;
+            if (hasFile) {
+                o.addProperty("picture", AttachmentProvider.getFile(picture).getAbsolutePath());
+            }
         }
 
         // 加载家庭成员关系
         List<YouthRelation> relations = vo.getRelations();
-        if (relations == null) {
-            relations = new ArrayList<YouthRelation>();
+        if (relations != null && !relations.isEmpty()) {
+            JsonElement element = gson.fromJson(gson.toJson(relations), JsonElement.class);
+            o.add("c", element);
         }
-        JsonElement element = gson.fromJson(gson.toJson(relations), JsonElement.class);
-        o.add("c", element);
         String disposition = null;//
         try {
             disposition = "attachment;filename=" + URLEncoder.encode("闲散青年个人信息-" + vo.getName() + ".xlsx", "UTF-8");

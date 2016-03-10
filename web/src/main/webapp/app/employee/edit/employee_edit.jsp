@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-2-half">
                                 <input type="text" class="col-12" ztree-single="OrgztreeOptions"
-                                       ng-model="employee.orgName"/>
+                                       ng-model="employee.orgName" validate validate-required/>
                                     <span class="add-on">
                                        <i class="icons circle_fork icon" title="清空"
                                           ng-click="employee..organization.id=null;employee.organization.name=null;"></i>
