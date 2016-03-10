@@ -7,7 +7,7 @@
         'eccrm.im.news'        // 新闻
     ]);
 
-    app.controller('MainController', function ($scope, $http, PasswordModal, $timeout, CommonUtils, AlertFactory, AsideFactory) {
+    app.controller('MainController', function ($scope, $http, AsideFactory, PasswordModal, $timeout, CommonUtils, AlertFactory, AsideFactory) {
         $scope.menus = []; // 菜单
 
         $scope.subMenus = [];// 子菜单
@@ -101,6 +101,31 @@
             }
         };
 
+
+        $scope.showMessages = function () {
+            AsideFactory.info({title: '通知', content: '您有新的审批消息! 请及时进行处理!'});
+        };
+
+        $scope.messages = 0;
+        var loadMessage = function () {
+            $http.post(CommonUtils.contextPathURL('/spec/youth/pageQuery'), {states: ['BLUE_WAIT', 'GRAY_WAIT']})
+                .success(function (data) {
+                    data = data.data || {total: 0, data: []};
+                    if (data.total > $scope.messages) {
+                        $scope.showMessages();
+                    }
+                    $scope.messages = data.total;
+                    CommonUtils.delay(loadMessage, 30000);
+                });
+        };
+
+
+        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=YOUTH_APPROVE_MSG'))
+            .success(function (data) {
+                if (data.data) {
+                    loadMessage();
+                }
+            });
         // 隐藏收缩条
         var $colbar = $('#colbar');
         var hideColbar = function (callback) {

@@ -65,7 +65,10 @@
                     </div>
 
                 </td>
-                <td style="float: right;" id="image2">
+                <td style="text-align: right;">
+                    <img ng-if="youth" src="<%=contextPath%>/app/home/panel/toggle.png" width="150" height="120"/>
+                </td>
+                <td style="float: right;padding-right: 15px;" id="image2">
                 </td>
                 <td style="width: 200px;">
                     <div ng-cloak ng-if="youth">

@@ -18,6 +18,11 @@
     <script>
         window.angular.contextPathURL = "<%=contextPath%>";
     </script>
+    <style>
+        .aside {
+            top: inherit !important;
+        }
+    </style>
 </head>
 <body id="ng-app" ng-app="eccrm.main">
 <div id="container" ng-controller="MainController">
@@ -128,6 +133,12 @@
         <div class="right" style="width: 100px;">
             <span title="便签">
                 <i class="icons note" ng-click="showNote();"></i>
+            </span>
+            <span title="消息">
+                <i class="icons message"></i>
+                <span style="position: relative;top:-2px;">(<span><a style="color: #fff;cursor: pointer" title="查看消息"
+                                                                     ng-click="showMessages();"
+                                                                     ng-cloak>{{messages}}</a></span>)</span>
             </span>
         </div>
     </div>
