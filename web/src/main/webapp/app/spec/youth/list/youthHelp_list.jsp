@@ -116,9 +116,9 @@
                                 <td>民族</td>
                                 <td>住址</td>
                                 <td>手机号</td>
-                                <td>QQ</td>
                                 <td>所属县区</td>
                                 <td>基本情况</td>
+                                <td>审批结果</td>
                                 <td>状态</td>
                                 <td style="width: 100px;">帮扶次数</td>
                                 <td style="width: 120px;">录入时间</td>
@@ -140,9 +140,15 @@
                                 <td bo-text="foo.nationName"></td>
                                 <td bo-text="foo.address|substr:20"></td>
                                 <td bo-text="foo.mobile"></td>
-                                <td bo-text="foo.qq"></td>
                                 <td bo-text="foo.orgName"></td>
-                                <td bo-text="foo.content|substr:20"></td>
+                                <td>
+                                    <a class="cp" ng-click="alert('基本情况',foo.content)"
+                                       bo-text="foo.content|substr:10"></a>
+                                </td>
+                                <td>
+                                    <a class="cp" ng-click="alert('打回原因',foo.reason)"
+                                       bo-text="foo.reason|substr:10"></a>
+                                </td>
                                 <td bo-title="foo.stateName">
                                     <button class="btn btn-icon" ng-class="{'btn-danger':foo.state=='RED','btn-primary':foo.state=='BLUE',
                                     'btn-gray':foo.state=='GRAY','btn-yellow':foo.state=='YELLOW','btn-wait':foo.state=='BLUE_WAIT'||foo.state=='GRAY_WAIT'}"
@@ -160,7 +166,8 @@
                                     <a style="cursor:pointer" title="解除帮扶" ng-click="helpFail(foo.id,foo.state)">
                                         <i class="icons fork"></i>
                                     </a>
-                                    <a style="cursor:pointer" title="帮扶记录" ng-click="viewHelpLog(foo.id,foo.name)">
+                                    <a style="cursor:pointer" title="帮扶记录"
+                                       ng-click="viewHelpLog(foo.id,foo.name,foo.state)">
                                         <i class="icons note"></i>
                                     </a>
                                 </td>

@@ -248,11 +248,50 @@
                                                            validate-int validate-max-length="20">
                                                 </td>
                                                 <td style="width: 80px;">
-                                                    <a style="cursor:pointer" title="删除"
+                                                    <a style="cursor:pointer" title="删除" ng-if="$parent.pageType!=='detail'" ng-cloak
                                                        ng-click="removeRelation($index)">
                                                         <i class="icons fork"></i>
                                                     </a>
                                                 </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" ng-cloak ng-if="'${pageType}'==='detail'">
+                        <div class="form-label col-1-half">&nbsp;</div>
+                        <div class="col-10-half">
+                            <h3 class="text-center">帮扶记录</h3>
+                            <div class="block">
+                                <div class="block-header">
+                                </div>
+                                <div class="block-content">
+                                    <div class="table-responsive panel panel-table">
+                                        <table class="table table-striped table-hover text-center">
+                                            <thead class="table-header">
+                                            <tr>
+                                                <td style="width: 20px;">序号</td>
+                                                <td>主题</td>
+                                                <td>帮扶时间</td>
+                                                <td>录入人</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="table-body">
+                                            <tr ng-show="!helpLogs.total">
+                                                <td colspan="4" class="text-center" style="border:0;">无帮扶历史！</td>
+                                            </tr>
+                                            <tr bindonce ng-repeat="foo in helpLogs.data" ng-cloak>
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <a ng-click="viewHelpHistory(foo.id)" class="cp" bo-text="foo.title"></a>
+                                                </td>
+                                                <td bo-text="foo.occurDate|eccrmDate"></td>
+                                                <td bo-text="foo.creatorName"></td>
                                             </tr>
                                             </tbody>
                                         </table>

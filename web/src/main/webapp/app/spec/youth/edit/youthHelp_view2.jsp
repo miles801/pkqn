@@ -27,7 +27,7 @@
     </script>
 </head>
 <body>
-<div class="main" ng-app="spec.youth.help.view2" ng-controller="Ctrl">
+<div class="main" ng-app="spec.youth.help.view2" ng-controller="Ctrl" style="overflow: auto;">
     <form name="form" class="form-horizontal" role="form" style="position: relative;">
         <div style="display: none;">
             <input type="hidden" id="id" value="${param.id}"/>

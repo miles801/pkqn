@@ -11,7 +11,7 @@
     ]);
 
     app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, YouthService,
-                                     YouthParam, Org) {
+                                     YouthParam, Org, YouthHelpService) {
 
         var pageType = $scope.pageType = $('#pageType').val();
         var id = $('#id').val();
@@ -144,6 +144,14 @@
             $scope.beans.relations.splice(index, 1);
         };
 
+        // 查看帮扶记录
+        $scope.viewHelpHistory = function (id) {
+            CommonUtils.addTab({
+                title: '浏览帮扶记录',
+                url: CommonUtils.contextPathURL('/app/spec/youth/edit/youthHelp_view2.jsp?id=' + id)
+            })
+        };
+
         if (pageType == 'add') {
             $scope.beans.sex = 'BP_MAN';
             $scope.beans.orgId = CommonUtils.loginContext().orgId;
@@ -154,6 +162,11 @@
             $scope.uploadOptions.readonly = true;
             $scope.load(id, function () {
                 $('input,textarea,select').attr('disabled', 'disabled');
+            });
+
+            // 帮扶记录
+            YouthHelpService.queryByYouth({youthId: id}, function (data) {
+                $scope.helpLogs = data.data || {total: 0, data: []};
             });
         } else {
             AlertFactory.error($scope, '错误的页面类型');

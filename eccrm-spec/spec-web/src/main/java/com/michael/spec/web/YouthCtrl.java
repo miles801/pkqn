@@ -192,6 +192,16 @@ public class YouthCtrl extends BaseController {
             JsonElement element = gson.fromJson(gson.toJson(relations), JsonElement.class);
             o.add("c", element);
         }
+
+        // 帮扶记录
+        /*YouthHelpBo bo = new YouthHelpBo();
+        bo.setYouthId(id);
+        YouthHelpService youthHelpService = SystemContainer.getInstance().getBean(YouthHelpService.class);
+        PageVo helpVO = youthHelpService.pageQuery(bo);
+        if (helpVO.getTotal() > 0) {
+            JsonElement element = gson.fromJson(gson.toJson(helpVO.getData()), JsonElement.class);
+            o.add("d", element);
+        }*/
         String disposition = null;//
         try {
             disposition = "attachment;filename=" + URLEncoder.encode("闲散青年个人信息-" + vo.getName() + ".xlsx", "UTF-8");

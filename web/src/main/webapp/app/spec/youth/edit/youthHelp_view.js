@@ -12,6 +12,7 @@
 
     app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, YouthHelpService) {
 
+        $scope.pageType = $('#pageType').val();
         var youthId = $('#youthId').val();
         if (!youthId) {
             AlertFactory.error('错误的访问!没有获得闲散青年ID!');

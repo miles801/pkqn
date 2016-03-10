@@ -29,7 +29,7 @@
 <body>
 <div class="main" ng-app="spec.youth.help.view" ng-controller="Ctrl">
     <div style="display: none;">
-        <input type="hidden" id="pageType" value="${pageType}"/>
+        <input type="hidden" id="pageType" value="${param.pageType}"/>
         <input type="hidden" id="youthId" value="${param.youthId}"/>
     </div>
     <div class="row">
@@ -71,10 +71,12 @@
                                 <td bo-text="foo.occurDate|eccrmDate"></td>
                                 <td bo-text="foo.creatorName"></td>
                                 <td>
-                                    <a style="cursor:pointer" title="修改" ng-click="modify(foo.id)"> <i
-                                            class="icons edit"></i> </a>
-                                    <a style="cursor:pointer" title="删除" ng-click="remove(foo.id)"> <i
-                                            class="icons fork"></i> </a>
+                                    <span ng-if="$parent.pageType!=='detail'" ng-cloak>
+                                        <a style="cursor:pointer" title="修改" ng-click="modify(foo.id)"> <i
+                                                class="icons edit"></i> </a>
+                                        <a style="cursor:pointer" title="删除" ng-click="remove(foo.id)"> <i
+                                                class="icons fork"></i> </a>
+                                    </span>
                                 </td>
                             </tr>
                             </tbody>

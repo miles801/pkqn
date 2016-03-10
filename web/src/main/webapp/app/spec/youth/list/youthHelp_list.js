@@ -108,10 +108,17 @@
             });
         };
 
-        $scope.viewHelpLog = function (youthId, name) {
+        $scope.alert = function (title, reason) {
+            ModalFactory.alert(title, reason);
+        };
+        $scope.viewHelpLog = function (youthId, name, state) {
+            var url = 'app/spec/youth/edit/youthHelp_view.jsp?youthId=' + youthId;
+            if (state !== 'YELLOW') {
+                url = url + '&pageType=detail';
+            }
             CommonUtils.addTab({
                 title: '帮扶记录-' + name,
-                url: 'app/spec/youth/edit/youthHelp_view.jsp?youthId=' + youthId
+                url: url
             });
         };
 
