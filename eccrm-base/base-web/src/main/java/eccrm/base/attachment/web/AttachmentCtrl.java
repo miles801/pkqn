@@ -18,13 +18,10 @@ import eccrm.base.attachment.utils.ImageUtils;
 import eccrm.base.attachment.vo.AttachmentVo;
 import eccrm.utils.StringUtils;
 import eccrm.utils.UUIDGenerator;
-import net.coobird.thumbnailator.Thumbnails;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -124,7 +121,7 @@ public class AttachmentCtrl {
     @ResponseBody
     @SuppressWarnings(value = {"unchecked"})
     public void upload2(@RequestParam(required = false) String dataType,
-                        MultipartHttpServletRequest request, HttpServletResponse response) {
+                        MultipartHttpServletRequest request, HttpServletResponse response) throws IOException {
         Iterator<String> itr = request.getFileNames();
 
         List<Attachment> attaList = new ArrayList<Attachment>();
@@ -138,27 +135,12 @@ public class AttachmentCtrl {
             String id = UUIDGenerator.generate();
             try {
                 File tmp = AttachmentHolder.newInstance().getTempFile(id);
-                logger.info(SecurityContext.getUsername() + ("上传文件:" + fileName + " , 文件大小:" + AttachmentFormat.format(fileSize)));
-                if ("true".equals(request.getParameter("thumb"))) {
-                    int w = 80; // 默认宽高
-                    int h = 80;
-                    String width = request.getParameter("width");
-                    if (com.ycrl.utils.string.StringUtils.isNotEmpty(width)) {
-                        w = Integer.parseInt(width);
-                    }
-                    String height = request.getParameter("height");
-                    if (com.ycrl.utils.string.StringUtils.isNotEmpty(height)) {
-                        h = Integer.parseInt(height);
-                    }
-                    logger.info(String.format("图片[%s]压缩:宽%d,高%d", fileName, w, h));
-                    File tmpFile = AttachmentHolder.newInstance().getTempFile(id + ".png");
-                    Thumbnails.of(file.getInputStream()).forceSize(w, h).toFile(tmpFile);
-                    FileUtils.moveFile(tmpFile, tmp);
-                } else {
-                    Assert.isTrue(tmp.createNewFile(), "附件上传失败：附件文件无法成功创建!");
-
-                    file.transferTo(tmp);
+                boolean result = tmp.mkdirs();
+                if (!result) {
+                    throw new RuntimeException("附件创建失败!" + tmp.getAbsolutePath());
                 }
+                file.transferTo(tmp);
+                logger.info(SecurityContext.getUsername() + ("上传文件:" + fileName + " , 文件大小:" + AttachmentFormat.format(fileSize)));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -191,6 +173,17 @@ public class AttachmentCtrl {
                 response.setContentType("xml/html");
             } else if ("json".equals(dataType)) {
                 response.setContentType("json/application");
+            } else if ("jsp".equals(dataType)) {
+                // 此处为定制化代码，为KindEditor定制
+                response.setContentType("text/html");
+                JsonObject o = new JsonObject();
+                o.addProperty("error", 0);
+                Attachment attachment = attaList.get(0);
+                o.addProperty("id", attachment.getId());
+                o.addProperty("name", attachment.getFileName());
+                o.addProperty("url", request.getContextPath() + "/attachment/download?id=" + attachment.getId());
+                response.getWriter().print(GsonUtils.toJson(o));
+                return;
             }
         } else {
             response.setContentType("json/application");
@@ -255,28 +248,6 @@ public class AttachmentCtrl {
     public void deleteGet(@RequestParam String ids, HttpServletRequest request, HttpServletResponse response) {
         String idArr[] = ids.split(",");
         attachmentService.deleteByIds(idArr);
-        GsonUtils.printSuccess(response);
-    }
-
-    /**
-     * 图片压缩
-     *
-     * @param id     文件ID
-     * @param width  宽度
-     * @param height 高度
-     */
-    @RequestMapping(value = "/thumb", params = {"id", "width", "height"}, method = RequestMethod.POST)
-    @ResponseBody
-    @SuppressWarnings("unchecked")
-    public void thumb(@RequestParam String id,
-                      @RequestParam int width,
-                      @RequestParam int height, HttpServletResponse response) {
-        File file = AttachmentProvider.getFile(id);
-        try {
-            Thumbnails.of(file).size(width, height).toFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         GsonUtils.printSuccess(response);
     }
 
