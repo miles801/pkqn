@@ -55,7 +55,16 @@ public class EmployeeVo extends CommonVo {
 
     private String positionId;
     private String positionName;
+    private String positionCode;
     private String picture;
+
+    public String getPositionCode() {
+        return positionCode;
+    }
+
+    public void setPositionCode(String positionCode) {
+        this.positionCode = positionCode;
+    }
 
     public String getPositionId() {
         return positionId;

@@ -52,6 +52,7 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     // 直属岗位
     private String positionId;
     private String positionName;
+    private String positionCode;    // 直属岗位的编号
 
     private String wCountry;
     private String wProvience;
@@ -62,6 +63,15 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
 
     // 头像
     private String picture;
+
+
+    public String getPositionCode() {
+        return positionCode;
+    }
+
+    public void setPositionCode(String positionCode) {
+        this.positionCode = positionCode;
+    }
 
     @Override
     public String businessId() {

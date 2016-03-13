@@ -119,9 +119,9 @@
             }
         };
         // 查看
-        $scope.view = function (id) {
+        $scope.view = function (id, name) {
             CommonUtils.addTab({
-                title: '查看',
+                title: '查看-' + name,
                 url: '/spec/youth/detail?id=' + id
             });
         };

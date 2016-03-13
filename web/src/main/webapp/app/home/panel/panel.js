@@ -58,7 +58,7 @@
                     var promise = YouthService.analysis(function (data) {
                         var $report = $('#report');
                         data = data.data || [];
-                        var total = ['', '全区县', 0, 0, 0, 0, 0, 0];
+                        var total = ['', '银川市团委 ', 0, 0, 0, 0, 0, 0];
                         angular.forEach(data, function (o, index) {
                             total[2] += o[2];
                             total[3] += o[3];
@@ -73,7 +73,7 @@
                             var pie = echarts.init(node[0]);
                             var options = {
                                 title: {
-                                    text: o[1] + '闲散青年帮扶统计',
+                                    text: o[1] + '帮扶统计',
                                     subtext: '总计-' + o[2] + '个',
                                     x: 'center'
                                 },

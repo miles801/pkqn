@@ -132,7 +132,7 @@
                                 <td>手机号</td>
                                 <td>QQ</td>
                                 <td>所属县区</td>
-                                <td>负责人</td>
+                                <td>团干部</td>
                                 <td>基本情况</td>
                                 <td>状态</td>
                                 <td style="width: 100px;">帮扶次数</td>
@@ -146,7 +146,7 @@
                             </tr>
                             <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td>
-                                    <a ng-click="view(foo.id)" class="cp" bo-text="foo.name"></a>
+                                    <a ng-click="view(foo.id,foo.name)" class="cp" bo-text="foo.name"></a>
                                 </td>
                                 <td bo-text="foo.sexName"></td>
                                 <td bo-text="foo.birthday|eccrmDate"></td>

@@ -73,7 +73,7 @@
                                 <td style="width: 40px;">性别</td>
                                 <td>身份证号</td>
                                 <td>所属县区</td>
-                                <td>专业</td>
+                                <td>熟悉领域</td>
                                 <td>联系电话</td>
                                 <td>添加人</td>
                                 <td style="width: 120px;">录入时间</td>

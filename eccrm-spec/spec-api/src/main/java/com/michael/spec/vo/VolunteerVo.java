@@ -15,7 +15,7 @@ public class VolunteerVo extends CommonVo {
     private String idCard;
     // 联系电话
     private String phone;
-    // 专业
+    // 熟悉领域
     private String duty;
 
     private String ownerId;

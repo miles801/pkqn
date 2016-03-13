@@ -19,7 +19,7 @@ public class Volunteer extends CommonDomain {
     private String idCard;
     // 联系电话
     private String phone;
-    // 专业
+    // 熟悉领域
     private String duty;
 
     // 归属于哪个团干部

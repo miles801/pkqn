@@ -114,7 +114,7 @@
                                 <td>民族</td>
                                 <td>住址</td>
                                 <td>手机号</td>
-                                <td>QQ</td>
+                                <td>团干部</td>
                                 <td>所属县区</td>
                                 <td>基本情况</td>
                                 <td>状态</td>
@@ -129,7 +129,7 @@
                             </tr>
                             <tr bindonce ng-repeat="foo in beans.data" ng-cloak>
                                 <td>
-                                    <a ng-click="view(foo.id)" class="cp" bo-text="foo.name"></a>
+                                    <a ng-click="view(foo.id,foo.name)" class="cp" bo-text="foo.name"></a>
                                 </td>
                                 <td bo-text="foo.sexName"></td>
                                 <td bo-text="foo.birthday|eccrmDate"></td>
@@ -138,7 +138,7 @@
                                 <td bo-text="foo.nationName"></td>
                                 <td bo-text="foo.address|substr:20"></td>
                                 <td bo-text="foo.mobile"></td>
-                                <td bo-text="foo.qq"></td>
+                                <td bo-text="foo.ownerName"></td>
                                 <td bo-text="foo.orgName"></td>
                                 <td bo-text="foo.content|substr:20"></td>
                                 <td bo-title="foo.stateName">
@@ -149,8 +149,11 @@
                                 <td bo-text="foo.helpTimes||0"></td>
                                 <td bo-text="foo.createdDatetime|eccrmDatetime"></td>
                                 <td>
-                                    <a style="cursor:pointer" title="审批" ng-click="approve(foo.id,foo.state)">
+                                    <a style="cursor:pointer" title="帮扶成功" ng-click="helpSuccess(foo.id,foo.state)">
                                         <i class="icons ok"></i>
+                                    </a>
+                                    <a style="cursor:pointer" title="解除帮扶" ng-click="helpFail(foo.id,foo.state)">
+                                        <i class="icons fork"></i>
                                     </a>
                                     <a style="cursor:pointer" title="打回" ng-click="helpBack(foo.id,foo.name)">
                                         <i class="icons refresh"></i>

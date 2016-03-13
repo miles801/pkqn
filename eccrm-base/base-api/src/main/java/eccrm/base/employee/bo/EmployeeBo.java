@@ -14,6 +14,20 @@ public class EmployeeBo extends Employee {
      */
     private Boolean permission;
 
+    /**
+     * 是否拥有直属岗位
+     */
+    private Boolean hasPosition;
+
+
+    public Boolean getHasPosition() {
+        return hasPosition;
+    }
+
+    public void setHasPosition(Boolean hasPosition) {
+        this.hasPosition = hasPosition;
+    }
+
     public Boolean getValid() {
         return valid;
     }

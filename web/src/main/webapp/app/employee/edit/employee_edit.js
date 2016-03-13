@@ -37,7 +37,7 @@
         //回到上一个页面
         $scope.back = CommonUtils.back;
 
-        var type = $('#pageType').val();
+        var type = $scope.pageType = $('#pageType').val();
         var id = $('#id').val();
 
         // 头像

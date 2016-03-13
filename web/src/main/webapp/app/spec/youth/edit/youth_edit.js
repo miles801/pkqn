@@ -148,7 +148,7 @@
         $scope.viewHelpHistory = function (id) {
             CommonUtils.addTab({
                 title: '浏览帮扶记录',
-                url: CommonUtils.contextPathURL('/app/spec/youth/edit/youthHelp_view2.jsp?id=' + id)
+                url: '/app/spec/youth/edit/youthHelp_view2.jsp?id=' + id
             })
         };
 

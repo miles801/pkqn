@@ -65,7 +65,7 @@ public class LoginFilter implements Filter {
 
         String contextPath = request.getContextPath();
         if (requestUri.startsWith(contextPath + "/login") || requestUri.startsWith(contextPath + "/index.html")
-                || requestUri.startsWith(contextPath + "/base/user/register")) {
+                || requestUri.startsWith(contextPath + "/base/user/register") || requestUri.startsWith(contextPath + "/attachment/upload2")) {
             logger.info("without login request uri:" + requestUri);
             filterChain.doFilter(request, response);
             return;

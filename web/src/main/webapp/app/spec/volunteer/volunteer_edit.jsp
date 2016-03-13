@@ -80,7 +80,7 @@
                         <input class="col-2-half" type="text" ng-model="beans.idCard"
                                validate validate-max-length="20"/>
                         <div class="form-label col-1-half">
-                            <label>专业:</label>
+                            <label>熟悉领域:</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.duty"
                                validate validate-max-length="20"/>

@@ -27,8 +27,7 @@
     </script>
 </head>
 <body id="ng-app">
-<div class="main condition-row-1" ng-app="eccrm.base.employee.list"
-     ng-controller="EmployeeListController"
+<div class="main condition-row-1" ng-app="eccrm.base.employee.list" ng-controller="Ctrl">
 <input type="hidden" id="contextPath" value="<%=request.getContextPath()%>"/>
 
 <div class="list-condition">
@@ -50,6 +49,17 @@
                         <label>姓名:</label>
                     </div>
                     <input class="col-2-half" type="text" ng-model="condition.employeeName"/>
+
+
+                    <div class="form-label col-1-half" ng-if="showOrg" ng-cloak>
+                        <label>所属县区:</label>
+                    </div>
+                    <div class="col-2-half" ng-if="showOrg" ng-cloak>
+                        <input class="col-12" type="text" ng-model="orgName" readonly ztree-single="orgTree"/>
+                            <span class="add-on">
+                                <i class="icons icon fork" title="清除" ng-click="clearOrg();"></i>
+                            </span>
+                    </div>
                     <div class="form-label col-1-half">
                         <label>手机号码:</label>
                     </div>

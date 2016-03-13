@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
         if (positions != null && !positions.isEmpty()) {
             employee.setPositionId(positions.get(0).getId());
             employee.setPositionName(positions.get(0).getName());
+            employee.setPositionCode("TGB");
         }
         employeeDao.save(employee);
         // 保存用户

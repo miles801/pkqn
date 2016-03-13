@@ -170,18 +170,18 @@ public class YouthServiceImpl implements YouthService, BeanWrapCallback<Youth, Y
 
     @Override
     public void fail(String youthId) {
-        Assert.hasText(youthId, "接触帮扶失败!没有获得青年ID!");
+        Assert.hasText(youthId, "解除帮扶操作失败!没有获得青年ID!");
         Youth youth = youthDao.findById(youthId);
-        Assert.notNull(youth, "接触帮扶失败!青年不存在!请刷新后重试!");
+        Assert.notNull(youth, "解除帮扶操作失败!青年不存在!请刷新后重试!");
         Assert.isTrue(Youth.STATE_FAIL_WAIT.equals(youth.getState()), "非法操作!只有“接触帮扶-待审核”状态的数据才可以更改!");
-        youth.setState(Youth.STATE_FAIL_WAIT);
+        youth.setState(Youth.STATE_FAIL);
     }
 
     @Override
     public void success(String youthId) {
-        Assert.hasText(youthId, "接触帮扶失败!没有获得青年ID!");
+        Assert.hasText(youthId, "帮扶成功操作失败!没有获得青年ID!");
         Youth youth = youthDao.findById(youthId);
-        Assert.notNull(youth, "接触帮扶失败!青年不存在!请刷新后重试!");
+        Assert.notNull(youth, "帮扶成功操作失败!青年不存在!请刷新后重试!");
         Assert.isTrue(Youth.STATE_SUCCESS_WAIT.equals(youth.getState()), "非法操作!只有“帮扶成功-待审核”状态的数据才可以更改!");
         youth.setState(Youth.STATE_SUCCESS);
     }

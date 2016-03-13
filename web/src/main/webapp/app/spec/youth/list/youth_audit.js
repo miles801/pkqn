@@ -53,6 +53,14 @@
         };
 
 
+        // 查看
+        $scope.view = function (id, name) {
+            CommonUtils.addTab({
+                title: '查看-' + name,
+                url: '/spec/youth/detail?id=' + id
+            });
+        };
+
         // 导出数据
         $scope.exportData = function () {
             if ($scope.pager.total == 0) {
