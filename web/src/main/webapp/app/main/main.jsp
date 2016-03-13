@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>银川市“青春护苗”工程家庭经济困难青少年数据库</title>
+    <title>银川市“红黄蓝”闲散青少年结对帮扶数据库</title>
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>
@@ -31,7 +31,7 @@
         <div class="top">
             <div class="logo"></div>
             <span style=" color: #fff; font-size: 26px; margin-left: 65px; height: 60px; display: inline-block; line-height: 60px; ">
-                | “红、黄、蓝”结对帮扶数据库
+                | 银川市“红黄蓝”闲散青少年结对帮扶数据库
             </span>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
