@@ -50,6 +50,17 @@ public class YouthBo implements BO {
     // 不使用权限
     private boolean noPermission = true;
 
+    // 是否过期（30天未上传帮扶记录的，日期为空或者日期小于当前时间的31天）
+    private Boolean expired;
+
+
+    public Boolean getExpired() {
+        return expired;
+    }
+
+    public void setExpired(Boolean expired) {
+        this.expired = expired;
+    }
 
     public List<String> getStates() {
         return states;

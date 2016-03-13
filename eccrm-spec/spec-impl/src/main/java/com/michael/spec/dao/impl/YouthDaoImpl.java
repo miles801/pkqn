@@ -8,9 +8,11 @@ import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import com.ycrl.core.hibernate.filter.FilterFieldType;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -78,6 +80,15 @@ public class YouthDaoImpl extends HibernateDaoHelper implements YouthDao {
 
     private void initCriteria(Criteria criteria, YouthBo bo) {
         Assert.notNull(criteria, "criteria must not be null!");
+        boolean isExpired = bo != null && bo.getExpired() != null && bo.getExpired();
+        if (isExpired) {
+            bo.setStates(null);
+            bo.setState(Youth.STATE_MATCHED);   // 已匹配
+            criteria.add(Restrictions.or(       // 帮扶时间为空或30天未上传的
+                    Restrictions.isNull("lastHelpDate"),
+                    Restrictions.le("lastHelpDate", org.apache.commons.lang.time.DateUtils.addDays(new Date(), -31))
+            ));
+        }
         CriteriaUtils.addCondition(criteria, bo);
     }
 

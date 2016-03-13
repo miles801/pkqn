@@ -126,6 +126,20 @@
                     loadMessage();
                 }
             });
+
+        // 查询超时未处理的帮扶信息进行提醒
+        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=OP_YOUTH_EXPIRED'))
+            .success(function (data) {
+                if (data.data) {
+                    $http.post(CommonUtils.contextPathURL('/spec/youth/pageQuery?start=0&limit=1'), {expired: true})
+                        .success(function (data) {
+                            if (data.data.total > 0) {
+                                AsideFactory.info({title: '警告', content: '发现有超时未处理的帮扶信息，请及时查看!'});
+                            }
+                        });
+                }
+            });
+
         // 隐藏收缩条
         var $colbar = $('#colbar');
         var hideColbar = function (callback) {

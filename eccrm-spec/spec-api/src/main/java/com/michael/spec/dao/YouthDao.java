@@ -47,4 +47,5 @@ public interface YouthDao {
      * ]
      */
     List<Object[]> analysis();
+
 }
