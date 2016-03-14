@@ -47,8 +47,19 @@ public class YouthVo extends CommonVo {
 
     private String reason;
 
+    // 兴趣爱好
+    private String interest;
+
     // 家庭关系
     private List<YouthRelation> relations;
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
 
     public String getReason() {
         return reason;

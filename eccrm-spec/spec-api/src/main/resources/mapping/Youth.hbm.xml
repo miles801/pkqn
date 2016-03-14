@@ -29,6 +29,7 @@
         <property name="helpTimes" column="HELP_TIMES" type="int"/>
         <property name="lastHelpDate" column="LAST_HELP_DATE" type="date"/>
         <property name="reason" column="REASON" type="string" length="200"/>
+        <property name="interest" column="INTEREST" type="string" length="50"/>
 
         <property name="description" column="DESCRIPTION" type="string" length="2000"/>
         <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>

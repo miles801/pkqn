@@ -109,7 +109,7 @@
                         <div class="row">
 
                             <div class="form-label col-1-half">
-                                <label>座机号:</label>
+                                <label>身份证号:</label>
                             </div>
                             <input class="col-2-half" type="text" validate validate-max-length="20" validate-int
                                    ng-model="employee.tel"/>

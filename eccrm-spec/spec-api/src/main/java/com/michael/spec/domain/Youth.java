@@ -30,6 +30,7 @@ public class Youth extends CommonDomain implements AttachmentSymbol {
     private Date birthday;
     private Integer age;
     private String mobile;
+    // 改为身份证号码了
     private String tel;
     private String qq;
     private String email;
@@ -59,11 +60,21 @@ public class Youth extends CommonDomain implements AttachmentSymbol {
 
     // 打回原因
     private String reason;
+    // 兴趣爱好
+    private String interest;
 
     // 家庭关系
     @Transient
     private List<YouthRelation> relations;
 
+
+    public String getInterest() {
+        return interest;
+    }
+
+    public void setInterest(String interest) {
+        this.interest = interest;
+    }
 
     public String getReason() {
         return reason;

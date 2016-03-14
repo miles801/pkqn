@@ -173,6 +173,7 @@ public class YouthCtrl extends BaseController {
         o.addProperty("mobile", vo.getMobile());
         o.addProperty("tel", vo.getTel());
         o.addProperty("qq", vo.getQq());
+        o.addProperty("interest", vo.getInterest());
         o.addProperty("email", vo.getEmail());
         o.addProperty("orgName", vo.getOrgName());
         o.addProperty("address", vo.getAddress());

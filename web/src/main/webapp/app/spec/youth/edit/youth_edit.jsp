@@ -140,7 +140,7 @@
                         <input class="col-2-half" type="text" ng-model="beans.mobile"
                                validate validate-max-length="20" validate-int/>
                         <div class="form-label col-1-half">
-                            <label>座机号码:</label>
+                            <label>身份证号码:</label>
                         </div>
                         <input class="col-2-half" type="text" ng-model="beans.tel"
                                validate validate-max-length="20"/>
@@ -158,6 +158,7 @@
                                validate validate-max-length="20" validate-int/>
                     </div>
                     <div class="row">
+
                         <div class="form-label col-1-half">
                             <label validate-error="form.orgName">县（市）区:</label>
                         </div>
@@ -169,6 +170,11 @@
                                 <i class="icons icon search"></i>
                             </span>
                         </div>
+                        <div class="form-label col-1-half">
+                            <label>兴趣爱好:</label>
+                        </div>
+                        <input class="col-2-half" type="text" ng-model="beans.interest"
+                               validate validate-max-length="20"/>
                     </div>
                     <div class="row">
                         <div class="form-label col-1-half">
