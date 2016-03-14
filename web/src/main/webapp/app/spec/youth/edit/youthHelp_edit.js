@@ -15,13 +15,24 @@
         var id = $('#id').val();
         var youthId = $('#youthId').val();
 
+        var attachmentIds = [];
         // 附件上传
         $scope.uploadOptions = {
             bid: id,
-            showUrl: true
+            showUrl: true,
+            onSuccess: function (att) {
+                attachmentIds.push(att.id);
+            }
         };
 
-        var editor = KindEditor.create('#description')
+        var editor = KindEditor.create('#description', {
+            uploadJson: CommonUtils.contextPathURL('/attachment/upload2?dataType=jsp'),
+            afterUpload: function (url, obj) {
+                $scope.$apply(function () {
+                    attachmentIds.push(obj.id)
+                });
+            }
+        });
 
         var load = function (callback) {
             var promise = YouthHelpService.get({id: id}, function (data) {
@@ -40,8 +51,7 @@
         // 保存
         $scope.save = function () {
             $scope.form.$setValidity('committed', false);
-            var ids = $scope.uploadOptions.getAttachment();
-            $scope.beans.attachmentIds = ids.join(',');
+            $scope.beans.attachmentIds = attachmentIds.join(',');
             $scope.beans.content = editor.html();
             var promise = YouthHelpService.save($scope.beans, function (data) {
                 AlertFactory.success('保存成功!');
@@ -56,7 +66,7 @@
         // 更新
         $scope.update = function () {
             var ids = $scope.uploadOptions.getAttachment();
-            $scope.beans.attachmentIds = ids.join(',');
+            $scope.beans.attachmentIds = attachmentIds.join(',');
             $scope.beans.content = editor.html();
             var promise = YouthHelpService.update($scope.beans, function (data) {
                 AlertFactory.success(null, '更新成功!');
