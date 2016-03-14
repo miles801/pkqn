@@ -34,7 +34,11 @@
         </div>
         <div style="margin:20px auto;text-align: center;">
             <h3 class="text-center" ng-cloak>{{beans.title}}</h3>
-            <h5 class="text-right" ng-cloak style="margin-right: 5%;">{{beans.occurDate|eccrmDate}}</h5>
+            <h5 ng-cloak>
+                <span style="float: left;margin-left:5%;">志愿者: {{beans.volunteerNames}}</span>
+                <span style="float: right;margin-right:5%;">时间: {{beans.occurDate|eccrmDate}}</span>
+                <span style="clear: both;">&nbsp;</span>
+            </h5>
             <div class="ycrl split" style="margin-top:15px;"></div>
             <div id="content"></div>
         </div>

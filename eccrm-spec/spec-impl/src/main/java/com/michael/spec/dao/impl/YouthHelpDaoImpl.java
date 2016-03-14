@@ -74,7 +74,7 @@ public class YouthHelpDaoImpl extends HibernateDaoHelper implements YouthHelpDao
     @Override
     @SuppressWarnings("unchecked")
     public List<Object[]> workMonthReport(int year, int month) {
-        return getSession().createSQLQuery("select y.owner_name,e.duty,y.name,y.sex,y.age,y.mobile,h.title,y.y_state,h.OCCUR_DATE from spec_youth y join spec_youth_help h on y.id=h.YOUTH_ID join sys_emp e on y.OWNER_ID=e.id " +
+        return getSession().createSQLQuery("select y.owner_name,e.duty,y.name,y.sex,y.age,y.mobile,h.title,y.y_state,h.OCCUR_DATE,e.company from spec_youth y join spec_youth_help h on y.id=h.YOUTH_ID join sys_emp e on y.OWNER_ID=e.id " +
                 "where year(h.OCCUR_DATE)=? and month(h.OCCUR_DATE)=?")
                 .setParameter(0, year)
                 .setParameter(1, month)

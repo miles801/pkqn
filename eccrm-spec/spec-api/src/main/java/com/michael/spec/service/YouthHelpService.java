@@ -42,7 +42,7 @@ public interface YouthHelpService {
      *
      * @param year  年份
      * @param month 月份
-     * @return [负责人名称、负责人职务、青年名称、性别、年龄、电话、帮扶标题、状态]
+     * @return [团干部名称、团干部职务、青年名称、性别、年龄、电话、帮扶标题、状态、时间、团干部工作单位]
      */
     List<Object[]> workMonthReport(int year, int month);
 

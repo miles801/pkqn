@@ -144,7 +144,13 @@
                             <input class="col-6-half" type="text" validate validate-max-length="100"
                                    ng-model="employee.email"/>
 
-
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>工作单位:</label>
+                            </div>
+                            <input class="col-6-half" type="text" validate validate-max-length="100"
+                                   ng-model="employee.company"/>
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">

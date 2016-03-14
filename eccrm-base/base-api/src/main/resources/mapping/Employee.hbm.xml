@@ -57,6 +57,7 @@
         <property name="tel" column="TEL" type="string" length="20"/>
         <property name="extensionNumber" column="EXTENSIONNUMBER" type="string" length="40"/>
         <property name="picture" column="PICTURE" type="string" length="40"/>
+        <property name="company" column="COMPANY" type="string" length="200"/>
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>
         <property name="description" column="DESCRIPTION" type="string" length="1000"/>

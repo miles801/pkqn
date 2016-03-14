@@ -18,6 +18,26 @@ public class YouthHelpVo extends CommonVo {
     // 发生时间
     private Date occurDate;
 
+
+    private String volunteerIds;
+    private String volunteerNames;
+
+    public String getVolunteerIds() {
+        return volunteerIds;
+    }
+
+    public void setVolunteerIds(String volunteerIds) {
+        this.volunteerIds = volunteerIds;
+    }
+
+    public String getVolunteerNames() {
+        return volunteerNames;
+    }
+
+    public void setVolunteerNames(String volunteerNames) {
+        this.volunteerNames = volunteerNames;
+    }
+
     public String getTitle() {
         return title;
     }

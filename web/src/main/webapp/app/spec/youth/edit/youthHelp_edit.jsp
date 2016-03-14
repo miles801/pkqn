@@ -77,6 +77,18 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="form-label col-1-half">
+                            <label validate-error="form.name">参与志愿者:</label>
+                        </div>
+                        <div class="col-10-half">
+                            <input class="col-12" type="text" ng-model="beans.volunteerNames" readonly
+                                   ng-click="pickVolunteer();"/>
+                            <span class="add-on">
+                                <i class="icons icon user"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div eccrm-upload="uploadOptions" ng-cloak></div>
                     </div>
                     <div class="row">
@@ -92,5 +104,6 @@
 </div>
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/spec/youth/youth.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/spec/volunteer/volunteer.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/spec/youth/edit/youthHelp_edit.js"></script>
 </html>

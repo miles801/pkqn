@@ -86,6 +86,7 @@
                             <td>姓名</td>
                             <td>性别</td>
                             <td>所属县区</td>
+                            <td>工作单位</td>
                             <td>移动电话</td>
                             <td>职务</td>
                             <td>民族</td>
@@ -94,7 +95,7 @@
                         </thead>
                         <tbody class="table-body">
                         <tr ng-show="!employees || !employees.total || employees.data.length==0">
-                            <td colspan="7" class="text-center">没有查询到数据！</td>
+                            <td colspan="8" class="text-center">没有查询到数据！</td>
                         </tr>
                         <tr bindonce ng-repeat="foo in employees.data">
                             <td title="点击查询明细！" style="cursor: pointer;">
@@ -103,6 +104,7 @@
                             </td>
                             <td bo-text="foo.genderName"></td>
                             <td bo-text="foo.orgName"></td>
+                            <td bo-text="foo.company"></td>
                             <td bo-text="foo.mobile"></td>
                             <td bo-text="foo.duty"></td>
                             <td bo-text="foo.nationName"></td>

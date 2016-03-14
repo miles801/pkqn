@@ -70,7 +70,8 @@
                                 <td></td>
                                 <td>团干部姓名</td>
                                 <td>团干部职务</td>
-                                <td>姓名</td>
+                                <td>团干部工作单位</td>
+                                <td>帮扶对象</td>
                                 <td>性别</td>
                                 <td>年龄</td>
                                 <td>联系电话</td>
@@ -80,17 +81,18 @@
                             </thead>
                             <tbody class="table-body">
                             <tr ng-show="!beans.length">
-                                <td colspan="9" class="text-center">没有查询到数据！</td>
+                                <td colspan="10" class="text-center">没有查询到数据！</td>
                             </tr>
                             <tr bindonce ng-repeat="foo in beans" ng-cloak>
                                 <td bo-text="$index+1"></td>
-                                <td bo-text="foo[0]"></td>
+                                <td bo-text="foo[0]||''"></td>
                                 <td bo-text="foo[1]||''"></td>
+                                <td bo-text="foo[9]||''"></td>
                                 <td bo-text="foo[2]"></td>
-                                <td bo-text="foo[3]"></td>
-                                <td bo-text="foo[4]"></td>
-                                <td bo-text="foo[5]"></td>
-                                <td bo-text="foo[6]"></td>
+                                <td bo-text="foo[3]||''"></td>
+                                <td bo-text="foo[4]||''"></td>
+                                <td bo-text="foo[5]||''"></td>
+                                <td bo-text="foo[6]||''"></td>
                                 <td bo-text="foo[7]"></td>
                             </tr>
                             </tbody>

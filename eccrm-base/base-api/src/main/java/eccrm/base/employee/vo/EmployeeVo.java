@@ -42,11 +42,6 @@ public class EmployeeVo extends CommonVo {
     private String orgId;
     private String orgName;
     private String employeeId;
-    private String wCountry;
-    private String wProvience;
-    private String wCity;
-    private String wRegion;
-    private String wAddress;
     private String statusName;
     private Boolean isBlank;//是否为白名单
     private String busiTypeName;
@@ -57,6 +52,16 @@ public class EmployeeVo extends CommonVo {
     private String positionName;
     private String positionCode;
     private String picture;
+    // 公司
+    private String company;
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public String getPositionCode() {
         return positionCode;
@@ -368,46 +373,6 @@ public class EmployeeVo extends CommonVo {
 
     public void setOrgId(String orgId) {
         this.orgId = orgId;
-    }
-
-    public String getwCountry() {
-        return wCountry;
-    }
-
-    public void setwCountry(String wCountry) {
-        this.wCountry = wCountry;
-    }
-
-    public String getwProvience() {
-        return wProvience;
-    }
-
-    public void setwProvience(String wProvience) {
-        this.wProvience = wProvience;
-    }
-
-    public String getwCity() {
-        return wCity;
-    }
-
-    public void setwCity(String wCity) {
-        this.wCity = wCity;
-    }
-
-    public String getwRegion() {
-        return wRegion;
-    }
-
-    public void setwRegion(String wRegion) {
-        this.wRegion = wRegion;
-    }
-
-    public String getwAddress() {
-        return wAddress;
-    }
-
-    public void setwAddress(String wAddress) {
-        this.wAddress = wAddress;
     }
 
     public Boolean getIsBlank() {

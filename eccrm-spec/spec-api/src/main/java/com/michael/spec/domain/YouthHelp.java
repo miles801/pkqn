@@ -25,6 +25,25 @@ public class YouthHelp extends CommonDomain implements AttachmentSymbol {
     @NotNull
     private Date occurDate;
 
+    // 志愿者信息
+    private String volunteerIds;
+    private String volunteerNames;
+
+    public String getVolunteerIds() {
+        return volunteerIds;
+    }
+
+    public void setVolunteerIds(String volunteerIds) {
+        this.volunteerIds = volunteerIds;
+    }
+
+    public String getVolunteerNames() {
+        return volunteerNames;
+    }
+
+    public void setVolunteerNames(String volunteerNames) {
+        this.volunteerNames = volunteerNames;
+    }
 
     public String getYouthName() {
         return youthName;

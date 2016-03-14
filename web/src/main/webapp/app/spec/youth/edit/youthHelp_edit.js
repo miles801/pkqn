@@ -6,10 +6,11 @@
         'spec.youth',
         'eccrm.angular',
         'eccrm.angularstrap',
+        'spec.volunteer',   // 志愿者
         'eccrm.angular.ztree'
     ]);
 
-    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, YouthHelpService) {
+    app.controller('Ctrl', function ($scope, CommonUtils, AlertFactory, ModalFactory, YouthHelpService, VolunteerModal) {
 
         var pageType = $scope.pageType = $('#pageType').val();
         var id = $('#id').val();
@@ -33,6 +34,20 @@
                 });
             }
         });
+
+        // 选择志愿者
+        $scope.pickVolunteer = function () {
+            VolunteerModal.pick(function (data) {
+                var volunteerIds = [];
+                var volunteerNames = [];
+                angular.forEach(data || [], function (o) {
+                    volunteerIds.push(o.id);
+                    volunteerNames.push(o.name);
+                });
+                $scope.beans.volunteeIds = volunteerIds.join(',');
+                $scope.beans.volunteerNames = volunteerNames.join(' , ');
+            });
+        };
 
         var load = function (callback) {
             var promise = YouthHelpService.get({id: id}, function (data) {

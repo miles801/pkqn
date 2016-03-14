@@ -12,6 +12,8 @@
         <property name="youthName" column="YOUTH_NAME" type="string" length="40" not-null="true"/>
         <property name="occurDate" column="OCCUR_DATE" type="date" not-null="true"/>
         <property name="content" column="Y_CONTENT" type="text"/>
+        <property name="volunteerIds" column="VOLUNTEER_IDS" type="string" length="200"/>
+        <property name="volunteerNames" column="VOLUNTEER_NAMES" type="string" length="200"/>
 
         <property name="description" column="DESCRIPTION" type="string" length="2000"/>
         <property name="creatorId" column="CREATOR_ID" type="string" length="40" update="false"/>

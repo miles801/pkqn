@@ -2,7 +2,6 @@ package eccrm.base.employee.domain;
 
 import com.ycrl.base.common.CommonDomain;
 import eccrm.base.attachment.AttachmentSymbol;
-import eccrm.base.org.domain.Organization;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -54,16 +53,19 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     private String positionName;
     private String positionCode;    // 直属岗位的编号
 
-    private String wCountry;
-    private String wProvience;
-    private Organization organization;
-    private String wCity;
-    private String wRegion;
-    private String wAddress;
-
+    // 公司
+    private String company;
     // 头像
     private String picture;
 
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
     public String getPositionCode() {
         return positionCode;
@@ -132,14 +134,6 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
 
     public void setExtensionNumber(String extensionNumber) {
         this.extensionNumber = extensionNumber;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
     }
 
     public String getEmployeeCode() {
@@ -316,46 +310,6 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
 
     public void setOrgId(String orgId) {
         this.orgId = orgId;
-    }
-
-    public String getwCountry() {
-        return wCountry;
-    }
-
-    public void setwCountry(String wCountry) {
-        this.wCountry = wCountry;
-    }
-
-    public String getwProvience() {
-        return wProvience;
-    }
-
-    public void setwProvience(String wProvience) {
-        this.wProvience = wProvience;
-    }
-
-    public String getwCity() {
-        return wCity;
-    }
-
-    public void setwCity(String wCity) {
-        this.wCity = wCity;
-    }
-
-    public String getwRegion() {
-        return wRegion;
-    }
-
-    public void setwRegion(String wRegion) {
-        this.wRegion = wRegion;
-    }
-
-    public String getwAddress() {
-        return wAddress;
-    }
-
-    public void setwAddress(String wAddress) {
-        this.wAddress = wAddress;
     }
 
     public String getOrgName() {
