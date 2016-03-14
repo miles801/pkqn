@@ -18,7 +18,7 @@
     </script>
 </head>
 <body>
-<div class="main" ng-app="spec.condole.report" ng-controller="Ctrl" style="padding-top: 50px;">
+<div class="main" ng-app="spec.condole.report" ng-controller="Ctrl" style="padding-top: 50px;overflow: auto;">
     <div class="row text-center">
         <div style="margin: 0 auto;">
             <div class="form-label" style="display: inline-block;width: 120px;">

@@ -54,10 +54,13 @@
                 pieOptions.title.text = $scope.year + '年各县（市）区贫困青少年统计';
                 var legendData = [];
                 var moneySeries = [];
+                var totalPersons = 0;
                 angular.forEach(data.data || [], function (o) {
                     legendData.push(o[1]);
+                    totalPersons += (o[2] || 0);
                     moneySeries.push({name: o[1], value: o[2]});
                 });
+                pieOptions.title.subtext = '总计-' + totalPersons + '个';
                 pieOptions.legend.data = legendData;
                 pieOptions.series[0].data = moneySeries;
                 pie.setOption(pieOptions);
