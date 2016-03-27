@@ -39,6 +39,10 @@
             // 查询所有有效的用户
             // 返回数据：{success:true,data:{total:1,data:[]}}
             queryValid: {method: 'POST', params: {method: 'queryValid'}, isArray: false},
+            // 审核用户状态为“通过/启用”
+            approveOk: {method: 'POST', params: {method: 'approveOk', ids: '@ids'}, isArray: false},
+            // 审核用户状态为“注销”
+            approveDeny: {method: 'POST', params: {method: 'approveDeny', ids: '@ids'}, isArray: false},
 
             //分页查询，返回data数据为：{total:,data:[]}
             query: {method: 'POST', params: {method: 'query', start: '@start', limit: '@limit'}, isArray: false},

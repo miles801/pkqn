@@ -60,6 +60,22 @@ public class UserCtrl extends BaseController {
         GsonUtils.printSuccess(response);
     }
 
+    // 通过审核
+    @RequestMapping(value = "/approveOk", params = "ids", method = RequestMethod.POST)
+    @ResponseBody
+    public void approveOk(@RequestParam String ids, HttpServletResponse response) {
+        userService.approveOk(ids.split(","));
+        GsonUtils.printSuccess(response);
+    }
+
+    // 拒绝通过审核
+    @RequestMapping(value = "/approveDeny", params = "ids", method = RequestMethod.POST)
+    @ResponseBody
+    public void approveDeny(@RequestParam String ids, HttpServletResponse response) {
+        userService.approveDeny(ids.split(","));
+        GsonUtils.printSuccess(response);
+    }
+
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public void save(HttpServletRequest request, HttpServletResponse response) {

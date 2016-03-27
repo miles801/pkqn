@@ -100,4 +100,18 @@ public interface UserService extends VoWrapper<User, UserVo> {
      * @param username 用户名
      */
     String findEmployeeId(String username);
+
+    /**
+     * 审核用户状态为“启用”
+     *
+     * @param userIds 用户ID
+     */
+    void approveOk(String[] userIds);
+
+    /**
+     * 审核用户状态为“注销”
+     *
+     * @param userIds 用户ID
+     */
+    void approveDeny(String[] userIds);
 }

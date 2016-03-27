@@ -103,15 +103,21 @@
 
 
         $scope.showMessages = function () {
-            AsideFactory.info({title: '通知', content: '您有新的审批消息! 请及时进行处理!'});
+            if ($scope.messages > 0) {
+                msg = '检测到有新的用户注册，请及时处理!';
+            } else {
+                msg = '暂无消息!';
+            }
+            AsideFactory.info({title: '通知', content: msg});
         };
 
         $scope.messages = 0;
         var loadMessage = function () {
-            $http.post(CommonUtils.contextPathURL('/spec/youth/pageQuery'), {states: ['BLUE_WAIT', 'GRAY_WAIT']})
+            $http.post(CommonUtils.contextPathURL('/base/user/query'), {status: 'PAUSE'})
                 .success(function (data) {
                     data = data.data || {total: 0, data: []};
                     if (data.total > $scope.messages) {
+                        $scope.messages = data.total;
                         $scope.showMessages();
                     }
                     $scope.messages = data.total;
@@ -120,23 +126,10 @@
         };
 
 
-        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=YOUTH_APPROVE_MSG'))
+        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=DF_MODIFY_REGISGER'))
             .success(function (data) {
                 if (data.data) {
                     loadMessage();
-                }
-            });
-
-        // 查询超时未处理的帮扶信息进行提醒
-        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=OP_YOUTH_EXPIRED'))
-            .success(function (data) {
-                if (data.data) {
-                    $http.post(CommonUtils.contextPathURL('/spec/youth/pageQuery?start=0&limit=1'), {expired: true})
-                        .success(function (data) {
-                            if (data.data.total > 0) {
-                                AsideFactory.info({title: '警告', content: '发现有超时未处理的帮扶信息，请及时查看!'});
-                            }
-                        });
                 }
             });
 

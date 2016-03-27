@@ -354,6 +354,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void approveDeny(String[] userIds) {
+        Assert.notEmpty(userIds);
+        for (String id : userIds) {
+            User user = userDao.findById(id);
+            if (user != null) {
+                user.setStatus(UserStatus.CANCELED.getValue());
+            }
+        }
+    }
+
+    @Override
+    public void approveOk(String[] userIds) {
+        Assert.notEmpty(userIds);
+        for (String id : userIds) {
+            User user = userDao.findById(id);
+            if (user != null) {
+                user.setStatus(UserStatus.ACTIVE.getValue());
+            }
+        }
+    }
+
+    @Override
     public String findEmployeeId(String username) {
         return userDao.findEmployeeId(username);
     }
