@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
 
     private Logger logger = Logger.getLogger(LoginFilter.class);
     //静态资源
-    private String[] static_suffix = new String[]{".js", ".less", ".css", ".jpg", ".png", ".gif", ".html", ".htm", ".ttf", ".svg", ".woff", ".map", ".ico", ".mp3", ".class"};
+    private String[] static_suffix = new String[]{".js", ".less", ".css", ".jpg", ".png", ".gif", ".html", ".htm", ".ttf", ".svg", ".woff", ".map", ".ico", ".mp3", ".json"};
 
 
     @Override
@@ -64,8 +64,12 @@ public class LoginFilter implements Filter {
         }
 
         String contextPath = request.getContextPath();
-        if (requestUri.startsWith(contextPath + "/login") || requestUri.startsWith(contextPath + "/index.html")
-                || requestUri.startsWith(contextPath + "/base/user/register") || requestUri.startsWith(contextPath + "/attachment/upload2")) {
+        if (requestUri.startsWith(contextPath + "/login")
+                || requestUri.startsWith(contextPath + "/index.html")
+                || requestUri.startsWith(contextPath + "/base/user/register")
+                || requestUri.startsWith(contextPath + "/base/org/queryValidChildren")
+                || requestUri.startsWith(contextPath + "/base/parameter")
+                || requestUri.startsWith(contextPath + "/attachment/upload2")) {
             logger.info("without login request uri:" + requestUri);
             filterChain.doFilter(request, response);
             return;

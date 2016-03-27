@@ -95,19 +95,30 @@ public class UserServiceImpl implements UserService {
         employee.setEmployeeName(user.getEmployeeName());
         employee.setStatus("2");
         employee.setTenementId("1");
-        // 设置员工的岗位（注册时默认添加到编号为TGB的岗位）
-        PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
-        List<Position> positions = positionDao.findByCode("TGB");
-        if (positions != null && !positions.isEmpty()) {
-            employee.setPositionId(positions.get(0).getId());
-            employee.setPositionName(positions.get(0).getName());
-            employee.setPositionCode("TGB");
+        employee.setTzz(user.getTzz());
+        employee.setTzzName(user.getTzzName());
+        employee.setLy(user.getLy());
+        employee.setZztgbCounts(user.getZztgbCounts());
+        employee.setJztgbCounts(user.getJztgbCounts());
+        employee.setMobile(user.getMobilePhone());
+        employee.setOrgId(user.getDeptId());
+        employee.setOrgName(user.getDeptName());
+        // 设置员工的岗位
+        String positionCode = user.getPosition();
+        if (StringUtils.isNotEmpty(positionCode)) {
+            PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
+            List<Position> positions = positionDao.findByCode(positionCode);
+            if (positions != null && !positions.isEmpty()) {
+                employee.setPositionId(positions.get(0).getId());
+                employee.setPositionName(positions.get(0).getName());
+                employee.setPositionCode(positionCode);
+            }
         }
         employeeDao.save(employee);
         // 保存用户
         user.setEmployeeId(empId);
         user.setEmployeeName(employee.getEmployeeName());
-        user.setStatus(UserStatus.ACTIVE.getValue());
+        user.setStatus(UserStatus.PAUSE.getValue());    // 默认为暂停状态，等待管理员审核
         user.setTenementId("1");
         ValidatorUtils.validate(user);
         // 验证用户名是否重复

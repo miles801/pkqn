@@ -2,13 +2,40 @@
     var app = angular.module('eccrm.base.user.register', [
         'eccrm.base.user',
         'eccrm.angular',
-        'eccrm.angularstrap'
+        'eccrm.base.param',
+        'eccrm.angularstrap',
+        'eccrm.angular.ztree',
+        'base.org'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, User, AlertFactory) {
-        // 保存用户
-        // 保存员工
-        // 指定机构
-        $scope.user = {};
+    app.controller('Ctrl', function ($scope, CommonUtils, User, AlertFactory, Org, ParameterLoader) {
+        // 岗位类型
+        $scope.positions = [
+            {name: '流动团员', value: 'TY'},
+            {name: '二级管理员', value: 'EJGLY'}
+        ];
+
+        // 领域
+        ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
+            $scope.ly = data || [];
+            $scope.ly.unshift({name: '请选择...'});
+        });
+        // 团组织
+        ParameterLoader.loadBusinessParam('SPEC_TZZ', function (data) {
+            $scope.tzz = data || [];
+            $scope.tzz.unshift({name: '请选择...'});
+        });
+        $scope.user = {
+            position: 'TY',
+            zztgbCounts: 0,
+            jztgbCounts: 0
+        };
+
+        // 组织机构
+        $scope.orgTree = Org.pick(function (o) {
+            $scope.user.deptId = o.id;
+            $scope.user.deptName = o.name;
+        });
+
 
         $scope.ok = function () {
             // 验证密码是否一致

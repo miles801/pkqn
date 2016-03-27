@@ -50,7 +50,51 @@ public class User extends CrmBaseDomain implements EnumSymbol {
     private String deptName;// 机构名称
     private String duty; // 职务
     private String position;
+    private String tzz; //   团组织
+    private String tzzName; //   团组织名称
+    private String ly;  // 领域
+    private Integer zztgbCounts;    // 专职团干部数量
+    private Integer jztgbCounts;    // 兼职团干部数量
 
+    public Integer getZztgbCounts() {
+        return zztgbCounts;
+    }
+
+    public void setZztgbCounts(Integer zztgbCounts) {
+        this.zztgbCounts = zztgbCounts;
+    }
+
+    public Integer getJztgbCounts() {
+        return jztgbCounts;
+    }
+
+    public void setJztgbCounts(Integer jztgbCounts) {
+        this.jztgbCounts = jztgbCounts;
+    }
+
+    public String getTzzName() {
+        return tzzName;
+    }
+
+    public void setTzzName(String tzzName) {
+        this.tzzName = tzzName;
+    }
+
+    public String getTzz() {
+        return tzz;
+    }
+
+    public void setTzz(String tzz) {
+        this.tzz = tzz;
+    }
+
+    public String getLy() {
+        return ly;
+    }
+
+    public void setLy(String ly) {
+        this.ly = ly;
+    }
 
     public String getUsername() {
         return username;

@@ -5,10 +5,32 @@
         'eccrm.base.employee',
         'eccrm.angular',
         'base.org',
+        'eccrm.base.param',
         'eccrm.directive.ztree',
         'eccrm.angularstrap'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory) {
+    app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory, ParameterLoader) {
+        // 是否具有编辑权限
+        $scope.hasEditPermission = false;
+
+        // 岗位类型
+        $scope.positions = [
+            {name: '超级管理员', value: 'SP_manger'},
+            {name: '基层管理员', value: 'NORMAL_MANAGER'},
+            {name: '二级管理员', value: 'EJGLY'},
+            {name: '流动团员', value: 'TY'}
+        ];
+
+        // 领域
+        ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
+            $scope.ly = data || [];
+            $scope.ly.unshift({name: '请选择...'});
+        });
+        // 团组织
+        ParameterLoader.loadBusinessParam('SPEC_TZZ', function (data) {
+            $scope.tzz = data || [];
+            $scope.tzz.unshift({name: '请选择...'});
+        });
         // 性别
         EmployeeConstant.sex(function (data) {
             $scope.sex = data;
@@ -34,6 +56,11 @@
             $scope.employee.orgId = node.id;
             $scope.employee.orgName = node.name;
         });
+
+        $scope.clearOrg = function () {
+            $scope.employee.orgId = null;
+            $scope.employee.orgName = null;
+        };
         //回到上一个页面
         $scope.back = CommonUtils.back;
 

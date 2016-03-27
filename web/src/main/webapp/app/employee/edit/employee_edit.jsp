@@ -93,10 +93,11 @@
                             </div>
                             <div class="col-2-half">
                                 <input type="text" class="col-12" ztree-single="OrgztreeOptions"
-                                       ng-model="employee.orgName" validate validate-required/>
-                                    <span class="add-on">
+                                       ng-model="employee.orgName" validate validate-required
+                                       ng-disabled="!hasEditPermission"/>
+                                    <span class="add-on" ng-show="hasEditPermission" ng-cloak>
                                        <i class="icons circle_fork icon" title="清空"
-                                          ng-click="employee..organization.id=null;employee.organization.name=null;"></i>
+                                          ng-click="clearOrg();"></i>
                                     </span>
                             </div>
 
@@ -135,7 +136,48 @@
                             <select ng-model="employee.zzmm" class="col-2-half"
                                     ng-options="foo.value as foo.name for foo in zzmm">
                             </select>
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label validate-error="form.position">角色类型:</label>
+                            </div>
+                            <select class="col-2-half" name="position" ng-model="employee.positionCode"
+                                    ng-options="foo.value as foo.name for foo in positions"
+                                    validate validate-required ng-cloak ng-disabled="!hasEditPermission"></select>
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label validate-error="form.tzz">团组织:</label>
+                            </div>
+                            <select class="col-2-half" name="tzz" ng-model="employee.tzz"
+                                    ng-options="foo.value as foo.name for foo in tzz"
+                                    validate ng-cloak ng-disabled="!hasEditPermission"></select>
 
+                            <div class="form-label col-1-half">
+                                <label validate-error="form.ly">领域:</label>
+                            </div>
+                            <select class="col-2-half" name="ly" ng-model="employee.ly"
+                                    ng-options="foo.value as foo.name for foo in ly"
+                                    validate ng-cloak ng-disabled="!hasEditPermission"></select>
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>团组织名称:</label>
+                            </div>
+                            <input class="col-2-half" type="text" ng-model="employee.tzzName"
+                                   validate maxlength="20" ng-cloak ng-disabled="!hasEditPermission"/>
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
+                                <label>专职团干部人数:</label>
+                            </div>
+                            <input class="col-2-half" type="text" ng-model="employee.zztgbCounts"
+                                   validate validate-int maxlength="4" ng-cloak ng-disabled="!hasEditPermission"/>
+                            <div class="form-label col-1-half">
+                                <label>兼职团干部人数:</label>
+                            </div>
+                            <input class="col-2-half" type="text" ng-model="employee.jztgbCounts"
+                                   validate validate-int maxlength="4" ng-cloak ng-disabled="!hasEditPermission"/>
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
@@ -144,20 +186,6 @@
                             <input class="col-6-half" type="text" validate validate-max-length="100"
                                    ng-model="employee.email"/>
 
-                        </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label>工作单位:</label>
-                            </div>
-                            <input class="col-6-half" type="text" validate validate-max-length="100"
-                                   ng-model="employee.company"/>
-                        </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label>地址:</label>
-                            </div>
-                            <input class="col-6-half" type="text" validate validate-max-length="100"
-                                   ng-model="employee.address"/>
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
