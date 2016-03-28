@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>共青团团员信息化平台数据库</title>
+    <title>成都顶呱呱集团OA系统</title>
     <link rel="stylesheet" href="<%=contextPath%>/vendor/bootstrap-v3.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/style/standard/css/eccrm-common-new.css"/>
     <link rel="stylesheet" href="<%=contextPath%>/app/main/css/main.css"/>
@@ -30,8 +30,7 @@
     <div id="header">
         <div class="top">
             <div class="logo"></div>
-            <span style=" color: #fff; font-size: 26px; margin-left: 65px; height: 60px; display: inline-block; line-height: 60px; ">
-                | 共青团团员信息化平台数据库
+            <span style=" color: #fff; font-size: 26px; margin-left: 145px; height: 60px; display: inline-block; line-height: 60px; ">
             </span>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
@@ -41,13 +40,13 @@
                     <img src="<%=contextPath%>/app/main/images/icon/h7.png" width="24" height="24" title="更改密码">
                 </a>
             </div>
-            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">共青团银川市委员会</span>
+            <span style="font-size: 16px;position: absolute;right: 100px;color:#fff;top:30px;">成都顶呱呱集团</span>
         </div>
     </div>
     <div id="main">
         <div class="leftbar">
             <div class="LB_container">
-                <a title="首页" ng-click="showHome();">
+                <a title="首页" ng-click="showHome();" class="current">
                     <img src="<%=contextPath%>/app/main/images/home.png" alt="首页"/>
                 </a>
                 <a bindonce bo-title="menu.name" ng-repeat="menu in menus" ng-repeat-finish
@@ -63,23 +62,23 @@
         <div class="mainRight">
             <div id="accordian">
                 <ul>
-                    <li bindonce ng-repeat="level1 in subMenus" ng-repeat-finish="subFinish">
+                    <li bindonce ng-class="{'current':$parent.currentId==level1.id}" ng-repeat="level1 in subMenus"
+                        ng-repeat-finish="subFinish">
                         <h3 nav-click-slide=".nav_menus">
 							<span class="menu-text">
                                 <i class="icons-sj"></i>
-								<a ng-click="addTab(level1.name,level1.url,level1)" bo-text="level1.name"></a>
+								<a ng-click="addTab(level1.name,level1.url,level1,level1.id)" bo-text="level1.name"></a>
 							</span>
 							<span class="menu-children" bo-show="level1.children.length>0">
-								<span class="menu-children" style="position:relative">
-                                    <span style="position:absolute;color:#ffffff;">&#9660;</span>
-                                </span>
+                                    <span class="icon-down">&#9660;</span>
 							</span>
                         </h3>
                         <ul class="nav_menus">
-                            <li bindonce ng-repeat="level2 in level1.children" bindonce>
+                            <li bindonce ng-class="{'current':$parent.$parent.currentId==level2.id}"
+                                ng-repeat="level2 in level1.children" bindonce>
                                 <div bo-if="level2.children && level2.children.length>0">
                                     <a nav-click-slide="div" style="cursor: pointer;"
-                                       ng-click="addTab(level2.name,level2.url,level2)">
+                                       ng-click="addTab(level2.name,level2.url,level2,level2.id)">
                                         <span bo-text="level2.name" class="menu-text"></span>
 										<span class="menu-children">
 											<span style="color:#1893dd;">&#9660;</span>
@@ -88,7 +87,8 @@
 
                                     <div style="margin-left: 10px;display: none;"
                                          bo-if="level2.children && level2.children.length>0">
-                                        <a ng-click="addTab(level3.name,level3.url,level3)" style="cursor: pointer;"
+                                        <a ng-click="addTab(level3.name,level3.url,level3,level2.id)"
+                                           style="cursor: pointer;"
                                            bindonce ng-repeat="level3 in level2.children">
                                             <span style="margin-right:3px;color:#1893dd;">&#8627;</span>
                                             <span bo-text="level3.name" class="menu-text"></span>
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <a bo-if="!level2.children || level2.children.length<1"
-                                   ng-click="addTab(level2.name,level2.url)">
+                                   ng-click="addTab(level2.name,level2.url,level2,level2.id)">
                                     <span bo-text="level2.name" class="menu-text"></span>
                                 </a>
                             </li>

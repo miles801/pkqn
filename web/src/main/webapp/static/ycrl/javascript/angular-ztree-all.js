@@ -1104,7 +1104,7 @@
         maxHeight: 300, // 树的最大高度：值为数字
         treeSetting: null,// 树的展示方式（一般使用默认值即可）
         position: 'fixed',// 定位方式，默认使用悬浮定位
-        backgroundColor: '#F0F6E4'// 树的背景色
+        backgroundColor: '#f0f3f6'// 树的背景色
     };
     //单选树
     //<input ztree-single="ztreeOptions"/>
@@ -1186,7 +1186,7 @@
                                 }
                             };
                             treeContainer = $('<span style="position: absolute;z-index: ' + options.zindex + ';top:0;right:0"></span>');
-                            var treeDiv = $('<div style="display: none;border: 1px solid #9fb5ac;padding-bottom: 5px;position: ' + options.position + ';background-color: ' + options.backgroundColor + ';" >' + '</div >');
+                            var treeDiv = $('<div style="display: none;border: 1px solid #afd0ee;padding-bottom: 5px;position: ' + options.position + ';background-color: ' + options.backgroundColor + ';" >' + '</div >');
                             tree = $('<ul class="ztree" style="max-height:' + options.maxHeight + 'px;overflow:auto;padding-right: 20px;" id="' + treeId + '"></ul >');
                             treeContainer.insertAfter(element);
                             treeContainer.append(treeDiv);

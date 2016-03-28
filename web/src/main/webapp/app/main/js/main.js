@@ -14,7 +14,8 @@
 
         var $iframe = $('#iframe');
         var $tab = $('#tab');
-        $scope.addTab = function (title, url, data) {
+        $scope.addTab = function (title, url, data, currentId) {
+            $scope.currentId = currentId;
             if (!url) {
                 return;
             }

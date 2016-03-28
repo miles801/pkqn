@@ -43,11 +43,8 @@ body {
 #header .top {
     overflow: hidden;
     height: 60px;
-    /*background: url(../images/header.png) no-repeat right;*/
-    background-color: #01a796;
+    background: #004b92 url(../images/header.png) no-repeat right;
     position: relative;
-    /*background: url('../images/banner2000.png') no-repeat;*/
-    /*background-size: 100% 80px;*/
 
 }
 
@@ -85,8 +82,7 @@ body {
 #header .top .logo {
     overflow: hidden;
     height: 60px;
-    width: 165px;
-    top: -3px;
+    width: 130px;
     left: 5px;
     background: url('../images/logo.png') no-repeat 0 5px;
     position: absolute;
@@ -209,12 +205,12 @@ body {
 
 /*heading styles*/
 #main #accordian h3 {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 40px;
     margin: 0;
     cursor: pointer;
-    background-color: #f3fdfc;
-    border-bottom: 1px solid #7acac1;
+    background-color: #d5ebff;
+    border-bottom: 1px solid #c0daf1;
     white-space: nowrap; /*防止折叠时挤开*/
 }
 
@@ -230,7 +226,7 @@ body {
 /*iconfont styles*/
 #main #accordian h3 span {
     font-size: 14px;
-    color: #333;
+    color: rgb(0, 75, 146);
     font-weight: 700;
 }
 
@@ -241,6 +237,23 @@ body {
 
 #main #accordian ul {
     position: relative;
+    background-color: #d5ebff;
+}
+
+#main #accordian h3 + ul {
+    background-color: #e9f5ff;
+}
+
+#main #accordian h3 + ul li a {
+    color: rgb(53, 67, 80)
+}
+
+#main #accordian li.current h3 {
+    background-color: #004b92;
+}
+
+#main #accordian li.current h3 .menu-text > a {
+    color: #fff;
 }
 
 /*links*/
@@ -250,16 +263,16 @@ body {
     line-height: 30px;
     display: block;
     padding: 0 15px 0 25px;
-    /*transition for smooth hover animation*/
     transition: all 0.15s;
     white-space: nowrap; /*防止折叠时挤开*/
-    border-bottom: 1px solid #929DAF;
+    border-bottom: 1px solid #d5ebff;
     font-size: 12px;
 }
 
 /*hover effect on links*/
 #main #accordian ul ul li a:hover {
-    background: #66afe9;
+    background: #004b92;
+    color: #fff !important;
 }
 
 /*Lets hide the non active LIs by default*/
@@ -281,8 +294,11 @@ body {
 }
 
 #main #accordian .menu-text {
-    margin-left: 5px;
+    padding-left: 5px;
     white-space: nowrap; /*防止折叠时挤开*/
+    display: inline-block;
+    height: 100%;
+    width: 100%;
 }
 
 #main #accordian .menu-children {
@@ -294,44 +310,48 @@ body {
 
 #main #accordian .menu-children > .icon-down {
     position: absolute;
-    color: #333;
+    color: #495a6b;
+}
+
+#main #accordian .current .menu-children > .icon-down {
+    color: #fff;
+}
+
+#main #accordian li.current > a {
+    background-color: #004b92;
+    color: #fff;
 }
 
 #main #accordian .menu-text a {
-    color: #333;
+    color: #495a6b;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
     text-decoration: none;
     line-height: 27px;
     padding: 0 0;
-    /*transition for smooth hover animation*/
     transition: all 0.15s;
     white-space: nowrap; /*防止折叠时挤开*/
 }
 
 #main #colbar {
-    width: 10px;
+    width: 8px;
     height: 100%;
-    border-right: 1px solid #d6d6d6;
-    border-left: 1px solid #d6d6d6;
-    box-sizing: border-box;
     float: left;
     text-align: center;
     position: relative;
     cursor: pointer;
-    filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=1, startColorStr=#FEFEFE, endColorStr=#E9E9E9);
-    background-image: linear-gradient(left, #FEFEFE 0%, #E9E9E9 100%);
-    background-image: -o-linear-gradient(left, #FEFEFE 0%, #E9E9E9 100%);
-    background-image: -moz-linear-gradient(left, #FEFEFE 0%, #E9E9E9 100%);
-    background-image: -webkit-linear-gradient(left, #FEFEFE 0%, #E9E9E9 100%);
-    background-image: -ms-linear-gradient(left, #FEFEFE 0%, #E9E9E9 100%);
+    background-color: #c0daf1;
 }
 
 #main #colbar #arrow {
-    height: 30px;
+    height: 70px;
     width: 100%;
     position: absolute;
     left: 0;
     top: 50%;
     margin-top: -15px;
+    background-color: #004b92;
 }
 
 #main #colbar #arrow i {
@@ -362,7 +382,6 @@ body {
     height: 30px;
     font-size: 12px;
     width: 100%;
-    border-top: 1px solid #01a796;
     overflow: hidden;
     text-align: center;
 }
@@ -427,8 +446,10 @@ body {
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-
-    border-left: 5px solid #000000;
+    border-left: 5px solid #fff;
+    top: 26px;
+    right: -1px;
+    position: relative;
 }
 
 .arrow-left {
@@ -436,8 +457,9 @@ body {
     height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-
-    border-right: 5px solid #000000;
+    border-right: 5px solid #fff;
+    top: 26px;
+    position: relative;
 }
 
 .arrow-up {
@@ -465,7 +487,7 @@ body {
 .footer {
     height: 30px;
     line-height: 30px;
-    background: #01a796;
+    background: #004b92;
     color: #FFF;
     position: relative;
 }
@@ -545,9 +567,9 @@ ul.nav_menus > li {
 }
 
 .leftbar .LB_container {
-    border: 1px solid #222;
     position: relative;
     overflow: hidden;
+    width: 50px !important;
 }
 
 .leftbar .LB_container > a {
@@ -558,7 +580,6 @@ ul.nav_menus > li {
     display: block;
     height: 50px;
     margin: auto;
-    border-bottom: 1px solid #333;
     position: relative;
     overflow: hidden;
     top: 0;
@@ -566,24 +587,25 @@ ul.nav_menus > li {
 
 .leftbar .LB_container a img {
     position: absolute;
-    top: 0;
+    top: 15px;
     left: 0;
 }
 
 .leftbar .LB_container a.current {
-    background: #90EB22;
+    background: #d5ebff;
 }
 
 .leftbar .LB_container a.current img {
-    top: -50px;
+    top: -24px;
+    background-color: #d5ebff;
 }
 
 .leftbar .LB_container a:hover {
-    background: #4c7d50;
+    /*background: #4c7d50;*/
 }
 
 .leftbar .LB_container a.current:hover {
-    background: #32ff40;
+    /*background: #32ff40;*/
 }
 
 .leftbar .btnT, .leftbar .btnB {
@@ -714,7 +736,7 @@ hr {
 .leftbar {
     width: 50px;
     height: 100%;
-    background: #555;
+    background: #10334f;
     text-align: center;
     position: relative;
     float: left;
@@ -744,7 +766,7 @@ hr {
 }
 
 .leftbar a.current {
-    background: #32ff40;
+    background: #d5ebff;
 }
 
 .leftbar .container a.current img {
