@@ -13,6 +13,9 @@
             //保存
             save: {method: 'POST', params: {method: 'save', attachmentIds: '@picture'}, isArray: false},
             importData: {method: 'POST', params: {method: 'import', attachmentIds: '@attachmentIds'}, isArray: false},
+
+            // 统计分析
+            memberAnalysis: {method: 'GET', params: {method: 'memberAnalysis'}, isArray: false},
             // 清理
             clear: {method: 'POST', params: {method: 'clear'}, isArray: false},
             //更新

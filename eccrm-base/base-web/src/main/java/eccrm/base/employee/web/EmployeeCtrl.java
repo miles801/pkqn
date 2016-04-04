@@ -189,4 +189,11 @@ public class EmployeeCtrl extends BaseController {
         GsonUtils.printSuccess(response);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysis", method = RequestMethod.GET)
+    public void memberAnalysis(HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysis();
+        GsonUtils.printData(response, data);
+    }
+
 }

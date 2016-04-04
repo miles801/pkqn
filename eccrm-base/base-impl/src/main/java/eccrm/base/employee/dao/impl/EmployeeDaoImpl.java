@@ -144,4 +144,11 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
                 .setMaxResults(1)
                 .uniqueResult();
     }
+
+    @Override
+    public List<Object[]> memberAnalysis() {
+        return getSession()
+                .createQuery("select e.orgId,e.orgName,count(e.id) from " + Employee.class.getName() + " e where e.positionCode='TY' group by e.orgId,e.orgName")
+                .list();
+    }
 }

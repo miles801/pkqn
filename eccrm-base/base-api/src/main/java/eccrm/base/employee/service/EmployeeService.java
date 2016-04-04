@@ -70,4 +70,10 @@ public interface EmployeeService {
      */
     int clear();
 
+    /**
+     * 各县区的团员统计
+     *
+     * @return [1：组织机构ID，1：组织机构名称，2：团员数量]
+     */
+    List<Object[]> memberAnalysis();
 }

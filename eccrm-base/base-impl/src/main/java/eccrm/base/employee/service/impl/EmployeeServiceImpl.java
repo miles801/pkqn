@@ -333,4 +333,9 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         }
         return counts;
     }
+
+    @Override
+    public List<Object[]> memberAnalysis() {
+        return employeesDao.memberAnalysis();
+    }
 }
