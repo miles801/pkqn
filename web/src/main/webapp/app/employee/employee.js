@@ -12,6 +12,7 @@
         return $resource(CommonUtils.contextPathURL('/base/employee/:method/:id'), {}, {
             //保存
             save: {method: 'POST', params: {method: 'save', attachmentIds: '@picture'}, isArray: false},
+            importData: {method: 'POST', params: {method: 'import', attachmentIds: '@attachmentIds'}, isArray: false},
             //更新
             update: {method: 'PUT', params: {method: 'update', attachmentIds: '@picture'}, isArray: false},
 

@@ -131,6 +131,17 @@ public class BusinessParamItemDaoImpl extends HibernateDaoHelper implements Busi
     }
 
     @Override
+    public String queryCode(String type, String name) {
+        Argument.isEmpty(type, "业务参数编号不能为空!");
+        Argument.isEmpty(name, "业务参数的名称不能为空!");
+        return (String) createCriteria(BusinessParamItem.class)
+                .setProjection(Projections.property("value"))
+                .add(Restrictions.eq("type", type))
+                .add(Restrictions.eq("name", name))
+                .uniqueResult();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<BusinessParamItem> fetchCascade(String typeCode, String value) {
         if (org.apache.commons.lang3.StringUtils.isAnyEmpty(typeCode, value)) {

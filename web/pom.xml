@@ -35,6 +35,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>bangfu</finalName>
+        <finalName>members</finalName>
     </build>
 </project>

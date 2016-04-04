@@ -52,6 +52,14 @@ public interface BusinessParamItemDao {
     String queryName(String type, String value);
 
     /**
+     * 查询指定编号下指定名称的参数的编号
+     * @param type 类型编号
+     * @param name 名称
+     * @return 编号
+     */
+    String queryCode(String type, String name);
+
+    /**
      * <p>查询所有级联了指定业务参数的所有业务参数集合</p>
      * <p>即，所有的级联类型为指定编号，且级联的值为指定的值的参数集合</p>
      * <p>例如:</p>

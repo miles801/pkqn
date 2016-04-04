@@ -1,9 +1,19 @@
 package eccrm.base.employee.service.impl;
 
+import com.michael.poi.adapter.AnnotationCfgAdapter;
+import com.michael.poi.core.Handler;
+import com.michael.poi.core.ImportEngine;
+import com.michael.poi.core.RuntimeContext;
+import com.michael.poi.imp.cfg.Configuration;
+import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.pager.PageVo;
 import com.ycrl.utils.string.StringUtils;
+import com.ycrl.utils.uuid.UUIDGenerator;
+import eccrm.base.attachment.AttachmentProvider;
+import eccrm.base.attachment.utils.AttachmentHolder;
+import eccrm.base.attachment.vo.AttachmentVo;
 import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
@@ -11,15 +21,24 @@ import eccrm.base.employee.service.ContactType;
 import eccrm.base.employee.service.EmployeeOrgRelService;
 import eccrm.base.employee.service.EmployeeService;
 import eccrm.base.employee.vo.EmployeeVo;
+import eccrm.base.org.dao.OrganizationDao;
+import eccrm.base.org.domain.Organization;
+import eccrm.base.parameter.dao.BusinessParamItemDao;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionDao;
 import eccrm.base.position.dao.PositionEmpDao;
+import eccrm.base.position.domain.Position;
 import eccrm.base.position.domain.PositionEmp;
 import eccrm.base.position.service.PositionEmpService;
+import eccrm.utils.BeanCopyUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +66,16 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
         // 设置年龄
         setAge(employee);
+
+        // 设置岗位信息
+        if (StringUtils.isNotEmpty(employee.getPositionCode())) {
+            PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
+            List<Position> positions = positionDao.findByCode(employee.getPositionCode());
+            if (positions != null && !positions.isEmpty()) {
+                employee.setPositionId(positions.get(0).getId());
+                employee.setPositionName(positions.get(0).getName());
+            }
+        }
 
         String id = employeesDao.save(employee);
         // 保存关联关系
@@ -208,4 +237,71 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         return query(bo);
     }
 
+    @Override
+    public void importData(String[] attachmentIds) {
+        Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
+        Assert.notEmpty(attachmentIds, "数据文件不能为空，请重试!");
+
+        for (String id : attachmentIds) {
+            AttachmentVo vo = AttachmentProvider.getInfo(id);
+            File file = AttachmentHolder.newInstance().getTempFile(id);
+            logger.info("准备导入黑名单数据：" + file.getAbsolutePath());
+            logger.info("初始化导入引擎....");
+            long start = System.currentTimeMillis();
+
+            //根据黑名单类型选择对应的DTO
+            Configuration configuration = new AnnotationCfgAdapter(EmployeeDTO.class).parse();
+            configuration.setStartRow(2);
+            String newFilePath = file.getAbsolutePath() + vo.getFileName().substring(vo.getFileName().lastIndexOf(".")); //获取路径
+            try {
+                FileUtils.copyFile(file, new File(newFilePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            configuration.setPath(newFilePath);
+            final BusinessParamItemDao bpiDao = SystemContainer.getInstance().getBean(BusinessParamItemDao.class);
+            configuration.setHandler(new Handler<EmployeeDTO>() {
+                @Override
+                public void execute(EmployeeDTO dto) {
+                    String orgName = dto.getOrgName();
+                    Assert.hasText(orgName, String.format("数据错误!请指明团员所属的县区,第%d行!", RuntimeContext.get().getRowIndex() + 1));
+
+                    Employee employee = new Employee();
+                    employee.setId(UUIDGenerator.generate());
+                    // 领域
+                    if (StringUtils.isNotEmpty(dto.getLy())) {
+                        dto.setLy(bpiDao.queryCode("SPEC_LY", dto.getLy()));
+                    }
+                    // 民族
+                    if (StringUtils.isNotEmpty(dto.getNation())) {
+                        dto.setNation(bpiDao.queryCode("BP_NATION", dto.getNation()));
+                    }
+                    // 政治面貌
+                    if (StringUtils.isNotEmpty(dto.getZzmm())) {
+                        dto.setZzmm(bpiDao.queryCode("BP_ZZMM", dto.getZzmm()));
+                    }
+                    // 学历
+                    if (StringUtils.isNotEmpty(dto.getXueli())) {
+                        dto.setXueli(bpiDao.queryCode("BP_EDU", dto.getXueli()));
+                    }
+                    // 荣誉称号
+                    if (StringUtils.isNotEmpty(dto.getHonor())) {
+                        dto.setHonor(bpiDao.queryCode("SPEC_HONOR", dto.getHonor()));
+                    }
+                    BeanCopyUtils.copyProperties(dto, employee);
+                    employee.setPositionCode("TY"); // 导入的都是团员
+                    OrganizationDao orgDao = SystemContainer.getInstance().getBean(OrganizationDao.class);
+                    List<Organization> orgs = orgDao.findByName(orgName);
+                    Assert.notEmpty(orgs, "县区[" + orgName + "]不存在!");
+                    employee.setOrgId(orgs.get(0).getId());
+                    save(employee);
+                }
+            });
+            logger.info("开始导入案件数据....");
+            ImportEngine engine = new ImportEngine(configuration);
+            engine.execute();
+            logger.info(String.format("导入按键数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
+            new File(newFilePath).delete();
+        }
+    }
 }
