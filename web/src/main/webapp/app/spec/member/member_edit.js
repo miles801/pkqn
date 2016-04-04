@@ -9,7 +9,7 @@
         'eccrm.directive.ztree',
         'eccrm.angularstrap'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory, ParameterLoader) {
+    app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory, ParameterLoader, Parameter) {
         // 是否具有编辑权限
         $scope.hasEditPermission = false;
 
@@ -19,6 +19,17 @@
             $scope.ly = data || [];
             $scope.ly.unshift({name: '请选择...'});
         });
+
+        // 领域改变时，加载子领域
+        $scope.lyChange = function () {
+            $scope.ly2 = [];
+            $scope.employee.ly2 = '';
+            Parameter.fetchBusinessCascade('SPEC_LY', $scope.employee.ly, function (data) {
+                $scope.ly2 = data.data || [];
+                $scope.ly2.unshift({name: '请选择..', value: ''});
+            });
+        };
+
         // 学历
         ParameterLoader.loadBusinessParam('BP_EDU', function (data) {
             $scope.education = data || [];

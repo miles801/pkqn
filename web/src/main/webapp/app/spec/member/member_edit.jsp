@@ -98,13 +98,20 @@
                                     </span>
                             </div>
 
+
+                        </div>
+                        <div class="row">
                             <div class="form-label col-1-half">
                                 <label validate-error="form.ly">所在领域:</label>
                             </div>
-                            <select class="col-2-half" name="ly" ng-model="employee.ly"
+                            <select class="col-2-half" name="ly" ng-model="employee.ly" ng-change="lyChange();"
                                     ng-options="foo.value as foo.name for foo in ly"
                                     validate validate-required ng-cloak></select>
-
+                            <div class="form-label col-1-half">
+                                <label >子领域:</label>
+                            </div>
+                            <select class="col-2-half" ng-model="employee.ly2"
+                                    ng-options="foo.value as foo.name for foo in ly2"></select>
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">

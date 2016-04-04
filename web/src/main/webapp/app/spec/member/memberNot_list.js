@@ -24,7 +24,7 @@
         $scope.condition = {
             orderBy: 'createdDatetime',
             reverse: 'false',
-            notPosition: 'TY'
+            positionCode: 'FTY'
         };
 
 

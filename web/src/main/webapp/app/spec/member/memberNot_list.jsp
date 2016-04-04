@@ -103,7 +103,7 @@ Date: 2014-10-15 14:47:37
                                 <td bo-text="foo.zzmmName"></td>
                                 <td bo-text="foo.beginWorkDate|date:'yyyy-MM'"></td>
                                 <td bo-text="foo.mobile"></td>
-                                <td bo-text="foo.lyName"></td>
+                                <td bo-text="foo.lyName + (foo.ly2Name?('-'+foo.ly2Name):'')"></td>
                                 <td>
                                     <a class="cp" ng-click="modify(foo.id)" title="编辑">
                                         <i class="icons edit"></i>
