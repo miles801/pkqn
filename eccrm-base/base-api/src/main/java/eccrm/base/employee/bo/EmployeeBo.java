@@ -1,8 +1,11 @@
 package eccrm.base.employee.bo;
 
+import com.ycrl.core.hibernate.criteria.BO;
+import com.ycrl.core.hibernate.criteria.Condition;
+import com.ycrl.core.hibernate.criteria.MatchModel;
 import eccrm.base.employee.domain.Employee;
 
-public class EmployeeBo extends Employee {
+public class EmployeeBo extends Employee implements BO {
 
     /**
      * 如果该值为true，表示查询状态有启用，且处于在职的员工（正式、实习、调动中）
@@ -19,6 +22,17 @@ public class EmployeeBo extends Employee {
      */
     private Boolean hasPosition;
 
+    @Condition(matchMode = MatchModel.NE, target = "positionCode")
+    private String notPosition;
+
+
+    public String getNotPosition() {
+        return notPosition;
+    }
+
+    public void setNotPosition(String notPosition) {
+        this.notPosition = notPosition;
+    }
 
     public Boolean getHasPosition() {
         return hasPosition;

@@ -3,6 +3,7 @@ package eccrm.base.employee.dao.impl;
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.exception.Argument;
 import com.ycrl.core.hibernate.filter.FilterFieldType;
+import com.ycrl.utils.string.StringUtils;
 import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
@@ -104,6 +105,12 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         if (bo.getValid() != null && bo.getValid()) {
             // 状态为正式、调动中、实习
             criteria.add(Restrictions.in("status", new String[]{"2", "9", "11"}));
+        }
+        if (StringUtils.isNotEmpty(bo.getNotPosition())) {
+            criteria.add(Restrictions.or(
+                    Restrictions.ne("positionCode", bo.getNotPosition()),
+                    Restrictions.isNull("positionCode")
+            ));
         }
         criteria.add(Example.create(bo).enableLike(MatchMode.START).ignoreCase());
     }
