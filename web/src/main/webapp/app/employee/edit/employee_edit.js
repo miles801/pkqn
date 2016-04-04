@@ -9,22 +9,22 @@
         'eccrm.directive.ztree',
         'eccrm.angularstrap'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory, ParameterLoader) {
+    app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory, ParameterLoader, Parameter) {
         // 是否具有编辑权限
         $scope.hasEditPermission = false;
 
         // 岗位类型
         $scope.positions = [
             {name: '超级管理员', value: 'SP_manger'},
-            {name: '基层管理员', value: 'NORMAL_MANAGER'},
             {name: '二级管理员', value: 'EJGLY'},
-            {name: '流动团员', value: 'TY'}
+            {name: '基层管理员', value: 'NORMAL_MANAGER'},
+            {name: '团员', value: 'TY'}
         ];
 
         // 领域
         ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
             $scope.ly = data || [];
-            $scope.ly.unshift({name: '请选择...'});
+            $scope.ly.unshift({name: '请选择...', value: ''});
         });
         // 团组织
         ParameterLoader.loadBusinessParam('SPEC_TZZ', function (data) {
@@ -47,7 +47,30 @@
             $scope.zzmm.unshift({name: '请选择'});
         });
 
+        // 荣誉称号
+        ParameterLoader.loadBusinessParam('SPEC_HONOR', function (data) {
+            $scope.honor = data || [];
+            $scope.honor.unshift({name: '请选择...'});
+        });
+
+        // 学历
+        ParameterLoader.loadBusinessParam('BP_EDU', function (data) {
+            $scope.education = data || [];
+            $scope.education.unshift({name: '请选择...'});
+        });
+
+        // 领域改变时，加载子领域
+        $scope.lyChange = function () {
+            $scope.ly2 = [];
+            $scope.employee.ly2 = '';
+            Parameter.fetchBusinessCascade('SPEC_LY', $scope.employee.ly, function (data) {
+                $scope.ly2 = data.data || [];
+                $scope.ly2.unshift({name: '请选择..', value: ''});
+            });
+        };
+
         $scope.employee = {
+            ly: '',
             status: "2",
             gender: "BP_MAN"
         };
@@ -104,33 +127,25 @@
 
         //保存
         $scope.save = function () {
-            EmployeeService.save($scope.employee, function (data) {
-                data = data || {};
-                if (data && data.success) {
-                    if (self.frameElement.tagName == "IFRAME" && self.frameElement.id && self.frameElement.id.indexOf("iframe_") == 0) {
-                        CommonUtils.addTab('update');
-                    }
-                    CommonUtils.back();
-                } else {
-                    AlertFactory.error($scope, '[' + (data['fail'] || data['error'] || '') + ']');
-                }
+            $scope.employee.beginWorkDate += '-01';
+            var promise = EmployeeService.save($scope.employee, function (data) {
+                $$scope.form.$setValidity('committed', false);
+                AlertFactory.success('保存成功!');
             });
+            CommonUtils.loading(promise);
         };
 
 
         //更新
         $scope.update = function () {
-            EmployeeService.update($scope.employee, function (data) {
-                data = data || {};
-                if (data && data.success) {
-                    if (self.frameElement.tagName == "IFRAME" && self.frameElement.id && self.frameElement.id.indexOf("iframe_") == 0) {
-                        CommonUtils.addTab('update');
-                    }
-                    CommonUtils.back();
-                } else {
-                    AlertFactory.error($scope, '[' + (data['fail'] || data['error'] || '') + ']');
-                }
+            $scope.employee.beginWorkDate += '-01';
+            var promise = EmployeeService.update($scope.employee, function (data) {
+                $scope.form.$setValidity('committed', false);
+                AlertFactory.success('更新成功!');
+                CommonUtils.addTab('update');
+                CommonUtils.delay($scope.back, 2000);
             });
+            CommonUtils.loading(promise);
         };
         var originalName;
         var load = function (id, callback) {
@@ -141,6 +156,19 @@
                     id: $scope.employee.organizationId,
                     name: $scope.employee.organizationName
                 };
+
+                // 只有未完善的团员才允许更改
+                if ($scope.employee.positionCode == 'LDTY' && "1,2,3".indexOf($scope.employee.status) !== -1) {
+                    if ($scope.employee.status == '1') {
+                        AlertFactory.warning('已经申请审核，暂时无法修改，请耐心等待!');
+                    } else if ($scope.employee.status == '2') {
+                        AlertFactory.warning('审核已通过，信息不能修改!');
+                    } else if ($scope.employee.status == '3') {
+                        AlertFactory.warning('已注销，信息不能修改!');
+                    }
+                    $scope.pageType = 'detail';
+                    $('input,text,textarea,select').attr('disabled', 'disabled');
+                }
 
                 // 头像
                 var imageId = $scope.employee.picture;

@@ -76,4 +76,20 @@ public interface EmployeeService {
      * @return [1：组织机构ID，1：组织机构名称，2：团员数量]
      */
     List<Object[]> memberAnalysis();
+
+    /**
+     * 申请团员证审核
+     * @param id 员工ID
+     */
+    void apply(String id);
+
+    /**
+     * 审核通过
+     */
+    void applyAccept(String id);
+
+    /**
+     * 审核不通过
+     */
+    void applyDeny(String id);
 }

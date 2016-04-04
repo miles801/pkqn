@@ -29,14 +29,14 @@
     <form name="form" class="form-horizontal" role="form">
         <div class="row">
             <div class="form-label col-2-half">
-                <label>用户名:</label>
+                <label validate-error="form.username">用户名:</label>
             </div>
-            <input class="col-3-half" type="text" ng-model="user.username"
+            <input class="col-3-half" type="text" ng-model="user.username" name="username"
                    validate validate-required validate-max-length="20"/>
             <div class="form-label col-2-half">
-                <label>姓名:</label>
+                <label validate-error="form.employeeName">姓名:</label>
             </div>
-            <input class="col-3-half" type="text" ng-model="user.employeeName"
+            <input class="col-3-half" type="text" ng-model="user.employeeName" name="employeeName"
                    validate validate-required validate-max-length="20"/>
         </div>
         <div class="row">
@@ -53,55 +53,17 @@
         </div>
         <div class="row">
             <div class="form-label col-2-half">
-                <label>县（市）区:</label>
+                <label validate-error="form.deptName">县（市）区:</label>
             </div>
             <div class="col-3-half" style="position: relative">
-                <input class="col-12" type="text" ng-model="user.deptName"
+                <input class="col-12" type="text" ng-model="user.deptName" name="deptName"
                        validate validate-required readonly ztree-single="orgTree"/>
             </div>
-            <div class="form-label col-2-half">
-                <label validate-error="form.tzz">团组织:</label>
-            </div>
-            <select class="col-3-half" name="tzz" ng-model="user.tzz" ng-options="foo.value as foo.name for foo in tzz"
-                    validate validate-required></select>
-        </div>
-        <div class="row">
-
-            <div class="form-label col-2-half">
-                <label validate-error="form.ly">领域:</label>
-            </div>
-            <select class="col-3-half" name="ly" ng-model="user.ly" ng-options="foo.value as foo.name for foo in ly"
-                    ng-change="lyChange();"
-                    validate validate-required></select>
-            <div class="form-label col-2-half">
-                <label>子领域:</label>
-            </div>
-            <select class="col-3-half" ng-model="user.ly2"
-                    ng-options="foo.value as foo.name for foo in ly2"></select>
-        </div>
-        <div class="row">
-            <div class="form-label col-2-half">
-                <label>团组织名称:</label>
-            </div>
-            <input class="col-3-half" type="text" ng-model="user.tzzName"
-                   validate validate-required maxlength="20"/>
             <div class="form-label col-2-half">
                 <label>联系电话:</label>
             </div>
             <input class="col-3-half" type="text" ng-model="user.mobilePhone"
                    validate validate-required validate-int maxlength="20"/>
-        </div>
-        <div class="row">
-            <div class="form-label col-2-half">
-                <label>专职团干部人数:</label>
-            </div>
-            <input class="col-3-half" type="text" ng-model="user.zztgbCounts"
-                   validate validate-required validate-int maxlength="4"/>
-            <div class="form-label col-2-half">
-                <label>兼职团干部人数:</label>
-            </div>
-            <input class="col-3-half" type="text" ng-model="user.jztgbCounts"
-                   validate validate-required validate-int maxlength="4"/>
         </div>
         <div class="button-row" style="margin-top: 20px;">
             <button type="button" class="btn btn-default btn-primary"
@@ -114,5 +76,5 @@
 </body>
 <script type="text/javascript" src="<%=contextPath%>/app/base/user/user.js"></script>
 <script type="text/javascript" src="<%=contextPath%>/app/org/org.js"></script>
-<script type="text/javascript" src="<%=contextPath%>/app/base/user/user_register.js"></script>
+<script type="text/javascript" src="<%=contextPath%>/app/base/user/user_register_member.js"></script>
 </html>

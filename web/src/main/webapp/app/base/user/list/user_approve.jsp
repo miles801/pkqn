@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>用户管理</title>
+    <title>二级管理员待审核列表</title>
     <meta content="text/html" charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
     <link rel="stylesheet" type="text/css" href="<%=contextPath%>/vendor/artDialog/artDialog.css"/>
@@ -63,7 +63,6 @@
                                 <td>用户名</td>
                                 <td>姓名</td>
                                 <td>所属县区</td>
-                                <td>岗位类型</td>
                                 <td>电话</td>
                                 <td>注册时间</td>
                                 <td>操作</td>
@@ -71,7 +70,7 @@
                             </thead>
                             <tbody class="table-body">
                             <tr ng-show="!users || !users.total">
-                                <td colspan="7" class="text-center">没有符合条件的记录！</td>
+                                <td colspan="6" class="text-center">没有符合条件的记录！</td>
                             </tr>
                             <tr bindonce ng-repeat="foo in users.data" ng-cloak>
 
@@ -80,7 +79,6 @@
                                 </td>
                                 <td bo-text="foo.employeeName"></td>
                                 <td bo-text="foo.deptName"></td>
-                                <td bo-text="foo.position|position"></td>
                                 <td bo-text="foo.mobilePhone"></td>
                                 <td bo-text="foo.createdDatetime | eccrmDatetime"></td>
                                 <td>

@@ -37,10 +37,17 @@
 <body id="ng-app">
 <div class="main" ng-app="spec.member.print" ng-controller="Ctrl" style="text-align: center;position: relative;">
     <div class="row" ng-cloak ng-if="'${param.show}'!=='true'" style="margin-top:20px;">
-        <button class="btn btn-blue" ng-click="printInfo();" ng-disabled="!beans.id" style="height: 40px;width: 60px;">
+        <button class="btn btn-blue" ng-click="printInfo();" ng-if="beans.status=='2'" style="height: 40px;width: 60px;">
             打印
         </button>
+        <button class="btn btn-blue" ng-click="applyMember();" ng-if="beans.status=='0'||beans.status=='4'"
+                style="height: 40px;width: 100px;">
+            申请团员证
+        </button>
     </div>
+    <h4 ng-if="beans.status=='1'" ng-cloak>正在申请中，请耐心等待审核!</h4>
+    <h4 ng-if="beans.status=='3'" ng-cloak>当前登录用户已被注销，无法使用该功能!</h4>
+    <h4 ng-if="beans.status=='4'" ng-cloak>审核未通过，无法使用该功能!请修改个人信息后重新申请！</h4>
     <div class="table-responsive panel panel-table" style="width: 700px;margin:0 auto;position: relative;">
         <table class="table table-striped table-hover" ng-cloak>
             <tbody>
@@ -70,7 +77,7 @@
             </tr>
             <tr>
                 <td class="td-label">是否在本县区从业</td>
-                <td class="td-value">{{beans.iwWorking?'是':'否'}}</td>
+                <td class="td-value">{{beans.isWorking?'是':'否'}}</td>
                 <td class="td-label">荣誉称号</td>
                 <td class="td-value">{{beans.honorName}}</td>
             </tr>

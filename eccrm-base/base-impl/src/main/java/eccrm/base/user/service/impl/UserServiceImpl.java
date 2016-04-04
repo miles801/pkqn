@@ -93,7 +93,11 @@ public class UserServiceImpl implements UserService {
         String empId = UUIDGenerator.generate();
         employee.setId(empId);
         employee.setEmployeeName(user.getEmployeeName());
-        employee.setStatus("2");
+        String positionCode = user.getPosition();
+        employee.setStatus(Employee.STATE_NORMAL);
+        if (Employee.POSITION_MEMBER_TEMP.equals(positionCode)) {
+            employee.setStatus(Employee.STATE_INACTIVE);
+        }
         employee.setTenementId("1");
         employee.setTzz(user.getTzz());
         employee.setTzzName(user.getTzzName());
@@ -104,7 +108,6 @@ public class UserServiceImpl implements UserService {
         employee.setOrgId(user.getDeptId());
         employee.setOrgName(user.getDeptName());
         // 设置员工的岗位
-        String positionCode = user.getPosition();
         if (StringUtils.isNotEmpty(positionCode)) {
             PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
             List<Position> positions = positionDao.findByCode(positionCode);
@@ -118,7 +121,11 @@ public class UserServiceImpl implements UserService {
         // 保存用户
         user.setEmployeeId(empId);
         user.setEmployeeName(employee.getEmployeeName());
-        user.setStatus(UserStatus.PAUSE.getValue());    // 默认为暂停状态，等待管理员审核
+        if (Employee.POSITION_MANAGER.equals(positionCode)) {
+            user.setStatus(UserStatus.PAUSE.getValue());    // 默认为暂停状态，等待管理员审核
+        } else {
+            user.setStatus(UserStatus.ACTIVE.getValue());   // 允许登录
+        }
         user.setTenementId("1");
         ValidatorUtils.validate(user);
         // 验证用户名是否重复

@@ -21,6 +21,7 @@
         var defaults = {
             orderBy: 'code',
             reverse: false,
+            positionCode:'NORMAL_MANAGER',
             status: 'PAUSE'
         };
 
@@ -97,22 +98,5 @@
                 url: '/base/employee/detail/' + empId
             });
         };
-    });
-    var positions = [
-        {name: '流动团员', value: 'TY'},
-        {name: '二级管理员', value: 'EJGLY'}
-    ];
-    app.filter('position', function () {
-        return function (value) {
-            if (!value) {
-                return '';
-            }
-            for (var i = 0; i < positions.length; i++) {
-                if (positions[i].value == value) {
-                    return positions[i].name;
-                }
-            }
-            return '未知岗位!';
-        }
     });
 })(window, angular, jQuery);

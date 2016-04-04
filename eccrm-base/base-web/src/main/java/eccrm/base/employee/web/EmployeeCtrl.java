@@ -181,6 +181,28 @@ public class EmployeeCtrl extends BaseController {
         GsonUtils.printData(response, total);
     }
 
+    // 申请团员证信息审核
+    @ResponseBody
+    @RequestMapping(value = "/apply/{id}", method = RequestMethod.POST)
+    public void apply(@PathVariable String id, HttpServletResponse response) {
+        employeeServices.apply(id);
+        GsonUtils.printSuccess(response);
+    }
+    // 申请通过
+    @ResponseBody
+    @RequestMapping(value = "/applyAccept/{id}", method = RequestMethod.POST)
+    public void applyAccept(@PathVariable String id, HttpServletResponse response) {
+        employeeServices.applyAccept(id);
+        GsonUtils.printSuccess(response);
+    }
+    // 审核拒绝
+    @ResponseBody
+    @RequestMapping(value = "/applyDeny/{id}", method = RequestMethod.POST)
+    public void applyDeny(@PathVariable String id, HttpServletResponse response) {
+        employeeServices.applyDeny(id);
+        GsonUtils.printSuccess(response);
+    }
+
     @ResponseBody
     @RequestMapping(value = "/delete", params = {"ids"}, method = RequestMethod.DELETE)
     public void deleteByIds(@RequestParam String ids, HttpServletResponse response) {

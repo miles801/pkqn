@@ -48,8 +48,8 @@
             <li><input type="password" class="loginpwd" ng-model="user.password"/></li>
             <li>
                 <button class="loginbtn" ng-click="login();">登录</button>
-                <label><a href="#">管理员注册</a></label>
-                <label><a href="#">流动团员注册</a></label>
+                <label><a href="#" ng-click="register()">管理员注册</a></label>
+                <label><a href="#" ng-click="registerMember()">流动团员注册</a></label>
             </li>
         </ul>
 
@@ -89,6 +89,19 @@
                     content: '<iframe src="base/user/register" style="border:none;padding: 0;margin:0;width: 700px;height: 400px;"></iframe>'
                 });
 
+            };
+            $scope.registerMember = function () {
+                artDialog({
+                    title: '注册',
+                    padding: '10px 10px',
+                    margin: 0,
+                    lock: true,
+                    background: '#000', // 背景色
+                    opacity: 0.5,	// 透明度
+                    height: 400,
+                    width: 800,
+                    content: '<iframe src="base/user/register/member" style="border:none;padding: 0;margin:0;width: 700px;height: 400px;"></iframe>'
+                });
             };
             $scope.login = function () {
                 if (!$scope.user.username) {

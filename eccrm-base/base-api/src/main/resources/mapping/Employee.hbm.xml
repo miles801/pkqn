@@ -61,6 +61,7 @@
         <property name="tzz" column="TZZ" type="string" length="40"/>
         <property name="tzzName" column="TZZ_NAME" type="string" length="40"/>
         <property name="ly" column="LY" type="string" length="40"/>
+        <property name="ly2" column="LY2" type="string" length="40"/>
         <property name="zztgbCounts" column="ZZTGB_COUNTS" type="int"/>
         <property name="jztgbCounts" column="JZTGB_COUNTS" type="int"/>
         <property name="honor" column="HONOR" type="string" length="40"/>

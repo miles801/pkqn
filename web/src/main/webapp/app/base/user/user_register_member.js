@@ -20,9 +20,7 @@
             $scope.tzz.unshift({name: '请选择...'});
         });
         $scope.user = {
-            position: 'NORMAL_MANAGER', // 基层管理员
-            zztgbCounts: 0,
-            jztgbCounts: 0
+            position: 'LDTY'   // 流动团员
         };
 
         // 组织机构
@@ -31,9 +29,6 @@
             $scope.user.deptName = o.name;
         });
 
-        $scope.lyChange = function () {
-
-        };
 
         $scope.ok = function () {
             // 验证密码是否一致
@@ -46,7 +41,7 @@
             delete beans.password2;
             beans.password = $.md5(beans.password);
             var promise = User.register(beans, function () {
-                AlertFactory.success('注册成功!请等待管理员进行审核!');
+                AlertFactory.success('注册成功!');
             }, function () {
                 $scope.form.$setValidity('committed', true);
             });

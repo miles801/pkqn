@@ -13,6 +13,18 @@ import java.util.Date;
 public class Employee extends CommonDomain implements AttachmentSymbol {
     // 常量：职务
     public static final String PARAM_DUTY = "BP_ZHIW";
+    public static final String STATE = "SYS_EMP_STATE";
+    public static final String STATE_INACTIVE = "0";            // 未启用
+    public static final String STATE_WAIT = "1";                // 等待审核
+    public static final String STATE_NORMAL = "2";              // 正常（审核通过）
+    public static final String STATE_CANCEL = "3";              // 注销
+    public static final String STATE_DENY = "4";                // 禁用（审核不通过）
+    public static final String POSITION_SUPER = "SUPER_MANAGER";    // 超级管理员
+    public static final String POSITION_EJGL = "EJGLY";             // 县区管理员
+    public static final String POSITION_MANAGER = "NORMAL_MANAGER"; // 基层管理员
+    public static final String POSITION_MEMBER = "TY";              // 普通团员
+    public static final String POSITION_MEMBER_TEMP = "LDTY";       // 流动团员
+
     private String employeeCode;
     @NotNull
     private String employeeName;
@@ -66,11 +78,19 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     private String tzz; //   团组织
     private String tzzName; //   团组织名称
     private String ly;  // 领域
+    private String ly2;  // 领域
     private Integer zztgbCounts;    // 专职团干部数量
     private Integer jztgbCounts;    // 兼职团干部数量
     private String honor;           // 荣誉称号
     private Boolean isWorking;     // 是否在本县区从业
 
+    public String getLy2() {
+        return ly2;
+    }
+
+    public void setLy2(String ly2) {
+        this.ly2 = ly2;
+    }
 
     public Integer getAge() {
         return age;

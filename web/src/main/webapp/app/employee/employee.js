@@ -13,6 +13,12 @@
             //保存
             save: {method: 'POST', params: {method: 'save', attachmentIds: '@picture'}, isArray: false},
             importData: {method: 'POST', params: {method: 'import', attachmentIds: '@attachmentIds'}, isArray: false},
+            // 申请团员证
+            applyMember: {method: 'POST', params: {method: 'apply', id: '@id'}, isArray: false},
+            // 申请通过
+            applyAccept: {method: 'POST', params: {method: 'applyAccept', id: '@id'}, isArray: false},
+            // 申请拒绝
+            applyDeny: {method: 'POST', params: {method: 'applyDeny', id: '@id'}, isArray: false},
 
             // 统计分析
             memberAnalysis: {method: 'GET', params: {method: 'memberAnalysis'}, isArray: false},
@@ -112,7 +118,7 @@
             },
             // 状态
             status: function (callback) {
-                Parameter.businessItems('BP_YGZT', function (data) {
+                Parameter.systemItems('SYS_EMP_STATE', function (data) {
                     callback(data.data || []);
                 });
             }

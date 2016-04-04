@@ -67,14 +67,15 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
         // 设置年龄
         setAge(employee);
-        if ("TY".equals(employee.getPositionCode())) {
+        String positionCode = employee.getPositionCode();
+        if (Employee.POSITION_MEMBER.equals(positionCode) || Employee.POSITION_MEMBER_TEMP.equals(positionCode)) {
             Assert.isTrue(employee.getAge() > 11 && employee.getAge() < 29, "年龄超出范围!");
         }
 
         // 设置岗位信息
-        if (StringUtils.isNotEmpty(employee.getPositionCode())) {
+        if (StringUtils.isNotEmpty(positionCode)) {
             PositionDao positionDao = SystemContainer.getInstance().getBean(PositionDao.class);
-            List<Position> positions = positionDao.findByCode(employee.getPositionCode());
+            List<Position> positions = positionDao.findByCode(positionCode);
             if (positions != null && !positions.isEmpty()) {
                 employee.setPositionId(positions.get(0).getId());
                 employee.setPositionName(positions.get(0).getName());
@@ -120,7 +121,8 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     public void update(Employee employee) {
         // 设置年龄
         setAge(employee);
-        if ("TY".equals(employee.getPositionCode())) {
+        String positionCode = employee.getPositionCode();
+        if (Employee.POSITION_MEMBER.equals(positionCode) || Employee.POSITION_MEMBER_TEMP.equals(positionCode)) {
             Assert.isTrue(employee.getAge() > 11 && employee.getAge() < 29, "年龄超出范围!");
         }
 
@@ -202,7 +204,9 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         // 工作类型
         vo.setWorkTypeName(parameterContainer.getBusinessName(ContactType.BP_EMPTYPE, vo.getWorkType()));
         // 状态
-        vo.setStatusName(parameterContainer.getSystemName(ContactType.CONT_TYPE_STATUS, vo.getStatus()));
+        vo.setStatusName(parameterContainer.getSystemName(Employee.STATE, vo.getStatus()));
+        // 学历
+        vo.setXueliName(parameterContainer.getBusinessName("BP_EDU", vo.getXueli()));
         // 性别
         vo.setGenderName(parameterContainer.getBusinessName("BP_SEX", employee.getGender()));
         // 民族
@@ -211,6 +215,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         vo.setZzmmName(parameterContainer.getBusinessName("BP_ZZMM", employee.getZzmm()));
         // 领域
         vo.setLyName(parameterContainer.getBusinessName("SPEC_LY", employee.getLy()));
+        vo.setLy2Name(parameterContainer.getBusinessName("SPEC_LY2",employee.getLy2()));
         // 荣誉称号
         vo.setHonorName(parameterContainer.getBusinessName("SPEC_HONOR", employee.getHonor()));
 
@@ -255,7 +260,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
             //根据黑名单类型选择对应的DTO
             Configuration configuration = new AnnotationCfgAdapter(EmployeeDTO.class).parse();
-            configuration.setStartRow(2);
+            configuration.setStartRow(1);
             String newFilePath = file.getAbsolutePath() + vo.getFileName().substring(vo.getFileName().lastIndexOf(".")); //获取路径
             try {
                 FileUtils.copyFile(file, new File(newFilePath));
@@ -337,5 +342,35 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     @Override
     public List<Object[]> memberAnalysis() {
         return employeesDao.memberAnalysis();
+    }
+
+    @Override
+    public void apply(String id) {
+        Assert.hasText(id, "申请打印团员证失败!ID不能为空!");
+        Employee employee = employeesDao.findById(id);
+        Assert.notNull(employee, "申请打印团员证失败!该团员已经不存在，请刷新后重试!");
+        Assert.isTrue(employee.getPositionCode().equals(Employee.POSITION_MEMBER_TEMP), "申请打印团员证失败!当前用户不是“流动团员”!");
+        Assert.isTrue(Employee.STATE_INACTIVE.equals(employee.getStatus()), "申请打印团员证失败!当前用户的状态不能申请!");
+        employee.setStatus(Employee.STATE_WAIT);
+    }
+
+    @Override
+    public void applyDeny(String id) {
+        Assert.hasText(id, "审核流动团员失败!ID不能为空!");
+        Employee employee = employeesDao.findById(id);
+        Assert.notNull(employee, "审核流动团员失败!该团员已经不存在，请刷新后重试!");
+        Assert.isTrue(employee.getPositionCode().equals(Employee.POSITION_MEMBER_TEMP), "审核流动团员失败!当前用户不是“流动团员”!");
+        Assert.isTrue(Employee.STATE_WAIT.equals(employee.getStatus()), "审核流动团员失败!当前用户的状态不能进行审核!");
+        employee.setStatus(Employee.STATE_DENY);
+    }
+
+    @Override
+    public void applyAccept(String id) {
+        Assert.hasText(id, "审核流动团员失败!ID不能为空!");
+        Employee employee = employeesDao.findById(id);
+        Assert.notNull(employee, "审核流动团员失败!该团员已经不存在，请刷新后重试!");
+        Assert.isTrue(employee.getPositionCode().equals(Employee.POSITION_MEMBER_TEMP), "审核流动团员失败!当前用户不是“流动团员”!");
+        Assert.isTrue(Employee.STATE_WAIT.equals(employee.getStatus()), "审核流动团员失败!当前用户的状态不能进行审核!");
+        employee.setStatus(Employee.STATE_NORMAL);
     }
 }

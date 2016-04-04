@@ -32,6 +32,7 @@ public class EmployeeVo extends CommonVo {
     private String zzmmName;
     private String marriage;
     private String xueli;
+    private String xueliName;
     private String xuewei;
     private String school;
     private String major;
@@ -60,12 +61,38 @@ public class EmployeeVo extends CommonVo {
     private String tzzName; //   团组织名称
     private String ly;  // 领域
     private String lyName;
+    private String ly2;  // 领域
+    private String ly2Name;
     private Integer zztgbCounts;    // 专职团干部数量
     private Integer jztgbCounts;    // 兼职团干部数量
     private String honor;           // 荣誉称号
     private String honorName;
     private Boolean isWorking;     // 是否在本县区从业
     private Integer age;
+
+    public String getXueliName() {
+        return xueliName;
+    }
+
+    public void setXueliName(String xueliName) {
+        this.xueliName = xueliName;
+    }
+
+    public String getLy2Name() {
+        return ly2Name;
+    }
+
+    public void setLy2Name(String ly2Name) {
+        this.ly2Name = ly2Name;
+    }
+
+    public String getLy2() {
+        return ly2;
+    }
+
+    public void setLy2(String ly2) {
+        this.ly2 = ly2;
+    }
 
     public Integer getAge() {
         return age;

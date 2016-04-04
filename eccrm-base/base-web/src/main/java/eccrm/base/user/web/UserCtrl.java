@@ -50,6 +50,11 @@ public class UserCtrl extends BaseController {
     public String toRegister() {
         return "base/user/user_register";
     }
+    // 跳转到注册页面
+    @RequestMapping(value = "/register/member", method = RequestMethod.GET)
+    public String toRegisterMember() {
+        return "base/user/user_register_member";
+    }
 
     // 注册
     @RequestMapping(value = "/register", method = RequestMethod.POST)

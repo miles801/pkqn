@@ -19,7 +19,7 @@
             $scope.ly = data || [];
             $scope.ly.unshift({name: '请选择...'});
         });
-        // 团组织
+        // 学历
         ParameterLoader.loadBusinessParam('BP_EDU', function (data) {
             $scope.education = data || [];
             $scope.education.unshift({name: '请选择...'});
