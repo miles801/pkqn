@@ -77,5 +77,19 @@
 
         }
 
+        $scope.clear = function () {
+            ModalFactory.confirm({
+                scope: $scope,
+                content: '<span style="color: #ff0000;font-size: 14px;">重置年龄并清理数据!</span><br/>清理后年龄不在团员范围内的团员将会被移到“非团员青年”中，请确认!',
+                callback: function () {
+                    var promise = EmployeeService.clear(function (data) {
+                        AlertFactory.success('清理成功，一共清理了' + (data.data || 0) + '条信息!');
+                        $scope.query();
+                    });
+                    CommonUtils.loading(promise);
+                }
+            })
+        };
+
     });
 })(window, angular, jQuery);

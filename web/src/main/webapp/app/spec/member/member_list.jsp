@@ -68,6 +68,9 @@ Date: 2014-10-15 14:47:37
                     <span class="glyphicons list"></span>
                     <span>团员列表</span>
                 </div>
+                <div class="header-button">
+                    <button type="button" class="btn btn-sm btn-green btn-min" ng-click="clear()">清理</button>
+                </div>
             </div>
             <div class="block-content">
                 <div class="content-wrap">

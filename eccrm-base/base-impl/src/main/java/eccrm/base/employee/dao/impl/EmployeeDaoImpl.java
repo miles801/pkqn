@@ -112,6 +112,9 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
                     Restrictions.isNull("positionCode")
             ));
         }
+        if (bo.getBirthday1() != null) {
+            criteria.add(Restrictions.le("birthday", bo.getBirthday1()));
+        }
         criteria.add(Example.create(bo).enableLike(MatchMode.START).ignoreCase());
     }
 

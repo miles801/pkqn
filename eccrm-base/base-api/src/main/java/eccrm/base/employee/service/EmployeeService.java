@@ -62,4 +62,12 @@ public interface EmployeeService {
     PageVo permissionPageQuery(EmployeeBo bo);
 
     void importData(String[] attachmentIds);
+
+    /**
+     * 清理数据
+     *
+     * @return
+     */
+    int clear();
+
 }

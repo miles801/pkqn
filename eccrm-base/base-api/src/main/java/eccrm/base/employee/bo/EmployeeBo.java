@@ -1,9 +1,9 @@
 package eccrm.base.employee.bo;
 
 import com.ycrl.core.hibernate.criteria.BO;
-import com.ycrl.core.hibernate.criteria.Condition;
-import com.ycrl.core.hibernate.criteria.MatchModel;
 import eccrm.base.employee.domain.Employee;
+
+import java.util.Date;
 
 public class EmployeeBo extends Employee implements BO {
 
@@ -22,9 +22,26 @@ public class EmployeeBo extends Employee implements BO {
      */
     private Boolean hasPosition;
 
-    @Condition(matchMode = MatchModel.NE, target = "positionCode")
     private String notPosition;
 
+    private Date birthday1;
+    private Date birthday2;
+
+    public Date getBirthday1() {
+        return birthday1;
+    }
+
+    public void setBirthday1(Date birthday1) {
+        this.birthday1 = birthday1;
+    }
+
+    public Date getBirthday2() {
+        return birthday2;
+    }
+
+    public void setBirthday2(Date birthday2) {
+        this.birthday2 = birthday2;
+    }
 
     public String getNotPosition() {
         return notPosition;

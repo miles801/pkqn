@@ -9,6 +9,7 @@ import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
 import com.ycrl.core.pager.PageVo;
+import com.ycrl.core.pager.Pager;
 import com.ycrl.utils.string.StringUtils;
 import com.ycrl.utils.uuid.UUIDGenerator;
 import eccrm.base.attachment.AttachmentProvider;
@@ -66,6 +67,9 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
         // 设置年龄
         setAge(employee);
+        if ("TY".equals(employee.getPositionCode())) {
+            Assert.isTrue(employee.getAge() > 11 && employee.getAge() < 29, "年龄超出范围!");
+        }
 
         // 设置岗位信息
         if (StringUtils.isNotEmpty(employee.getPositionCode())) {
@@ -107,9 +111,6 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         if (date != null) {
             employee.setBirthday(date);
             int age = Integer.parseInt((System.currentTimeMillis() - date.getTime()) / (1000 * 60 * 60 * 24 * 365l) + "");
-            if ("TY".equals(employee.getPositionCode())) {
-                Assert.isTrue(age > 11 && age < 29, "年龄超出范围!");
-            }
             employee.setAge(age);
         }
 
@@ -119,6 +120,9 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     public void update(Employee employee) {
         // 设置年龄
         setAge(employee);
+        if ("TY".equals(employee.getPositionCode())) {
+            Assert.isTrue(employee.getAge() > 11 && employee.getAge() < 29, "年龄超出范围!");
+        }
 
         // 保存关联关系
         String positionId = employee.getPositionId();
@@ -294,6 +298,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
                     List<Organization> orgs = orgDao.findByName(orgName);
                     Assert.notEmpty(orgs, "县区[" + orgName + "]不存在!");
                     employee.setOrgId(orgs.get(0).getId());
+                    employee.setStatus("2");
                     save(employee);
                 }
             });
@@ -303,5 +308,29 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
             logger.info(String.format("导入按键数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
             new File(newFilePath).delete();
         }
+    }
+
+    @Override
+    public int clear() {
+        int counts = 0;
+        EmployeeBo bo = new EmployeeBo();
+        bo.setValid(true);
+        long total = employeesDao.getTotal(bo);
+        long nums = total / 20 + 1;
+        Pager.setLimit(20);
+        for (int i = 0; i < nums; i++) {
+            Pager.setStart(i * 20);
+            List<Employee> employees = employeesDao.query(bo);
+            for (Employee employee : employees) {
+                setAge(employee);
+                if ("TY".equals(employee.getPositionCode()) && (employee.getAge() < 12 || employee.getAge() > 28)) {
+                    employee.setPositionCode("FTY");
+                    employee.setPositionId(null);
+                    employee.setPositionName(null);
+                    counts++;
+                }
+            }
+        }
+        return counts;
     }
 }

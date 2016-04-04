@@ -175,6 +175,13 @@ public class EmployeeCtrl extends BaseController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/clear", method = RequestMethod.POST)
+    public void clear(HttpServletResponse response) {
+        int total = employeeServices.clear();
+        GsonUtils.printData(response, total);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/delete", params = {"ids"}, method = RequestMethod.DELETE)
     public void deleteByIds(@RequestParam String ids, HttpServletResponse response) {
         String[] idArr = ids.split(",");
