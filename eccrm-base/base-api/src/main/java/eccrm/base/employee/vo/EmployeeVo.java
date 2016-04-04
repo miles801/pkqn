@@ -29,6 +29,7 @@ public class EmployeeVo extends CommonVo {
     private String nation;
     private String nationName;
     private String zzmm;
+    private String zzmmName;
     private String marriage;
     private String xueli;
     private String xuewei;
@@ -58,8 +59,61 @@ public class EmployeeVo extends CommonVo {
     private String tzz; //   团组织
     private String tzzName; //   团组织名称
     private String ly;  // 领域
+    private String lyName;
     private Integer zztgbCounts;    // 专职团干部数量
     private Integer jztgbCounts;    // 兼职团干部数量
+    private String honor;           // 荣誉称号
+    private String honorName;
+    private Boolean isWorking;     // 是否在本县区从业
+    private Integer age;
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getLyName() {
+        return lyName;
+    }
+
+    public void setLyName(String lyName) {
+        this.lyName = lyName;
+    }
+
+    public String getHonorName() {
+        return honorName;
+    }
+
+    public void setHonorName(String honorName) {
+        this.honorName = honorName;
+    }
+
+    public String getZzmmName() {
+        return zzmmName;
+    }
+
+    public void setZzmmName(String zzmmName) {
+        this.zzmmName = zzmmName;
+    }
+
+    public String getHonor() {
+        return honor;
+    }
+
+    public void setHonor(String honor) {
+        this.honor = honor;
+    }
+
+    public Boolean getWorking() {
+        return isWorking;
+    }
+
+    public void setWorking(Boolean working) {
+        isWorking = working;
+    }
 
     public Integer getZztgbCounts() {
         return zztgbCounts;

@@ -18,6 +18,7 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     private String employeeName;
     // 性别
     private String gender;
+    private Integer age;
     // 出生年月
     private Date birthday;
     private String contry;
@@ -31,17 +32,22 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
      * 分机号（作为RTX账号使用）
      */
     private String extensionNumber;
+    // 所在区域
     private String region;
     private String address;
     private String idType;
     private String idNo;
+    // 民族
     private String nation;
+    // 政治面貌
     private String zzmm;
     private String marriage;
+    // 学历
     private String xueli;
     private String xuewei;
     private String school;
     private String major;
+    // 入团时间
     private Date beginWorkDate;
     private String workType;
     private String duty;
@@ -62,6 +68,33 @@ public class Employee extends CommonDomain implements AttachmentSymbol {
     private String ly;  // 领域
     private Integer zztgbCounts;    // 专职团干部数量
     private Integer jztgbCounts;    // 兼职团干部数量
+    private String honor;           // 荣誉称号
+    private Boolean isWorking;     // 是否在本县区从业
+
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getHonor() {
+        return honor;
+    }
+
+    public void setHonor(String honor) {
+        this.honor = honor;
+    }
+
+    public Boolean getWorking() {
+        return isWorking;
+    }
+
+    public void setWorking(Boolean working) {
+        isWorking = working;
+    }
 
     public Integer getJztgbCounts() {
         return jztgbCounts;

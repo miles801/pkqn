@@ -145,6 +145,7 @@ Date: 2014-10-15 14:47:37
                                     <a ng-click="remove(foo.id)" title="删除！" >
                                         <i class="icons fork" ></i >
                                     </a >
+                                </td>
                             </tr >
                             </tbody >
                         </table >

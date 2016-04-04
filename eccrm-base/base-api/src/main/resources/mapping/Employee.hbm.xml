@@ -63,6 +63,9 @@
         <property name="ly" column="LY" type="string" length="40"/>
         <property name="zztgbCounts" column="ZZTGB_COUNTS" type="int"/>
         <property name="jztgbCounts" column="JZTGB_COUNTS" type="int"/>
+        <property name="honor" column="HONOR" type="string" length="40"/>
+        <property name="working" column="IS_WORKING" type="boolean"/>
+        <property name="age" column="AGE" type="int"/>
         <!-- 公共属性 -->
         <property name="status" column="STATUS" type="string" length="40"/>
         <property name="description" column="DESCRIPTION" type="string" length="1000"/>

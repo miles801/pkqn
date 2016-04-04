@@ -17,8 +17,12 @@ import eccrm.base.position.dao.PositionEmpDao;
 import eccrm.base.position.domain.PositionEmp;
 import eccrm.base.position.service.PositionEmpService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
 
     @Override
     public String save(Employee employee) {
+
+        // 设置年龄
+        setAge(employee);
+
         String id = employeesDao.save(employee);
         // 保存关联关系
         String positionId = employee.getPositionId();
@@ -54,8 +62,35 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         return id;
     }
 
+    private void setAge(Employee employee) {
+        Date date = null;
+        if (StringUtils.isNotEmpty(employee.getIdNo())) {
+            Assert.isTrue(employee.getIdNo().length() == 18, "错误的身份证号码!身份证号码的长度必须是18位!");
+            String birthdayStr = employee.getIdNo().substring(6, 14);
+            try {
+                date = new SimpleDateFormat("yyyyMMdd").parse(birthdayStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if (employee.getBirthday() != null) {
+            date = employee.getBirthday();
+        }
+        if (date != null) {
+            employee.setBirthday(date);
+            int age = Integer.parseInt((System.currentTimeMillis() - date.getTime()) / (1000 * 60 * 60 * 24 * 365l) + "");
+            if ("TY".equals(employee.getPositionCode())) {
+                Assert.isTrue(age > 11 && age < 29, "年龄超出范围!");
+            }
+            employee.setAge(age);
+        }
+
+    }
+
     @Override
     public void update(Employee employee) {
+        // 设置年龄
+        setAge(employee);
+
         // 保存关联关系
         String positionId = employee.getPositionId();
         String orgId = employee.getOrgId();
@@ -139,6 +174,13 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         vo.setGenderName(parameterContainer.getBusinessName("BP_SEX", employee.getGender()));
         // 民族
         vo.setNationName(parameterContainer.getBusinessName("BP_NATION", employee.getNation()));
+        // 政治面貌
+        vo.setZzmmName(parameterContainer.getBusinessName("BP_ZZMM", employee.getZzmm()));
+        // 领域
+        vo.setLyName(parameterContainer.getBusinessName("SPEC_LY", employee.getLy()));
+        // 荣誉称号
+        vo.setHonorName(parameterContainer.getBusinessName("SPEC_HONOR", employee.getHonor()));
+
     }
 
     @Override
