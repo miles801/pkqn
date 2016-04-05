@@ -78,6 +78,12 @@ public interface EmployeeService {
     List<Object[]> memberAnalysis();
 
     /**
+     * 流动团员统计
+     * @return
+     */
+    List<Object[]> memberAnalysis2();
+
+    /**
      * 申请团员证审核
      * @param id 员工ID
      */
@@ -92,4 +98,6 @@ public interface EmployeeService {
      * 审核不通过
      */
     void applyDeny(String id);
+
+
 }

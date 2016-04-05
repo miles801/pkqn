@@ -20,8 +20,10 @@
             // 申请拒绝
             applyDeny: {method: 'POST', params: {method: 'applyDeny', id: '@id'}, isArray: false},
 
-            // 统计分析
+            // 团员统计分析
             memberAnalysis: {method: 'GET', params: {method: 'memberAnalysis'}, isArray: false},
+            // 流动团员统计分析
+            memberAnalysis2: {method: 'GET', params: {method: 'memberAnalysis2'}, isArray: false},
             // 清理
             clear: {method: 'POST', params: {method: 'clear'}, isArray: false},
             //更新

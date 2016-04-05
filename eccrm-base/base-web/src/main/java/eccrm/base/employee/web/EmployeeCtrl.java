@@ -218,4 +218,12 @@ public class EmployeeCtrl extends BaseController {
         GsonUtils.printData(response, data);
     }
 
+    // 流动团员统计
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysis2", method = RequestMethod.GET)
+    public void memberAnalysis2(HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysis2();
+        GsonUtils.printData(response, data);
+    }
+
 }

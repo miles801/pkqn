@@ -61,4 +61,11 @@ public interface EmployeeDao {
      * @return [1：组织机构ID，1：组织机构名称，2：团员数量]
      */
     List<Object[]> memberAnalysis();
+
+    /**
+     * 各县区的流动团员统计
+     *
+     * @return [1：组织机构ID，1：组织机构名称，2：团员数量]
+     */
+    List<Object[]> memberAnalysis2();
 }

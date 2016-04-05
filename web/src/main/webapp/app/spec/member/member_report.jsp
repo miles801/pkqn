@@ -23,8 +23,8 @@
         <div class="col-6 text-center">
             <div id="timesPie" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
         </div>
-        <div class="col-6 text-center dn">
-            <div id="moneyPie" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
+        <div class="col-6 text-center">
+            <div id="ldtyChart" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
         </div>
     </div>
 </div>

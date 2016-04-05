@@ -18,6 +18,7 @@
         $scope.year = now;
 
         var timesChart = echarts.init(document.getElementById('timesPie'));
+        var ldtyChart = echarts.init(document.getElementById('ldtyChart'));
         var timesPieOption = {
             title: {
                 text: '各县（市）区团员统计',
@@ -48,6 +49,8 @@
                 }
             ]
         };
+        var ldtyOption = angular.extend({},timesPieOption);
+        ldtyOption.title.text = '各县（市）区流动团员统计';
 
         $scope.query = function () {
             var promise = EmployeeService.memberAnalysis(function (data) {
@@ -66,6 +69,22 @@
 
             });
             CommonUtils.loading(promise);
+
+            var promise2=EmployeeService.memberAnalysis2(function(data){
+                var legendData = [];
+                var series = [];
+                var total = 0;
+                angular.forEach(data.data || [], function (o) {
+                    legendData.push(o[1]);
+                    total += (o[2]);
+                    series.push({name: o[1], value: o[2]});
+                });
+                ldtyOption.legend.data = legendData;
+                ldtyOption.series[0].data = series;
+                ldtyOption.title.subtext = '共计' + total + '个团员';
+                ldtyChart.setOption(ldtyOption);
+            });
+            CommonUtils.loading(promise2);
         };
 
         $scope.query();

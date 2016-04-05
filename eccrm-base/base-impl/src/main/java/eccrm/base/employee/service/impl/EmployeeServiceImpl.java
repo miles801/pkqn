@@ -345,6 +345,11 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     }
 
     @Override
+    public List<Object[]> memberAnalysis2() {
+        return employeesDao.memberAnalysis2();
+    }
+
+    @Override
     public void apply(String id) {
         Assert.hasText(id, "申请打印团员证失败!ID不能为空!");
         Employee employee = employeesDao.findById(id);
