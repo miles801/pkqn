@@ -7,13 +7,23 @@
         'eccrm.angular.ztree',
         'base.org'
     ]);
-    app.controller('Ctrl', function ($scope, CommonUtils, User, AlertFactory, Org, ParameterLoader) {
+    app.controller('Ctrl', function ($scope, CommonUtils, User, AlertFactory, Org, ParameterLoader, Parameter) {
 
         // 领域
         ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
             $scope.ly = data || [];
             $scope.ly.unshift({name: '请选择...'});
         });
+
+        // 领域改变时，加载子领域
+        $scope.lyChange = function () {
+            $scope.ly2 = [];
+            $scope.user.ly2 = '';
+            Parameter.fetchBusinessCascade('SPEC_LY', $scope.user.ly, function (data) {
+                $scope.ly2 = data.data || [];
+                $scope.ly2.unshift({name: '请选择..', value: ''});
+            });
+        };
         // 团组织
         ParameterLoader.loadBusinessParam('SPEC_TZZ', function (data) {
             $scope.tzz = data || [];
@@ -30,10 +40,6 @@
             $scope.user.deptId = o.id;
             $scope.user.deptName = o.name;
         });
-
-        $scope.lyChange = function () {
-
-        };
 
         $scope.ok = function () {
             // 验证密码是否一致
