@@ -21,9 +21,9 @@
         });
 
         // 领域改变时，加载子领域
-        $scope.lyChange = function () {
+        $scope.lyChange = function (ly2) {
             $scope.ly2 = [];
-            $scope.employee.ly2 = '';
+            $scope.employee.ly2 = ly2 || '';
             Parameter.fetchBusinessCascade('SPEC_LY', $scope.employee.ly, function (data) {
                 $scope.ly2 = data.data || [];
                 $scope.ly2.unshift({name: '请选择..', value: ''});
@@ -147,6 +147,10 @@
                     name: $scope.employee.organizationName
                 };
 
+                // 手动触发领域的二级事件
+                if ($scope.employee.ly) {
+                    $scope.lyChange($scope.employee.ly2);
+                }
                 // 头像
                 var imageId = $scope.employee.picture;
                 if (imageId) {
