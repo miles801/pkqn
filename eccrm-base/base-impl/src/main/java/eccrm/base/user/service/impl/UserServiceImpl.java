@@ -102,6 +102,7 @@ public class UserServiceImpl implements UserService {
         employee.setTzz(user.getTzz());
         employee.setTzzName(user.getTzzName());
         employee.setLy(user.getLy());
+        employee.setLy2(user.getLy2());
         employee.setZztgbCounts(user.getZztgbCounts());
         employee.setJztgbCounts(user.getJztgbCounts());
         employee.setMobile(user.getMobilePhone());

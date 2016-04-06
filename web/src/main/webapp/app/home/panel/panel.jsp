@@ -53,11 +53,11 @@
                     <div ng-cloak>
                         <p>姓名：{{beans.employeeName}}</p>
 
-                        <p>性别：{{beans.genderName}}</p>
-
                         <p>岗位：{{beans.positionName}}</p>
 
-                        <p>民族：{{beans.nationName}}</p>
+                        <p>领域：{{beans.lyName+(beans.ly2Name?'-':'')+(beans.ly2Name||'')}}</p>
+
+                        <p>团组织：{{beans.tzzName}}</p>
 
                         <p>所属县区：{{beans.orgName}}</p>
 
