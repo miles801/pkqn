@@ -91,8 +91,8 @@
                             </div>
                             <div class="col-2-half">
                                 <input type="text" class="col-12" ztree-single="OrgztreeOptions" name="orgName"
-                                       ng-model="employee.orgName" validate validate-required>
-                                    <span class="add-on" ng-cloak>
+                                       ng-model="employee.orgName" validate validate-required ng-disabled="!hasOrgPermission">
+                                    <span class="add-on" ng-cloak ng-if="hasOrgPermission">
                                        <i class="icons circle_fork icon" title="清空"
                                           ng-click="clearOrg();"></i>
                                     </span>

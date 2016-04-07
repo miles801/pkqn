@@ -77,7 +77,7 @@
         //回到上一个页面
         $scope.back = CommonUtils.back;
 
-        var type = $scope.pageType = $('#pageType').val();
+        var type = $scope.pageType = $('#pageType').val() || 'add';
         var id = $('#id').val();
 
         // 头像
@@ -117,7 +117,6 @@
 
         //保存
         $scope.save = function () {
-            $scope.employee.beginWorkDate += '-01';
             var promise = EmployeeService.save($scope.employee, function (data) {
                 $scope.form.$setValidity('committed', false);
                 AlertFactory.success('保存成功!');
@@ -128,7 +127,6 @@
 
         //更新
         $scope.update = function () {
-            $scope.employee.beginWorkDate += '-01';
             var promise = EmployeeService.update($scope.employee, function (data) {
                 $scope.form.$setValidity('committed', false);
                 AlertFactory.success('更新成功!');
@@ -160,6 +158,18 @@
             });
             CommonUtils.loading(promise);
         };
+
+        EmployeeService.get({id: CommonUtils.loginContext().id}, function (o) {
+            o = o.data;
+            $scope.hasOrgPermission = o.positionCode == 'SYS';
+            if (type == 'add') {
+                $scope.employee.orgId = o.orgId;
+                $scope.employee.orgName = o.orgName;
+            }
+
+
+        });
+
         if (type == 'add') {
 
         } else if (type == 'modify') {
