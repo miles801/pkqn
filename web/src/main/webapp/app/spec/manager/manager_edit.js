@@ -10,15 +10,6 @@
         'eccrm.angularstrap'
     ]);
     app.controller('Ctrl', function ($scope, CommonUtils, EmployeeConstant, OrgTree, EmployeeService, AlertFactory, ParameterLoader, Parameter) {
-        // 是否具有编辑权限
-        $scope.hasEditPermission = false;
-
-        // 岗位类型
-        $scope.positions = [
-            {name: '二级管理员', value: 'EJGLY'},
-            {name: '基层管理员', value: 'NORMAL_MANAGER'},
-            {name: '团员', value: 'TY'}
-        ];
 
         // 领域
         ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
@@ -128,7 +119,7 @@
         $scope.save = function () {
             $scope.employee.beginWorkDate += '-01';
             var promise = EmployeeService.save($scope.employee, function (data) {
-                $$scope.form.$setValidity('committed', false);
+                $scope.form.$setValidity('committed', false);
                 AlertFactory.success('保存成功!');
             });
             CommonUtils.loading(promise);

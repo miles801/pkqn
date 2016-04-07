@@ -8,8 +8,10 @@ import com.michael.poi.imp.cfg.Configuration;
 import com.ycrl.core.SystemContainer;
 import com.ycrl.core.beans.BeanWrapBuilder;
 import com.ycrl.core.beans.BeanWrapCallback;
+import com.ycrl.core.hibernate.validator.ValidatorUtils;
 import com.ycrl.core.pager.PageVo;
 import com.ycrl.core.pager.Pager;
+import com.ycrl.utils.md5.MD5Utils;
 import com.ycrl.utils.string.StringUtils;
 import com.ycrl.utils.uuid.UUIDGenerator;
 import eccrm.base.attachment.AttachmentProvider;
@@ -31,6 +33,10 @@ import eccrm.base.position.dao.PositionEmpDao;
 import eccrm.base.position.domain.Position;
 import eccrm.base.position.domain.PositionEmp;
 import eccrm.base.position.service.PositionEmpService;
+import eccrm.base.user.dao.UserDao;
+import eccrm.base.user.domain.User;
+import eccrm.base.user.enums.UserStatus;
+import eccrm.base.user.enums.UserType;
 import eccrm.utils.BeanCopyUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -92,6 +98,23 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
             pe.setOrgId(orgId);
             pe.setEmpId(id);
             positionEmpDao.save(pe);
+        }
+
+        String employeeCode = employee.getEmployeeCode();
+        if (StringUtils.isNotEmpty(employeeCode)) {
+            UserDao userDao = SystemContainer.getInstance().getBean(UserDao.class);
+            User user = new User();
+            user.setPassword(MD5Utils.encode("111111"));
+            user.setUsername(employeeCode);
+            user.setType(UserType.OFFICIAL.getValue());
+            user.setStatus(UserStatus.ACTIVE.getValue());
+            user.setEmployeeId(id);
+            user.setEmployeeName(employee.getEmployeeName());
+            ValidatorUtils.validate(user);
+            // 验证用户名是否重复
+            User oldUser = userDao.findByUsername(user.getUsername());
+            Assert.isNull(oldUser, "注册失败：用户名已经存在!");
+            userDao.save(user);
         }
         return id;
     }
@@ -215,7 +238,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         vo.setZzmmName(parameterContainer.getBusinessName("BP_ZZMM", employee.getZzmm()));
         // 领域
         vo.setLyName(parameterContainer.getBusinessName("SPEC_LY", employee.getLy()));
-        vo.setLy2Name(parameterContainer.getBusinessName("SPEC_LY2",employee.getLy2()));
+        vo.setLy2Name(parameterContainer.getBusinessName("SPEC_LY2", employee.getLy2()));
         // 荣誉称号
         vo.setHonorName(parameterContainer.getBusinessName("SPEC_HONOR", employee.getHonor()));
 

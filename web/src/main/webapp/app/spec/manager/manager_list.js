@@ -11,21 +11,22 @@
     ]);
     app.controller('Ctrl', function ($scope, $http, EmployeeConstant, Org, CommonUtils, ModalFactory, AlertFactory, $window, Debounce, EmployeeService) {
         $scope.condition = {
-            permission: true,
-            positionCode: 'TGB',
+            positionCode: 'EJGLY',
             orderBy: 'createdDatetime',
             reverse: 'false'
         };
 
-        $scope.showOrg = false;
-        $http.get(CommonUtils.contextPathURL('/auth/accreditFunc/hasPermission?code=TGB_ORG'))
-            .success(function (data) {
-                $scope.showOrg = !!data.data;
-            });
-        $scope.modify = function (id) {
+        $scope.add = function (id) {
             CommonUtils.addTab({
-                title: '更新团干部',
-                url: '/base/employee/modify/' + id,
+                title: '新增二级管理员',
+                url: '/app/spec/manager/manager_edit.jsp?pageType=add',
+                onUpdate: $scope.query
+            });
+        };
+        $scope.modify = function (id,name) {
+            CommonUtils.addTab({
+                title: '编辑--' + name,
+                url: '/app/spec/manager/manager_edit.jsp?pageType=modify&id=' + id,
                 onUpdate: $scope.pager.load
             });
         };
@@ -40,10 +41,10 @@
             $scope.orgName = null;
         };
 
-        $scope.detail = function (id) {
+        $scope.detail = function (id, name) {
             CommonUtils.addTab({
-                title: '查看团干部',
-                url: '/base/employee/detail/' + id
+                title: '查看--' + name,
+                url: '/app/spec/manager/manager_edit.jsp?pageType=detail&id=' + id
             });
         };
 
