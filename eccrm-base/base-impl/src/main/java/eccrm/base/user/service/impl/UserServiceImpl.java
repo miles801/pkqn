@@ -10,7 +10,9 @@ import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import eccrm.base.parameter.service.ParameterContainer;
 import eccrm.base.position.dao.PositionDao;
+import eccrm.base.position.dao.PositionEmpDao;
 import eccrm.base.position.domain.Position;
+import eccrm.base.position.domain.PositionEmp;
 import eccrm.base.tenement.dao.TenementDao;
 import eccrm.base.user.bo.UserBo;
 import eccrm.base.user.dao.PasswordPolicyDao;
@@ -118,7 +120,18 @@ public class UserServiceImpl implements UserService {
                 employee.setPositionCode(positionCode);
             }
         }
+
         employeeDao.save(employee);
+        // 保存关联关系
+        String positionId = employee.getPositionId();
+        String orgId = employee.getOrgId();
+        if (!com.ycrl.utils.string.StringUtils.hasEmpty(positionId, orgId)) {
+            PositionEmp pe = new PositionEmp();
+            pe.setPositionId(positionId);
+            pe.setOrgId(orgId);
+            pe.setEmpId(empId);
+            SystemContainer.getInstance().getBean(PositionEmpDao.class).save(pe);
+        }
         // 保存用户
         user.setEmployeeId(empId);
         user.setEmployeeName(employee.getEmployeeName());

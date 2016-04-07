@@ -137,22 +137,7 @@
                                     ng-options="foo.value as foo.name for foo in zzmm">
                             </select>
                         </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label>入团年月:</label>
-                            </div>
-                            <div class="col-2-half">
-                                <input class="col-12" type="text" validate validate-required readonly
-                                       ng-model="employee.beginWorkDate" eccrm-my97="{dateFmt:'yyyy-MM'}"/>
-                                <span class="add-on"><i class="icons icon clock"></i></span>
-                            </div>
 
-                            <div class="form-label col-1-half">
-                                <label validate-error="form.xueli">教育学历:</label>
-                            </div>
-                            <select class="col-2-half" name="xueli" ng-model="employee.xueli"
-                                    ng-options="foo.value as foo.name for foo in education" ></select>
-                        </div>
                         <div class="row">
                             <div class="form-label col-1-half">
                                 <label validate-error="form.ly">领域:</label>
@@ -165,23 +150,40 @@
                             <select class="col-2-half" name="ly2" ng-model="employee.ly2"
                                     ng-options="foo.value as foo.name for foo in ly2" ></select>
                         </div>
-                        <div class="row">
-                            <div class="form-label col-1-half">
-                                <label validate-error="form.ly">在本县区从业:</label>
-                            </div>
-                            <div class="col-2-half">
-                                <input type="checkbox" ng-model="employee.isWorking" class="col"/>
-                            </div>
-                            <div class="form-label col-1-half">
-                                <label validate-error="form.honor">荣誉称号:</label>
-                            </div>
+                        <div ng-if="employee.positionCode=='TY'||employee.positionCode=='LDTY'" ng-cloak>
+                            <div class="row" >
+                                <div class="form-label col-1-half">
+                                    <label validate-error="form.ly">在本县区从业:</label>
+                                </div>
+                                <div class="col-2-half">
+                                    <input type="checkbox" ng-model="employee.isWorking" class="col"/>
+                                </div>
+                                <div class="form-label col-1-half">
+                                    <label validate-error="form.honor">荣誉称号:</label>
+                                </div>
 
-                            <select class="col-2-half" name="honor" ng-model="employee.honor"
-                                    ng-options="foo.value as foo.name for foo in honor"></select>
+                                <select class="col-2-half" name="honor" ng-model="employee.honor"
+                                        ng-options="foo.value as foo.name for foo in honor"></select>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>入团年月:</label>
+                                </div>
+                                <div class="col-2-half">
+                                    <input class="col-12" type="text" validate validate-required readonly
+                                           ng-model="employee.beginWorkDate" eccrm-my97="{dateFmt:'yyyy-MM'}"/>
+                                    <span class="add-on"><i class="icons icon clock"></i></span>
+                                </div>
+
+                                <div class="form-label col-1-half">
+                                    <label validate-error="form.xueli">教育学历:</label>
+                                </div>
+                                <select class="col-2-half" name="xueli" ng-model="employee.xueli"
+                                        ng-options="foo.value as foo.name for foo in education" ></select>
+                            </div>
                         </div>
-                        <div ng-if="hasEditPermission" ng-cloak>
-
-                            <div class="row"  >
+                        <div ng-if="employee.positionCode=='NORMAL_MANAGER'" ng-cloak>
+                            <div class="row dn"  >
                                 <div class="form-label col-1-half">
                                     <label validate-error="form.position">角色类型:</label>
                                 </div>

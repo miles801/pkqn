@@ -254,7 +254,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         for (String id : attachmentIds) {
             AttachmentVo vo = AttachmentProvider.getInfo(id);
             File file = AttachmentHolder.newInstance().getTempFile(id);
-            logger.info("准备导入黑名单数据：" + file.getAbsolutePath());
+            logger.info("准备导入数据：" + file.getAbsolutePath());
             logger.info("初始化导入引擎....");
             long start = System.currentTimeMillis();
 
@@ -307,10 +307,10 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
                     save(employee);
                 }
             });
-            logger.info("开始导入案件数据....");
+            logger.info("开始导入数据....");
             ImportEngine engine = new ImportEngine(configuration);
             engine.execute();
-            logger.info(String.format("导入按键数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
+            logger.info(String.format("导入数据成功,用时(%d)s....", (System.currentTimeMillis() - start) / 1000));
             new File(newFilePath).delete();
         }
     }

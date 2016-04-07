@@ -15,7 +15,6 @@
 
         // 岗位类型
         $scope.positions = [
-            {name: '超级管理员', value: 'SP_manger'},
             {name: '二级管理员', value: 'EJGLY'},
             {name: '基层管理员', value: 'NORMAL_MANAGER'},
             {name: '团员', value: 'TY'}
