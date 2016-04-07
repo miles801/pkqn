@@ -32,12 +32,18 @@
         .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
             background: none;
         }
+        table,
+        table *{
+            border-color:#dcdcdc!important;
+        }
     </style>
 </head>
 <body id="ng-app">
-<div class="main" ng-app="spec.member.print" ng-controller="Ctrl" style="text-align: center;position: relative;">
+<div class="main" ng-app="spec.member.print" ng-controller="Ctrl"
+     style="text-align: center;position: relative;overflow: auto;">
     <div class="row" ng-cloak ng-if="'${param.show}'!=='true'" style="margin-top:20px;">
-        <button class="btn btn-blue" ng-click="printInfo();" ng-if="beans.status=='2'" style="height: 40px;width: 60px;">
+        <button class="btn btn-blue" ng-click="printInfo();" ng-if="beans.status=='2'"
+                style="height: 40px;width: 60px;">
             打印
         </button>
         <button class="btn btn-blue" ng-click="applyMember();" ng-if="beans.status=='0'||beans.status=='4'"
@@ -48,26 +54,33 @@
     <h4 ng-if="beans.status=='1'" ng-cloak>正在申请中，请耐心等待审核!</h4>
     <h4 ng-if="beans.status=='3'" ng-cloak>当前登录用户已被注销，无法使用该功能!</h4>
     <h4 ng-if="beans.status=='4'" ng-cloak>审核未通过，无法使用该功能!请修改个人信息后重新申请！</h4>
-    <div class="table-responsive panel panel-table" style="width: 700px;margin:0 auto;position: relative;">
-        <table class="table table-striped table-hover" ng-cloak>
+    <div class="table-responsive panel panel-table"
+         style="width: 600px;height:850px;margin:0 auto;position: relative;background: url(<%=contextPath%>/app/spec/member/bg.jpg) no-repeat;">
+        <table class="table table-striped table-hover" ng-cloak style="position: absolute; top:190px; left: 54px; width: 490px;">
             <tbody>
             <tr>
                 <td class="td-label">姓名</td>
                 <td class="td-value">{{beans.employeeName}}</td>
+                <td class="td-label" rowspan="4">照片</td>
+                <td class="td-value" rowspan="4" style="text-align: center;vertical-align: middle;">
+                    <img ng-src="<%=contextPath%>/attachment/view?id={{beans.picture}}" width="110" height="95" alt="个人照片">
+                </td>
+            </tr>
+            <tr>
                 <td class="td-label">身份证号</td>
                 <td class="td-value">{{beans.idNo}}</td>
             </tr>
             <tr>
-                <td class="td-label">民族</td>
-                <td class="td-value">{{beans.nationName}}</td>
-                <td class="td-label">政治面貌</td>
-                <td class="td-value">{{beans.zzmmName}}</td>
-            </tr>
-            <tr>
-                <td class="td-label">入党年月</td>
-                <td class="td-value"></td>
                 <td class="td-label">入团年月</td>
                 <td class="td-value">{{beans.beginWorkDate|date:'yyyy-MM'}}</td>
+            </tr>
+            <tr>
+                <td class="td-label">民族</td>
+                <td class="td-value">{{beans.nationName}}</td>
+            </tr>
+            <tr>
+                <td class="td-label">政治面貌</td>
+                <td class="td-value">{{beans.zzmmName}}</td>
             </tr>
             <tr>
                 <td class="td-label">全日制教育学历</td>
@@ -94,7 +107,7 @@
             </tbody>
         </table>
         <div ng-cloak ng-if="'${param.show}'=='true'"
-             style="position: absolute;width: 200px;height: 200px;top: 100px;right: 30px;">
+             style="position: absolute;width: 200px;height: 200px;top: 318px;right: 30px;">
             <img src="<%=contextPath%>/app/spec/member/zhang.png" alt="印章" width="200" height="200"/>
         </div>
     </div>
