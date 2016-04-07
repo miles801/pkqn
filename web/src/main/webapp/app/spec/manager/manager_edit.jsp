@@ -118,6 +118,43 @@
                             <select class="col-2-half" name="ly2" ng-model="employee.ly2"
                                     ng-options="foo.value as foo.name for foo in ly2"></select>
                         </div>
+                        <div ng-if="employee.positionCode=='NORMAL_MANAGER'" ng-cloak>
+                            <div class="row dn"  >
+                                <div class="form-label col-1-half">
+                                    <label validate-error="form.position">角色类型:</label>
+                                </div>
+                                <select class="col-2-half" name="position" ng-model="employee.positionCode"
+                                        ng-options="foo.value as foo.name for foo in positions"
+                                        validate validate-required ng-cloak ></select>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label validate-error="form.tzz">团组织:</label>
+                                </div>
+                                <select class="col-2-half" name="tzz" ng-model="employee.tzz"
+                                        ng-options="foo.value as foo.name for foo in tzz"
+                                        validate ng-cloak ng-disabled="!hasEditPermission"></select>
+
+
+                                <div class="form-label col-1-half">
+                                    <label>团组织名称:</label>
+                                </div>
+                                <input class="col-2-half" type="text" ng-model="employee.tzzName"
+                                       validate maxlength="20" ng-cloak ng-disabled="!hasEditPermission"/>
+                            </div>
+                            <div class="row">
+                                <div class="form-label col-1-half">
+                                    <label>专职团干部人数:</label>
+                                </div>
+                                <input class="col-2-half" type="text" ng-model="employee.zztgbCounts"
+                                       validate validate-int maxlength="4" ng-cloak ng-disabled="!hasEditPermission"/>
+                                <div class="form-label col-1-half">
+                                    <label>兼职团干部人数:</label>
+                                </div>
+                                <input class="col-2-half" type="text" ng-model="employee.jztgbCounts"
+                                       validate validate-int maxlength="4" ng-cloak ng-disabled="!hasEditPermission"/>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="form-label col-1-half">
                                 <label>手机号码:</label>

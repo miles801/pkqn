@@ -50,9 +50,9 @@
         });
 
         // 领域改变时，加载子领域
-        $scope.lyChange = function () {
+        $scope.lyChange = function (ly2) {
             $scope.ly2 = [];
-            $scope.employee.ly2 = '';
+            $scope.employee.ly2 = ly2 || '';
             Parameter.fetchBusinessCascade('SPEC_LY', $scope.employee.ly, function (data) {
                 $scope.ly2 = data.data || [];
                 $scope.ly2.unshift({name: '请选择..', value: ''});
@@ -146,6 +146,9 @@
                     id: $scope.employee.organizationId,
                     name: $scope.employee.organizationName
                 };
+
+                // 激活领域的更改
+                $scope.lyChange($scope.employee.ly2);
 
                 // 只有未完善的团员才允许更改
                 if ($scope.employee.positionCode == 'LDTY' && "1,2,3".indexOf($scope.employee.status) !== -1) {

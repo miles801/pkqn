@@ -69,7 +69,12 @@
                 <td style="text-align: left">
                     <div class="row mybtn">
                         <a type="button" class="btn btn-blue"
-                           href="<%=contextPath%>/base/employee/modify/<%=userId%>"
+                           href="<%=contextPath%>/app/spec/manager/manager_edit.jsp?pageType=modify&id=<%=userId%>" ng-cloak ng-if="beans.positionCode=='EJGLY'||beans.positionCode=='SYS'||beans.positionCode=='NORMAL_MANAGER'"
+                           style="width: 110px;">
+                            <span class="glyphicons plus"></span> 完善个人信息
+                        </a>
+                        <a type="button" class="btn btn-blue"
+                           href="<%=contextPath%>/app/spec/member/member_edit.jsp?pageType=modify&id=<%=userId%>" ng-cloak ng-if="beans.positionCode=='TY'||beans.positionCode=='LDTY'"
                            style="width: 110px;">
                             <span class="glyphicons plus"></span> 完善个人信息
                         </a>
