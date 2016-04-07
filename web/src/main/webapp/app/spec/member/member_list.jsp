@@ -31,7 +31,7 @@ Date: 2014-10-15 14:47:37
     </script>
 </head>
 <body id="ng-app">
-<div class="main condition-row-1 " ng-app="spec.member.list" ng-controller="Ctrl">
+<div class="main condition-row-2 " ng-app="spec.member.list" ng-controller="Ctrl">
     <input type="hidden" id="contextPath" value="<%=request.getContextPath()%>"/>
 
     <div class="list-condition">
@@ -47,15 +47,49 @@ Date: 2014-10-15 14:47:37
                 <div class="content-wrap" style="padding-top: 0px">
                     <div class="row">
                         <div class="form-label col-1-half">
-                            <label>姓名:</label>
+                            <label>年龄:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="condition.employeeName"/>
-
+                        <select ng-model="age" class="col-2-half"
+                                ng-options="foo.value as foo.name for foo in ages" ng-change="changeAge()">
+                        </select>
 
                         <div class="form-label col-1-half">
-                            <label>移动电话:</label>
+                            <label validate-error="form.orgName">所属县区:</label>
                         </div>
-                        <input class="col-2-half" type="text" ng-model="condition.mobile"/>
+                        <div class="col-2-half">
+                            <input type="text" class="col-12" ztree-single="OrgztreeOptions" name="orgName"
+                                   ng-model="condition.orgName">
+                                    <span class="add-on" ng-cloak>
+                                       <i class="icons circle_fork icon" title="清空"
+                                          ng-click="clearOrg();"></i>
+                                    </span>
+                        </div>
+
+                        <div class="form-label col-1-half">
+                            <label>荣誉称号:</label>
+                        </div>
+                        <select ng-model="condition.honor" class="col-2-half"
+                                ng-options="foo.value as foo.name for foo in honor">
+                        </select>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-label col-1-half">
+                            <label>所在领域:</label>
+                        </div>
+                        <select class="col-2-half" name="ly" ng-model="condition.ly" ng-change="lyChange();"
+                                ng-options="foo.value as foo.name for foo in ly"
+                                ng-cloak></select>
+                        <div class="form-label col-1-half">
+                            <label>子领域:</label>
+                        </div>
+                        <select class="col-2-half" ng-model="condition.ly2"
+                                ng-options="foo.value as foo.name for foo in ly2"></select>
+                        <div class="form-label col-1-half">
+                            <label>入团年份:</label>
+                        </div>
+                        <select class="col-2-half" ng-model="year" ng-change="yearChange()"
+                                ng-options="foo.value as foo.name for foo in years"></select>
                     </div>
                 </div>
             </div>

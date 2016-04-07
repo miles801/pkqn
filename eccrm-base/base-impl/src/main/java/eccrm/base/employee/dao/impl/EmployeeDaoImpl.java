@@ -2,14 +2,13 @@ package eccrm.base.employee.dao.impl;
 
 import com.ycrl.core.HibernateDaoHelper;
 import com.ycrl.core.exception.Argument;
+import com.ycrl.core.hibernate.criteria.CriteriaUtils;
 import com.ycrl.core.hibernate.filter.FilterFieldType;
 import com.ycrl.utils.string.StringUtils;
 import eccrm.base.employee.bo.EmployeeBo;
 import eccrm.base.employee.dao.EmployeeDao;
 import eccrm.base.employee.domain.Employee;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Example;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -115,7 +114,8 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         if (bo.getBirthday1() != null) {
             criteria.add(Restrictions.le("birthday", bo.getBirthday1()));
         }
-        criteria.add(Example.create(bo).enableLike(MatchMode.START).ignoreCase());
+
+        CriteriaUtils.addCondition(criteria, bo);
     }
 
     @Override
