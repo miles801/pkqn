@@ -68,4 +68,18 @@ public interface EmployeeDao {
      * @return [1：组织机构ID，1：组织机构名称，2：团员数量]
      */
     List<Object[]> memberAnalysis2();
+
+    /**
+     * 汇总
+     * @return []
+     * 1. 领域1
+     * 2. 领域2
+     * 3. 团组织ID
+     * 4. 团组织名称
+     * 5. 团组织数量
+     * 6. 团员数量
+     * 7. 专职数量
+     * 8. 兼职数量
+     */
+    List<Object[]> memberAnalysisTotal(Integer year);
 }

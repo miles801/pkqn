@@ -24,6 +24,10 @@
             memberAnalysis: {method: 'GET', params: {method: 'memberAnalysis'}, isArray: false},
             // 流动团员统计分析
             memberAnalysis2: {method: 'GET', params: {method: 'memberAnalysis2'}, isArray: false},
+            // 团员年度统计
+            memberAnalysisYear: {method: 'GET', params: {method: 'memberAnalysisYear',year:'@year'}, isArray: false},
+            // 团员所有统计
+            memberAnalysisTotal: {method: 'GET', params: {method: 'memberAnalysisTotal'}, isArray: false},
             // 清理
             clear: {method: 'POST', params: {method: 'clear'}, isArray: false},
             //更新

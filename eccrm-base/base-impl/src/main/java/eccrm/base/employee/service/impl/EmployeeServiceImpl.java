@@ -401,4 +401,9 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         Assert.isTrue(Employee.STATE_WAIT.equals(employee.getStatus()), "审核流动团员失败!当前用户的状态不能进行审核!");
         employee.setStatus(Employee.STATE_NORMAL);
     }
+
+    @Override
+    public List<Object[]> memberAnalysisTotal(Integer year) {
+        return employeesDao.memberAnalysisTotal(year);
+    }
 }

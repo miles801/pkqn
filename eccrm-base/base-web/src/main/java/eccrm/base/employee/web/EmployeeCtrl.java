@@ -188,6 +188,7 @@ public class EmployeeCtrl extends BaseController {
         employeeServices.apply(id);
         GsonUtils.printSuccess(response);
     }
+
     // 申请通过
     @ResponseBody
     @RequestMapping(value = "/applyAccept/{id}", method = RequestMethod.POST)
@@ -195,6 +196,7 @@ public class EmployeeCtrl extends BaseController {
         employeeServices.applyAccept(id);
         GsonUtils.printSuccess(response);
     }
+
     // 审核拒绝
     @ResponseBody
     @RequestMapping(value = "/applyDeny/{id}", method = RequestMethod.POST)
@@ -223,6 +225,22 @@ public class EmployeeCtrl extends BaseController {
     @RequestMapping(value = "/memberAnalysis2", method = RequestMethod.GET)
     public void memberAnalysis2(HttpServletResponse response) {
         List<Object[]> data = employeeServices.memberAnalysis2();
+        GsonUtils.printData(response, data);
+    }
+
+    //
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysisYear", params = "year", method = RequestMethod.GET)
+    public void memberAnalysisYear(@RequestParam Integer year, HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysisTotal(year);
+        GsonUtils.printData(response, data);
+    }
+
+    //
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysisTotal", method = RequestMethod.GET)
+    public void memberAnalysisTotal(HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysisTotal(null);
         GsonUtils.printData(response, data);
     }
 

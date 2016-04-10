@@ -13,7 +13,10 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -157,5 +160,79 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         return getSession()
                 .createQuery("select e.orgId,e.orgName,count(e.id) from " + Employee.class.getName() + " e where e.positionCode='LDTY' group by e.orgId,e.orgName")
                 .list();
+    }
+
+    @Override
+    public List<Object[]> memberAnalysisTotal(Integer year) {
+        List<Object[]> result = new ArrayList<Object[]>();
+
+        Map<String, Object[]> keys = new HashMap<String, Object[]>(12);
+        keys.put("11", new Object[]{"1","1",null,null,null,null,null,null,null});
+        keys.put("12", new Object[]{"1","2",null,null,null,null,null,null,null});
+        keys.put("13", new Object[]{"1","3",null,null,null,null,null,null,null});
+        keys.put("21", new Object[]{"2","1",null,null,null,null,null,null,null});
+        keys.put("22", new Object[]{"2","2",null,null,null,null,null,null,null});
+        keys.put("23", new Object[]{"2","3",null,null,null,null,null,null,null});
+        keys.put("3null", new Object[]{"3","null",null,null,null,null,null,null,null});
+        keys.put("4null", new Object[]{"4","null",null,null,null,null,null,null,null});
+        keys.put("5null", new Object[]{"5","null",null,null,null,null,null,null,null});
+        keys.put("6null", new Object[]{"6","null",null,null,null,null,null,null,null});
+        keys.put("7null", new Object[]{"7","null",null,null,null,null,null,null,null});
+        keys.put("8null", new Object[]{"8","null",null,null,null,null,null,null,null});
+
+
+        // 查询各个团组织的数量(3-5)
+        List<Object> data = getSession().createSQLQuery("select ly, ly2,tzz,tzz_name,count(tzz)" +
+                " from sys_emp where tzz is not null and tzz <> '' and ly is not null group by tzz,tzz_name,ly,ly2").list();
+        if (data != null && data.size() > 0) {
+            for (Object o : data) {
+                Object arr[] = (Object[]) o;
+                String key = arr[0].toString() + arr[1];
+                Object[] value = keys.get(key);
+                String tzz = arr[2].toString();
+                Object tzzCount = arr[4];
+                if ("1".equals(tzz)) {
+                    value[2] = tzzCount;
+                } else if ("2".equals(tzz)) {
+                    value[3] = tzzCount;
+                } else if ("3".equals(tzz)) {
+                    value[4] = tzzCount;
+                } else if ("4".equals(tzz)) {
+                    value[5] = tzzCount;
+                }
+
+            }
+        }
+
+
+        // 查询团员数量（6）
+        if (year != null) {
+            data = getSession().createSQLQuery("select ly ,ly2 ,count(position_code) from sys_emp where position_code ='TY' and year(start_work_date)=" + year + " and ly is not null group by tzz,ly,ly2").list();
+        } else {
+            data = getSession().createSQLQuery("select ly ,ly2 ,count(position_code) from sys_emp where position_code ='TY' and ly is not null group by tzz,ly,ly2").list();
+        }
+
+        if (data != null && data.size() > 0) {
+            for (Object o : data) {
+                Object arr[] = (Object[]) o;
+                String key = arr[0].toString() + arr[1];
+                Object[] value = keys.get(key);
+                value[6] = arr[2];
+            }
+        }
+
+        // 干部
+        data = getSession().createSQLQuery("select ly ,ly2 ,sum(ZZTGB_COUNTS),sum(JZTGB_COUNTS) from sys_emp where position_code ='NORMAL_MANAGER' and ly is not null group by ly,ly2").list();
+        if (data != null && data.size() > 0) {
+            for (Object o : data) {
+                Object arr[] = (Object[]) o;
+                String key = arr[0].toString() + arr[1];
+                Object[] value = keys.get(key);
+                value[7] = arr[2];
+                value[8] = arr[3];
+            }
+        }
+        result.addAll(keys.values());
+        return result;
     }
 }

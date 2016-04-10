@@ -99,5 +99,17 @@ public interface EmployeeService {
      */
     void applyDeny(String id);
 
-
+    /**
+     * 汇总
+     * @return []
+     * 1. 领域1
+     * 2. 领域2
+     * 3. 团组织ID
+     * 4. 团组织名称
+     * 5. 团组织数量
+     * 6. 团员数量
+     * 7. 专职数量
+     * 8. 兼职数量
+     */
+    List<Object[]> memberAnalysisTotal(Integer year);
 }
