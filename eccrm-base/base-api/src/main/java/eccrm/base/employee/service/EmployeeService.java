@@ -112,4 +112,25 @@ public interface EmployeeService {
      * 8. 兼职数量
      */
     List<Object[]> memberAnalysisTotal(Integer year);
+
+    /**
+     * 性别统计
+     *
+     * @return
+     */
+    List<Object[]> memberAnalysisSex();
+
+    /**
+     * 领域统计
+     *
+     * @return
+     */
+    List<Object[]> memberAnalysisLY();
+
+    /**
+     * 年龄段统计
+     *
+     * @return
+     */
+    List<Object[]> memberAnalysisAge();
 }

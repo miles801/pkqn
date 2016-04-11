@@ -227,6 +227,27 @@ public class EmployeeCtrl extends BaseController {
         GsonUtils.printData(response, data);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysisAge", method = RequestMethod.GET)
+    public void memberAnalysisAge(HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysisAge();
+        GsonUtils.printData(response, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysisSex", method = RequestMethod.GET)
+    public void memberAnalysisSex(HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysisSex();
+        GsonUtils.printData(response, data);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/memberAnalysisLY", method = RequestMethod.GET)
+    public void memberAnalysisLY(HttpServletResponse response) {
+        List<Object[]> data = employeeServices.memberAnalysisLY();
+        GsonUtils.printData(response, data);
+    }
+
     // 流动团员统计
     @ResponseBody
     @RequestMapping(value = "/memberAnalysis2", method = RequestMethod.GET)

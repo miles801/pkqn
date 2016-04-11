@@ -407,4 +407,19 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     public List<Object[]> memberAnalysisTotal(Integer year) {
         return employeesDao.memberAnalysisTotal(year);
     }
+
+    @Override
+    public List<Object[]> memberAnalysisSex() {
+        return employeesDao.memberAnalysisSex();
+    }
+
+    @Override
+    public List<Object[]> memberAnalysisLY() {
+        return employeesDao.memberAnalysisLY();
+    }
+
+    @Override
+    public List<Object[]> memberAnalysisAge() {
+        return employeesDao.memberAnalysisAge();
+    }
 }

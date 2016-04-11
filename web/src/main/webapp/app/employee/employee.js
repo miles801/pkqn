@@ -24,6 +24,12 @@
             memberAnalysis: {method: 'GET', params: {method: 'memberAnalysis'}, isArray: false},
             // 流动团员统计分析
             memberAnalysis2: {method: 'GET', params: {method: 'memberAnalysis2'}, isArray: false},
+            // 流动团员统计分析
+            memberAnalysisAge: {method: 'GET', params: {method: 'memberAnalysisAge'}, isArray: false},
+            // 流动团员统计分析
+            memberAnalysisSex: {method: 'GET', params: {method: 'memberAnalysisSex'}, isArray: false},
+            // 流动团员统计分析
+            memberAnalysisLY: {method: 'GET', params: {method: 'memberAnalysisLY'}, isArray: false},
             // 团员年度统计
             memberAnalysisYear: {method: 'GET', params: {method: 'memberAnalysisYear', year: '@year'}, isArray: false},
             // 团员所有统计
@@ -37,15 +43,6 @@
             get: {method: 'GET', params: {method: 'get', id: '@id'}, isArray: false},
             exists: {method: 'GET', params: {method: 'exists', extensionNumber: '@extensionNumber'}, isArray: false},
             getRTX: {method: 'GET', params: {method: 'RTX', extensionNumber: '@extensionNumber'}, isArray: false},
-
-            // 导出团员
-            exportTY: {method: 'GET', params: {method: 'export-ty'}, isArray: false},
-            // 导出非团员
-            exportFTY: {method: 'GET', params: {method: 'export-fty'}, isArray: false},
-            // 导出流动团员
-            exportLDTY: {method: 'GET', params: {method: 'export-ldty'}, isArray: false},
-            //分页查询，返回{total:,data:[{},{}]}
-            pageQuery: {method: 'POST', params: {method: 'page', limit: '@limit', start: '@start'}, isArray: false},
 
             // 带权限的分页查询
             permissionPageQuery: {

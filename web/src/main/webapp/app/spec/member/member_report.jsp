@@ -16,15 +16,32 @@
     <script>
         window.angular.contextPathURL = '<%=contextPath%>';
     </script>
+    <style>
+        .row > div {
+            width: 400px;
+            height: 400px;
+            float: left;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="main" ng-app="spec.member.report" ng-controller="Ctrl" style="overflow: auto;">
     <div class="row" style="margin-top:20px;">
-        <div class="col-6 text-center">
+        <div class="text-center">
             <div id="timesPie" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
         </div>
-        <div class="col-6 text-center">
+        <div class="text-center">
             <div id="ldtyChart" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
+        </div>
+        <div class="text-center">
+            <div id="ageChart" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
+        </div>
+        <div class="text-center">
+            <div id="sexChart" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
+        </div>
+        <div class="text-center">
+            <div id="lyChart" style="width: 400px;height:350px;border: 1px solid #dcdcdc;margin:0 auto;"></div>
         </div>
     </div>
 </div>

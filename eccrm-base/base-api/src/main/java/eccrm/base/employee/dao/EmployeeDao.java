@@ -82,4 +82,10 @@ public interface EmployeeDao {
      * 8. 兼职数量
      */
     List<Object[]> memberAnalysisTotal(Integer year);
+
+    List<Object[]> memberAnalysisSex();
+
+    List<Object[]> memberAnalysisLY();
+
+    List<Object[]> memberAnalysisAge();
 }

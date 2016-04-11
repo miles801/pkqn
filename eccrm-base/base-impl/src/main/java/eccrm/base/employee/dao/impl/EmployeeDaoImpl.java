@@ -235,4 +235,27 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         result.addAll(keys.values());
         return result;
     }
+
+    @Override
+    public List<Object[]> memberAnalysisSex() {
+        return getSession().createSQLQuery("select sex,count(id) from sys_emp where position_code='TY' group by sex")
+                .list();
+    }
+
+    @Override
+    public List<Object[]> memberAnalysisLY() {
+        return getSession().createSQLQuery("select ly,count(id) from sys_emp where position_code='TY' group by ly")
+                .list();
+    }
+
+    @Override
+    public List<Object[]> memberAnalysisAge() {
+        return getSession().createSQLQuery("select " +
+                "(select count(id) from sys_emp where position_code='TY' AND age BETWEEN 14 AND 18 ) as age1," +
+                "(select count(id) from sys_emp where position_code='TY' AND age BETWEEN 19 AND 23 ) as age2," +
+                "(select count(id) from sys_emp where position_code='TY' AND age BETWEEN 24 AND 28 ) as age3," +
+                "(select count(id) from sys_emp where position_code='TY' AND age > 28 ) as age4 " +
+                " from sys_emp limit 1")
+                .list();
+    }
 }
