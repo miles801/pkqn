@@ -12,7 +12,8 @@
     app.controller('Ctrl', function ($scope, EmployeeConstant, OrgTree, CommonUtils, ModalFactory, AlertFactory,
                                      EmployeeService, ParameterLoader, Parameter) {
         $scope.OrgztreeOptions = OrgTree.dynamicTree(function (node) {
-            $scope.condition.organization = {id: node.id, name: node.name};
+            $scope.condition.orgId = node.id;
+            $scope.condition.orgName = node.name;
         });
 
         $scope.years = [{name: '不限制'}];
