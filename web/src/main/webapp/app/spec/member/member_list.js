@@ -11,11 +11,46 @@
     ]);
     app.controller('Ctrl', function ($scope, EmployeeConstant, OrgTree, CommonUtils, ModalFactory, AlertFactory,
                                      EmployeeService, ParameterLoader, Parameter) {
+        $scope.orgPermission = false;
+        $scope.lyPermission = false;
+        $scope.condition = {
+            orderBy: 'createdDatetime',
+            reverse: 'false',
+            positionCode: 'TY'
+        };
+
+        // 获得个人信息
+        var defer = CommonUtils.defer();
+        EmployeeService.get({id: CommonUtils.loginContext().id}, function (e) {
+            e = e.data || {};
+            defer.resolve(true);
+            if (e.positionCode == 'NORMAL_MANAGER') {
+                $scope.condition.orgId = e.orgId;
+                $scope.condition.orgName = e.orgName;
+                $scope.condition.tzz = e.tzz;
+                $scope.condition.tzzName = e.tzzName;
+                $scope.condition.ly = e.ly;
+                $scope.condition.ly2 = e.ly2;
+                $scope.lyChange(e.ly2);
+            } else if (e.positionCode == 'EJGLY') {
+                $scope.condition.orgId = e.orgId;
+                $scope.condition.orgName = e.orgName;
+                $scope.lyPermission = true;
+            } else if (e.positionCode == 'SUPER_MANAGER') {
+                $scope.orgPermission = true;
+            }
+
+        });
+
         $scope.OrgztreeOptions = OrgTree.dynamicTree(function (node) {
             $scope.condition.orgId = node.id;
             $scope.condition.orgName = node.name;
         });
 
+        $scope.clearOrg = function () {
+            $scope.condition.orgId = null;
+            $scope.condition.orgName = null;
+        };
         $scope.years = [{name: '不限制'}];
         var year = new Date().getFullYear();
         for (var i = 0; i < 28; i++) {
@@ -55,12 +90,6 @@
 
         };
         $scope.ly2 = [{name: '全部'}];
-
-        $scope.condition = {
-            orderBy: 'createdDatetime',
-            reverse: 'false',
-            positionCode: 'TY'
-        };
 
         // 领域
         ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
@@ -115,7 +144,7 @@
                 });
             },
             finishInit: function () {
-                this.load();
+                defer.promise.then(this.query);
             }
         };
 

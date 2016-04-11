@@ -58,11 +58,11 @@ Date: 2014-10-15 14:47:37
                         </div>
                         <div class="col-2-half">
                             <input type="text" class="col-12" ztree-single="OrgztreeOptions" name="orgName"
-                                   ng-model="condition.orgName">
-                                    <span class="add-on" ng-cloak>
-                                       <i class="icons circle_fork icon" title="清空"
-                                          ng-click="clearOrg();"></i>
-                                    </span>
+                                   ng-model="condition.orgName" ng-disabled="!orgPermission">
+                                <span class="add-on" ng-cloak ng-show="orgPermission">
+                                   <i class="icons circle_fork icon" title="清空"
+                                      ng-click="clearOrg();"></i>
+                                </span>
                         </div>
 
                         <div class="form-label col-1-half">
@@ -79,12 +79,12 @@ Date: 2014-10-15 14:47:37
                         </div>
                         <select class="col-2-half" name="ly" ng-model="condition.ly" ng-change="lyChange();"
                                 ng-options="foo.value as foo.name for foo in ly"
-                                ng-cloak></select>
+                                ng-cloak ng-disabled="!lyPermission"></select>
                         <div class="form-label col-1-half">
                             <label>子领域:</label>
                         </div>
                         <select class="col-2-half" ng-model="condition.ly2"
-                                ng-options="foo.value as foo.name for foo in ly2"></select>
+                                ng-options="foo.value as foo.name for foo in ly2" ng-disabled="!lyPermission"></select>
                         <div class="form-label col-1-half">
                             <label>入团年份:</label>
                         </div>
