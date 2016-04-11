@@ -115,6 +115,18 @@
                         </div>
                         <div class="row">
                             <div class="form-label col-1-half">
+                                <label validate-error="form.tzz">团组织:</label>
+                            </div>
+                            <select class="col-2-half" name="tzz" ng-model="employee.tzz"
+                                    ng-options="foo.value as foo.name for foo in tzz"
+                                    validate validate-required></select>
+                            <div class="form-label col-1-half">
+                                <label validate-error="form.tzzName">团组织名称:</label>
+                            </div>
+                            <input class="col-2-half" type="text" ng-model="employee.tzzName" name="tzzName"/>
+                        </div>
+                        <div class="row">
+                            <div class="form-label col-1-half">
                                 <label validate-error="form.idNo">身份证号:</label>
                             </div>
                             <input class="col-2-half" type="text" name="idNo"

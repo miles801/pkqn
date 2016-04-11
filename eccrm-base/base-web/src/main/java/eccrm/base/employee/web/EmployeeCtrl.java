@@ -176,8 +176,9 @@ public class EmployeeCtrl extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/import", params = {"attachmentIds"}, method = RequestMethod.POST)
-    public void importData(@RequestParam String attachmentIds, HttpServletResponse response) {
-        employeeServices.importData(attachmentIds.split(","));
+    public void importData(@RequestParam String attachmentIds, HttpServletRequest request, HttpServletResponse response) {
+        Employee employee = GsonUtils.wrapDataToEntity(request, Employee.class);
+        employeeServices.importData(attachmentIds.split(","), employee);
         GsonUtils.printSuccess(response);
     }
 

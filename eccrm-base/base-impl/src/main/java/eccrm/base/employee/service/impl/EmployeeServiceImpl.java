@@ -271,7 +271,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
     }
 
     @Override
-    public void importData(String[] attachmentIds) {
+    public void importData(String[] attachmentIds, final Employee emp) {
         Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
         Assert.notEmpty(attachmentIds, "数据文件不能为空，请重试!");
 
@@ -293,6 +293,9 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
             }
             configuration.setPath(newFilePath);
             final BusinessParamItemDao bpiDao = SystemContainer.getInstance().getBean(BusinessParamItemDao.class);
+
+            // 获得当前人的信息
+
             configuration.setHandler(new Handler<EmployeeDTO>() {
                 @Override
                 public void execute(EmployeeDTO dto) {
@@ -323,10 +326,19 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
                     }
                     BeanCopyUtils.copyProperties(dto, employee);
                     employee.setPositionCode("TY"); // 导入的都是团员
-                    OrganizationDao orgDao = SystemContainer.getInstance().getBean(OrganizationDao.class);
-                    List<Organization> orgs = orgDao.findByName(orgName);
-                    Assert.notEmpty(orgs, "县区[" + orgName + "]不存在!");
-                    employee.setOrgId(orgs.get(0).getId());
+                    if (emp != null && StringUtils.isNotEmpty(emp.getLy())) {
+                        employee.setLy(emp.getLy());
+                        employee.setLy2(emp.getLy2());
+                        employee.setTzz(emp.getTzz());
+                        employee.setTzzName(emp.getTzzName());
+                        employee.setOrgId(emp.getOrgId());
+                        employee.setOrgName(emp.getOrgName());
+                    } else {
+                        OrganizationDao orgDao = SystemContainer.getInstance().getBean(OrganizationDao.class);
+                        List<Organization> orgs = orgDao.findByName(orgName);
+                        Assert.notEmpty(orgs, "县区[" + orgName + "]不存在!");
+                        employee.setOrgId(orgs.get(0).getId());
+                    }
                     employee.setStatus("2");
                     save(employee);
                 }

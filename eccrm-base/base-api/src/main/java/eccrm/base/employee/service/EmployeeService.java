@@ -61,7 +61,13 @@ public interface EmployeeService {
      */
     PageVo permissionPageQuery(EmployeeBo bo);
 
-    void importData(String[] attachmentIds);
+    /**
+     * 导入员工信息
+     *
+     * @param attachmentIds 附件ID列表
+     * @param emp           额外需要指定的信息
+     */
+    void importData(String[] attachmentIds, Employee emp);
 
     /**
      * 清理数据
@@ -79,12 +85,14 @@ public interface EmployeeService {
 
     /**
      * 流动团员统计
+     *
      * @return
      */
     List<Object[]> memberAnalysis2();
 
     /**
      * 申请团员证审核
+     *
      * @param id 员工ID
      */
     void apply(String id);
@@ -101,6 +109,7 @@ public interface EmployeeService {
 
     /**
      * 汇总
+     *
      * @return []
      * 1. 领域1
      * 2. 领域2

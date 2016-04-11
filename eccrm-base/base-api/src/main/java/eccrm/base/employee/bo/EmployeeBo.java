@@ -62,10 +62,31 @@ public class EmployeeBo implements BO {
     private String honor;
     private Integer year;
 
+    @Condition
+    private String tzz;
+    @Condition
+    private String tzzName;
+
     @Condition(matchMode = MatchModel.GE, target = "beginWorkDate")
     private Date beginWorkDate1;
     @Condition(matchMode = MatchModel.LT, target = "beginWorkDate")
     private Date beginWorkDate2;
+
+    public String getTzz() {
+        return tzz;
+    }
+
+    public void setTzz(String tzz) {
+        this.tzz = tzz;
+    }
+
+    public String getTzzName() {
+        return tzzName;
+    }
+
+    public void setTzzName(String tzzName) {
+        this.tzzName = tzzName;
+    }
 
     public Date getBeginWorkDate2() {
         return beginWorkDate2;

@@ -14,6 +14,11 @@
         $scope.hasEditPermission = false;
 
 
+        // 团组织
+        ParameterLoader.loadBusinessParam('SPEC_TZZ', function (data) {
+            $scope.tzz = data || [];
+            $scope.tzz.unshift({name: '请选择...'});
+        });
         // 领域
         ParameterLoader.loadBusinessParam('SPEC_LY', function (data) {
             $scope.ly = data || [];
