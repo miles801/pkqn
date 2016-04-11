@@ -25,7 +25,7 @@
             // 流动团员统计分析
             memberAnalysis2: {method: 'GET', params: {method: 'memberAnalysis2'}, isArray: false},
             // 团员年度统计
-            memberAnalysisYear: {method: 'GET', params: {method: 'memberAnalysisYear',year:'@year'}, isArray: false},
+            memberAnalysisYear: {method: 'GET', params: {method: 'memberAnalysisYear', year: '@year'}, isArray: false},
             // 团员所有统计
             memberAnalysisTotal: {method: 'GET', params: {method: 'memberAnalysisTotal'}, isArray: false},
             // 清理
@@ -38,6 +38,12 @@
             exists: {method: 'GET', params: {method: 'exists', extensionNumber: '@extensionNumber'}, isArray: false},
             getRTX: {method: 'GET', params: {method: 'RTX', extensionNumber: '@extensionNumber'}, isArray: false},
 
+            // 导出团员
+            exportTY: {method: 'GET', params: {method: 'export-ty'}, isArray: false},
+            // 导出非团员
+            exportFTY: {method: 'GET', params: {method: 'export-fty'}, isArray: false},
+            // 导出流动团员
+            exportLDTY: {method: 'GET', params: {method: 'export-ldty'}, isArray: false},
             //分页查询，返回{total:,data:[{},{}]}
             pageQuery: {method: 'POST', params: {method: 'page', limit: '@limit', start: '@start'}, isArray: false},
 

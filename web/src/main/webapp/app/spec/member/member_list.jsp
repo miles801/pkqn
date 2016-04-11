@@ -104,6 +104,7 @@ Date: 2014-10-15 14:47:37
                 </div>
                 <div class="header-button">
                     <button type="button" class="btn btn-sm btn-green btn-min" ng-click="clear()">清理</button>
+                    <button type="button" class="btn btn-sm btn-green btn-min" ng-click="exportData()">导出</button>
                 </div>
             </div>
             <div class="block-content">

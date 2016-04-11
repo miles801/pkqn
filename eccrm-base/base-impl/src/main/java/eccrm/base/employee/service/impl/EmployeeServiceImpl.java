@@ -241,6 +241,7 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
         vo.setLy2Name(parameterContainer.getBusinessName("SPEC_LY2", employee.getLy2()));
         // 荣誉称号
         vo.setHonorName(parameterContainer.getBusinessName("SPEC_HONOR", employee.getHonor()));
+        vo.setIsWorkingName((employee.getWorking() != null && employee.getWorking()) ? "是" : "否");
 
     }
 

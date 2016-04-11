@@ -1,7 +1,13 @@
 package eccrm.base.employee.web;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.michael.poi.exp.ExportEngine;
 import com.ycrl.core.pager.PageVo;
 import com.ycrl.core.web.BaseController;
+import com.ycrl.utils.gson.DateStringConverter;
 import com.ycrl.utils.gson.GsonUtils;
 import com.ycrl.utils.string.StringUtils;
 import eccrm.base.employee.bo.EmployeeBo;
@@ -19,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -242,6 +249,88 @@ public class EmployeeCtrl extends BaseController {
     public void memberAnalysisTotal(HttpServletResponse response) {
         List<Object[]> data = employeeServices.memberAnalysisTotal(null);
         GsonUtils.printData(response, data);
+    }
+
+
+    @RequestMapping(value = "/export-ty", method = RequestMethod.GET)
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        EmployeeBo bo = GsonUtils.wrapDataToEntity(request, EmployeeBo.class);
+        bo.setPositionCode("TY");
+        PageVo pageVo = employeeServices.query(bo);
+        List data = pageVo.getData();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateStringConverter("yyyy-MM-dd"))
+                .create();
+        String json = gson.toJson(data);
+        JsonElement element = gson.fromJson(json, JsonElement.class);
+        JsonObject o = new JsonObject();
+        o.add("c", element);
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("团员数据.xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", disposition);
+        try {
+            new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("ty_export.xlsx"), o);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/export-fty", method = RequestMethod.GET)
+    public void exportFTY(HttpServletRequest request, HttpServletResponse response) {
+        EmployeeBo bo = GsonUtils.wrapDataToEntity(request, EmployeeBo.class);
+        bo.setPositionCode("FTY");
+        PageVo pageVo = employeeServices.query(bo);
+        List data = pageVo.getData();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateStringConverter("yyyy-MM-dd"))
+                .create();
+        String json = gson.toJson(data);
+        JsonElement element = gson.fromJson(json, JsonElement.class);
+        JsonObject o = new JsonObject();
+        o.add("c", element);
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("非团员青年数据.xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", disposition);
+        try {
+            new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("fty_export.xlsx"), o);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/export-ldty", method = RequestMethod.GET)
+    public void exportLDTY(HttpServletRequest request, HttpServletResponse response) {
+        EmployeeBo bo = GsonUtils.wrapDataToEntity(request, EmployeeBo.class);
+        bo.setPositionCode("LDTY");
+        PageVo pageVo = employeeServices.query(bo);
+        List data = pageVo.getData();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateStringConverter("yyyy-MM-dd"))
+                .create();
+        String json = gson.toJson(data);
+        JsonElement element = gson.fromJson(json, JsonElement.class);
+        JsonObject o = new JsonObject();
+        o.add("c", element);
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("流动团员数据.xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", disposition);
+        try {
+            new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("ldty_export.xlsx"), o);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

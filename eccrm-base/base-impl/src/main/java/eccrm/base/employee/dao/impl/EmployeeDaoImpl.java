@@ -207,9 +207,9 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
 
         // 查询团员数量（6）
         if (year != null) {
-            data = getSession().createSQLQuery("select ly ,ly2 ,count(position_code) from sys_emp where position_code ='TY' and year(start_work_date)=" + year + " and ly is not null group by tzz,ly,ly2").list();
+            data = getSession().createSQLQuery("select ly ,ly2 ,count(position_code) from sys_emp where position_code ='TY' and year(start_work_date)=" + year + " and ly is not null group by ly,ly2").list();
         } else {
-            data = getSession().createSQLQuery("select ly ,ly2 ,count(position_code) from sys_emp where position_code ='TY' and ly is not null group by tzz,ly,ly2").list();
+            data = getSession().createSQLQuery("select ly ,ly2 ,count(position_code) from sys_emp where position_code ='TY' and ly is not null group by ly,ly2").list();
         }
 
         if (data != null && data.size() > 0) {

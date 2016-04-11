@@ -68,7 +68,16 @@ public class EmployeeVo extends CommonVo {
     private String honor;           // 荣誉称号
     private String honorName;
     private Boolean isWorking;     // 是否在本县区从业
+    private String isWorkingName;
     private Integer age;
+
+    public String getIsWorkingName() {
+        return isWorkingName;
+    }
+
+    public void setIsWorkingName(String isWorkingName) {
+        this.isWorkingName = isWorkingName;
+    }
 
     public String getXueliName() {
         return xueliName;
