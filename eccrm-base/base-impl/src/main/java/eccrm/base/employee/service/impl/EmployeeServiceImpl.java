@@ -300,8 +300,10 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
                 @Override
                 public void execute(EmployeeDTO dto) {
                     String orgName = dto.getOrgName();
+                    if (StringUtils.isEmpty(orgName)) {
+                        orgName = emp.getOrgName();
+                    }
                     Assert.hasText(orgName, String.format("数据错误!请指明团员所属的县区,第%d行!", RuntimeContext.get().getRowIndex() + 1));
-
                     Employee employee = new Employee();
                     employee.setId(UUIDGenerator.generate());
                     // 领域

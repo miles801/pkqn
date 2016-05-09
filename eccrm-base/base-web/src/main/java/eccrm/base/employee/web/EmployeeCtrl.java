@@ -301,6 +301,34 @@ public class EmployeeCtrl extends BaseController {
         }
     }
 
+    @RequestMapping(value = "/export-report", params = "year", method = RequestMethod.GET)
+    public void exportReport(@RequestParam Integer year, HttpServletRequest request, HttpServletResponse response) {
+        if (year == 0) {
+            year = null;
+        }
+        List<Object[]> data = employeeServices.memberAnalysisTotal(year);
+        JsonObject o = new JsonObject();
+        for (Object[] obj : data) {
+            String key = obj[0].toString() + obj[1].toString();
+            for (int i = 0; i < 7; i++) {
+                o.addProperty(key + i, obj[i + 2] == null ? "" : obj[i + 2].toString());
+            }
+        }
+        String disposition = null;//
+        try {
+            disposition = "attachment;filename=" + URLEncoder.encode("团员数据汇总-" + (year == null ? "全部" : year) + ".xlsx", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", disposition);
+        try {
+            new ExportEngine().export(response.getOutputStream(), this.getClass().getClassLoader().getResourceAsStream("member_report.xlsx"), o);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(value = "/export-fty", method = RequestMethod.GET)
     public void exportFTY(HttpServletRequest request, HttpServletResponse response) {
         EmployeeBo bo = GsonUtils.wrapDataToEntity(request, EmployeeBo.class);

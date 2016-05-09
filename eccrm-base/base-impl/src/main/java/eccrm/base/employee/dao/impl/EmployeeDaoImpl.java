@@ -167,18 +167,18 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         List<Object[]> result = new ArrayList<Object[]>();
 
         Map<String, Object[]> keys = new HashMap<String, Object[]>(12);
-        keys.put("11", new Object[]{"1","1",null,null,null,null,null,null,null});
-        keys.put("12", new Object[]{"1","2",null,null,null,null,null,null,null});
-        keys.put("13", new Object[]{"1","3",null,null,null,null,null,null,null});
-        keys.put("21", new Object[]{"2","1",null,null,null,null,null,null,null});
-        keys.put("22", new Object[]{"2","2",null,null,null,null,null,null,null});
-        keys.put("23", new Object[]{"2","3",null,null,null,null,null,null,null});
-        keys.put("3null", new Object[]{"3","null",null,null,null,null,null,null,null});
-        keys.put("4null", new Object[]{"4","null",null,null,null,null,null,null,null});
-        keys.put("5null", new Object[]{"5","null",null,null,null,null,null,null,null});
-        keys.put("6null", new Object[]{"6","null",null,null,null,null,null,null,null});
-        keys.put("7null", new Object[]{"7","null",null,null,null,null,null,null,null});
-        keys.put("8null", new Object[]{"8","null",null,null,null,null,null,null,null});
+        keys.put("11", new Object[]{"1", "1", null, null, null, null, null, null, null});
+        keys.put("12", new Object[]{"1", "2", null, null, null, null, null, null, null});
+        keys.put("13", new Object[]{"1", "3", null, null, null, null, null, null, null});
+        keys.put("21", new Object[]{"2", "1", null, null, null, null, null, null, null});
+        keys.put("22", new Object[]{"2", "2", null, null, null, null, null, null, null});
+        keys.put("23", new Object[]{"2", "3", null, null, null, null, null, null, null});
+        keys.put("3", new Object[]{"3", "", null, null, null, null, null, null, null});
+        keys.put("4", new Object[]{"4", "", null, null, null, null, null, null, null});
+        keys.put("5", new Object[]{"5", "", null, null, null, null, null, null, null});
+        keys.put("6", new Object[]{"6", "", null, null, null, null, null, null, null});
+        keys.put("7", new Object[]{"7", "", null, null, null, null, null, null, null});
+        keys.put("8", new Object[]{"8", "", null, null, null, null, null, null, null});
 
 
         // 查询各个团组织的数量(3-5)
@@ -187,7 +187,7 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         if (data != null && data.size() > 0) {
             for (Object o : data) {
                 Object arr[] = (Object[]) o;
-                String key = arr[0].toString() + arr[1];
+                String key = arr[0].toString() + (arr[1] == null ? "" : arr[1]);
                 Object[] value = keys.get(key);
                 String tzz = arr[2].toString();
                 Object tzzCount = arr[4];
@@ -215,7 +215,7 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         if (data != null && data.size() > 0) {
             for (Object o : data) {
                 Object arr[] = (Object[]) o;
-                String key = arr[0].toString() + arr[1];
+                String key = arr[0].toString() + (arr[1] == null ? "" : arr[1]);
                 Object[] value = keys.get(key);
                 value[6] = arr[2];
             }
@@ -226,7 +226,7 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         if (data != null && data.size() > 0) {
             for (Object o : data) {
                 Object arr[] = (Object[]) o;
-                String key = arr[0].toString() + arr[1];
+                String key = arr[0].toString() + (arr[1] == null ? "" : arr[1]);
                 Object[] value = keys.get(key);
                 value[7] = arr[2];
                 value[8] = arr[3];

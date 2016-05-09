@@ -46,7 +46,7 @@ public class EmployeeBo implements BO {
     @Condition
     private String duty;
     @Condition
-    private String statue;
+    private String status;
 
     @Condition(matchMode = MatchModel.GE, target = "age")
     private Integer age1;
@@ -208,12 +208,13 @@ public class EmployeeBo implements BO {
         this.duty = duty;
     }
 
-    public String getStatue() {
-        return statue;
+
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatue(String statue) {
-        this.statue = statue;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Integer getAge1() {

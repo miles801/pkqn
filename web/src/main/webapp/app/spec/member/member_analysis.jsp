@@ -26,6 +26,7 @@
             </div>
             <select ng-model="year" style="width: 200px;" ng-change="query();" ng-options="foo as foo for foo in years">
             </select>
+            <button type="button" class="btn btn-blue" style="margin-left:20px;" ng-click="exportData()">导出</button>
         </div>
     </div>
     <div class="table-responsive panel panel-table  first-min">
@@ -109,63 +110,63 @@
             </tr>
             <tr>
                 <td colspan="2">国有企业</td>
-                <td>{{beans['3null'][2]}}</td>
-                <td>{{beans['3null'][3]}}</td>
-                <td>{{beans['3null'][4]}}</td>
-                <td>{{beans['3null'][5]}}</td>
-                <td>{{beans['3null'][6]}}</td>
-                <td>{{beans['3null'][7]}}</td>
-                <td>{{beans['3null'][8]}}</td>
+                <td>{{beans['3'][2]}}</td>
+                <td>{{beans['3'][3]}}</td>
+                <td>{{beans['3'][4]}}</td>
+                <td>{{beans['3'][5]}}</td>
+                <td>{{beans['3'][6]}}</td>
+                <td>{{beans['3'][7]}}</td>
+                <td>{{beans['3'][8]}}</td>
             </tr>
             <tr>
                 <td colspan="2">非公企业</td>
-                <td>{{beans['4null'][2]}}</td>
-                <td>{{beans['4null'][3]}}</td>
-                <td>{{beans['4null'][4]}}</td>
-                <td>{{beans['4null'][5]}}</td>
-                <td>{{beans['4null'][6]}}</td>
-                <td>{{beans['4null'][7]}}</td>
-                <td>{{beans['4null'][8]}}</td>
+                <td>{{beans['4'][2]}}</td>
+                <td>{{beans['4'][3]}}</td>
+                <td>{{beans['4'][4]}}</td>
+                <td>{{beans['4'][5]}}</td>
+                <td>{{beans['4'][6]}}</td>
+                <td>{{beans['4'][7]}}</td>
+                <td>{{beans['4'][8]}}</td>
             </tr>
             <tr>
                 <td colspan="2">机关事业单位</td>
-                <td>{{beans['5null'][2]}}</td>
-                <td>{{beans['5null'][3]}}</td>
-                <td>{{beans['5null'][4]}}</td>
-                <td>{{beans['5null'][5]}}</td>
-                <td>{{beans['5null'][6]}}</td>
-                <td>{{beans['5null'][7]}}</td>
-                <td>{{beans['5null'][8]}}</td>
+                <td>{{beans['5'][2]}}</td>
+                <td>{{beans['5'][3]}}</td>
+                <td>{{beans['5'][4]}}</td>
+                <td>{{beans['5'][5]}}</td>
+                <td>{{beans['5'][6]}}</td>
+                <td>{{beans['5'][7]}}</td>
+                <td>{{beans['5'][8]}}</td>
             </tr>
             <tr>
                 <td colspan="2">社会组织</td>
-                <td>{{beans['6null'][2]}}</td>
-                <td>{{beans['6null'][3]}}</td>
-                <td>{{beans['6null'][4]}}</td>
-                <td>{{beans['6null'][5]}}</td>
-                <td>{{beans['6null'][6]}}</td>
-                <td>{{beans['6null'][7]}}</td>
-                <td>{{beans['6null'][8]}}</td>
+                <td>{{beans['6'][2]}}</td>
+                <td>{{beans['6'][3]}}</td>
+                <td>{{beans['6'][4]}}</td>
+                <td>{{beans['6'][5]}}</td>
+                <td>{{beans['6'][6]}}</td>
+                <td>{{beans['6'][7]}}</td>
+                <td>{{beans['6'][8]}}</td>
             </tr>
             <tr>
                 <td colspan="2">农 村</td>
-                <td>{{beans['7null'][2]}}</td>
-                <td>{{beans['7null'][3]}}</td>
-                <td>{{beans['7null'][4]}}</td>
-                <td>{{beans['7null'][5]}}</td>
-                <td>{{beans['7null'][6]}}</td>
-                <td>{{beans['7null'][7]}}</td>
-                <td>{{beans['7null'][8]}}</td>
+                <td>{{beans['7'][2]}}</td>
+                <td>{{beans['7'][3]}}</td>
+                <td>{{beans['7'][4]}}</td>
+                <td>{{beans['7'][5]}}</td>
+                <td>{{beans['7'][6]}}</td>
+                <td>{{beans['7'][7]}}</td>
+                <td>{{beans['7'][8]}}</td>
             </tr>
             <tr>
                 <td colspan="2">城市社区</td>
-                <td>{{beans['8null'][2]}}</td>
-                <td>{{beans['8null'][3]}}</td>
-                <td>{{beans['8null'][4]}}</td>
-                <td>{{beans['8null'][5]}}</td>
-                <td>{{beans['8null'][6]}}</td>
-                <td>{{beans['8null'][7]}}</td>
-                <td>{{beans['8null'][8]}}</td>
+                <td>{{beans['8'][2]}}</td>
+                <td>{{beans['8'][3]}}</td>
+                <td>{{beans['8'][4]}}</td>
+                <td>{{beans['8'][5]}}</td>
+                <td>{{beans['8'][6]}}</td>
+                <td>{{beans['8'][7]}}</td>
+                <td>{{beans['8'][8]}}</td>
             </tr>
         </table>
     </div>

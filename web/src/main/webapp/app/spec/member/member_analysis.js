@@ -26,12 +26,12 @@
             '21': [],
             '22': [],
             '23': [],
-            '3null': [],
-            '4null': [],
-            '5null': [],
-            '6null': [],
-            '7null': [],
-            '8null': []
+            '3': [],
+            '4': [],
+            '5': [],
+            '6': [],
+            '7': [],
+            '8': []
         };
         $scope.query = function () {
             var method = 'memberAnalysisTotal';
@@ -47,7 +47,14 @@
             CommonUtils.loading(promise)
         };
 
+        // 导出信息
+        $scope.exportData = function () {
+            window.open(CommonUtils.contextPathURL('/base/employee/export-report?year=' + ($scope.year == '不限' ? 0 : $scope.year)))
+        };
+
+
         $scope.query();
     });
+
 
 })(window, angular, jQuery);
