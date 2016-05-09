@@ -53,13 +53,13 @@
                 }
             ]
         };
-        var ldtyOption = angular.extend({}, timesPieOption);
+        var ldtyOption = $.extend(true, {}, timesPieOption);
         ldtyOption.title.text = '各县（市）区流动团员统计';
-        var sexOption = angular.extend({}, timesPieOption);
+        var sexOption = $.extend(true, {}, timesPieOption);
         sexOption.title.text = '团员男女比例统计';
-        var ageOption = angular.extend({}, timesPieOption);
+        var ageOption = $.extend(true, {}, timesPieOption);
         ageOption.title.text = '团员年龄段比例统计';
-        var lyOption = angular.extend({}, timesPieOption);
+        var lyOption = $.extend(true, {}, timesPieOption);
         lyOption.title.text = '各领域团员比例统计';
 
         var lyDefer = CommonUtils.defer();
@@ -105,10 +105,10 @@
                 var series = [];
                 var total = 0;
                 angular.forEach(data.data || [], function (o) {
-                    var sex = o[1];
+                    var sex = o[0];
                     var name;
                     if (!sex) {
-                        name = '未知';
+                        name = '未设置';
                     } else if (sex == 'BP_MAN') {
                         name = '男';
                     } else {
