@@ -27,9 +27,13 @@
         });
 
         // 领域改变时，加载子领域
-        $scope.lyChange = function () {
+        $scope.lyChange = function (ly2) {
             $scope.ly2 = [];
-            $scope.extra.ly2 = '';
+            $scope.extra.ly2 = ly2 || '';
+            if (!$scope.extra.ly) {
+                $scope.ly2.push({name: '请选择..', value: ''});
+                return;
+            }
             Parameter.fetchBusinessCascade('SPEC_LY', $scope.extra.ly, function (data) {
                 $scope.ly2 = data.data || [];
                 $scope.ly2.unshift({name: '请选择..', value: ''});

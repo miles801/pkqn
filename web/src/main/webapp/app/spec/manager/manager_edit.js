@@ -53,6 +53,10 @@
         $scope.lyChange = function (ly2) {
             $scope.ly2 = [];
             $scope.employee.ly2 = ly2 || '';
+            if (!$scope.employee.ly) {
+                $scope.ly2.push({name: '请选择..', value: ''});
+                return;
+            }
             Parameter.fetchBusinessCascade('SPEC_LY', $scope.employee.ly, function (data) {
                 $scope.ly2 = data.data || [];
                 $scope.ly2.unshift({name: '请选择..', value: ''});

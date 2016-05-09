@@ -170,9 +170,9 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
         keys.put("11", new Object[]{"1", "1", null, null, null, null, null, null, null});
         keys.put("12", new Object[]{"1", "2", null, null, null, null, null, null, null});
         keys.put("13", new Object[]{"1", "3", null, null, null, null, null, null, null});
-        keys.put("21", new Object[]{"2", "1", null, null, null, null, null, null, null});
-        keys.put("22", new Object[]{"2", "2", null, null, null, null, null, null, null});
-        keys.put("23", new Object[]{"2", "3", null, null, null, null, null, null, null});
+        keys.put("24", new Object[]{"2", "4", null, null, null, null, null, null, null});
+        keys.put("25", new Object[]{"2", "5", null, null, null, null, null, null, null});
+        keys.put("26", new Object[]{"2", "6", null, null, null, null, null, null, null});
         keys.put("3", new Object[]{"3", "", null, null, null, null, null, null, null});
         keys.put("4", new Object[]{"4", "", null, null, null, null, null, null, null});
         keys.put("5", new Object[]{"5", "", null, null, null, null, null, null, null});
@@ -182,15 +182,15 @@ public class EmployeeDaoImpl extends HibernateDaoHelper implements EmployeeDao {
 
 
         // 查询各个团组织的数量(3-5)
-        List<Object> data = getSession().createSQLQuery("select ly, ly2,tzz,tzz_name,count(tzz)" +
-                " from sys_emp where tzz is not null and tzz <> '' and ly is not null group by tzz,tzz_name,ly,ly2").list();
+        List<Object> data = getSession().createSQLQuery("select t.ly,t.ly2,tzz,count(t.tzz_name) from (select ly, ly2,tzz,tzz_name" +
+                " from sys_emp where tzz is not null and tzz <> '' and ly is not null group by tzz,tzz_name,ly,ly2) t group by t.ly,t.ly2,t.tzz").list();
         if (data != null && data.size() > 0) {
             for (Object o : data) {
                 Object arr[] = (Object[]) o;
                 String key = arr[0].toString() + (arr[1] == null ? "" : arr[1]);
                 Object[] value = keys.get(key);
                 String tzz = arr[2].toString();
-                Object tzzCount = arr[4];
+                Object tzzCount = arr[3];
                 if ("1".equals(tzz)) {
                     value[2] = tzzCount;
                 } else if ("2".equals(tzz)) {

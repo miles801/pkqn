@@ -76,8 +76,8 @@
                             <div class="form-label col-1-half">
                                 <label validate-error="form.employeeCode">登录用户名:</label>
                             </div>
-                            <input class="col-2-half" type="text" name="employeeCode" validate validate-required
-                                   validate-max-length="15" ng-model="employee.employeeCode" ng-disabled="pageType!='add'"/>
+                            <input class="col-2-half" type="text" name="employeeCode" validate validate-max-length="15"
+                                   ng-model="employee.employeeCode" ng-disabled="pageType!='add'"/>
 
                         </div>
 

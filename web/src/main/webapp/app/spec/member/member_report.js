@@ -158,7 +158,7 @@
                         for (var i = 0; i < ly.length; i++) {
                             if (ly[i].value == o[0]) {
                                 legendData.push(ly[i].name);
-                                series.push({name: ly[i].name, value: o[0]});
+                                series.push({name: ly[i].name, value: o[1]});
                                 break;
                             }
                         }

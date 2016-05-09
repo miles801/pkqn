@@ -80,33 +80,33 @@
             <tr>
                 <td rowspan="3">民办学校</td>
                 <td>高校</td>
-                <td>{{beans['21'][2]}}</td>
-                <td>{{beans['21'][3]}}</td>
-                <td>{{beans['21'][4]}}</td>
-                <td>{{beans['21'][5]}}</td>
-                <td>{{beans['21'][6]}}</td>
-                <td>{{beans['21'][7]}}</td>
-                <td>{{beans['21'][8]}}</td>
+                <td>{{beans['24'][2]}}</td>
+                <td>{{beans['24'][3]}}</td>
+                <td>{{beans['24'][4]}}</td>
+                <td>{{beans['24'][5]}}</td>
+                <td>{{beans['24'][6]}}</td>
+                <td>{{beans['24'][7]}}</td>
+                <td>{{beans['24'][8]}}</td>
             </tr>
             <tr>
                 <td>中学</td>
-                <td>{{beans['22'][2]}}</td>
-                <td>{{beans['22'][3]}}</td>
-                <td>{{beans['22'][4]}}</td>
-                <td>{{beans['22'][5]}}</td>
-                <td>{{beans['22'][6]}}</td>
-                <td>{{beans['22'][7]}}</td>
-                <td>{{beans['22'][8]}}</td>
+                <td>{{beans['25'][2]}}</td>
+                <td>{{beans['25'][3]}}</td>
+                <td>{{beans['25'][4]}}</td>
+                <td>{{beans['25'][5]}}</td>
+                <td>{{beans['25'][6]}}</td>
+                <td>{{beans['25'][7]}}</td>
+                <td>{{beans['25'][8]}}</td>
             </tr>
             <tr>
                 <td>中职</td>
-                <td>{{beans['23'][2]}}</td>
-                <td>{{beans['23'][3]}}</td>
-                <td>{{beans['23'][4]}}</td>
-                <td>{{beans['23'][5]}}</td>
-                <td>{{beans['23'][6]}}</td>
-                <td>{{beans['23'][7]}}</td>
-                <td>{{beans['23'][8]}}</td>
+                <td>{{beans['26'][2]}}</td>
+                <td>{{beans['26'][3]}}</td>
+                <td>{{beans['26'][4]}}</td>
+                <td>{{beans['26'][5]}}</td>
+                <td>{{beans['26'][6]}}</td>
+                <td>{{beans['26'][7]}}</td>
+                <td>{{beans['26'][8]}}</td>
             </tr>
             <tr>
                 <td colspan="2">国有企业</td>
