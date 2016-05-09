@@ -55,7 +55,9 @@
     <h4 ng-if="beans.status=='3'" ng-cloak>当前登录用户已被注销，无法使用该功能!</h4>
     <h4 ng-if="beans.status=='4'" ng-cloak>审核未通过，无法使用该功能!请修改个人信息后重新申请！</h4>
     <div class="table-responsive panel panel-table"
-         style="width: 600px;height:850px;margin:0 auto;position: relative;background: url(<%=contextPath%>/app/spec/member/bg.jpg) no-repeat;">
+         style="width: 600px;height:850px;margin:0 auto;position: relative;padding:0;overflow: hidden;">
+        <img src="<%=contextPath%>/app/spec/member/bg.jpg" alt="" width="600" height="850"
+             style="position: absolute;top:0;left:0;"/>
         <table class="table table-striped table-hover" ng-cloak style="position: absolute; top:190px; left: 54px; width: 490px;">
             <tbody>
             <tr>
