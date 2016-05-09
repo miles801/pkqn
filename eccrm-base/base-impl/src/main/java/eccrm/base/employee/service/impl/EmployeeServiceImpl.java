@@ -326,6 +326,15 @@ public class EmployeeServiceImpl implements EmployeeService, BeanWrapCallback<Em
                     }
                     BeanCopyUtils.copyProperties(dto, employee);
                     employee.setPositionCode("TY"); // 导入的都是团员
+                    String idNo = employee.getIdNo();
+                    if (StringUtils.isNotEmpty(idNo) && idNo.length() == 18) {
+                        char sexIndex = idNo.charAt(16);
+                        if (Integer.parseInt(sexIndex + "") % 2 == 0) {
+                            employee.setGender("BP_LADY");
+                        } else {
+                            employee.setGender("BP_MAN");
+                        }
+                    }
                     if (emp != null && StringUtils.isNotEmpty(emp.getLy())) {
                         employee.setLy(emp.getLy());
                         employee.setLy2(emp.getLy2());
