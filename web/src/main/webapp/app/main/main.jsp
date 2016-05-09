@@ -31,7 +31,7 @@
         <div class="top">
             <div class="logo"></div>
             <span class="logo-text">
-                | 共青团银川市委员会团员管理系统
+                | 共青团银川市委员会团员管理云平台
             </span>
             <div class="tool" style="width: 100px;">
                 <a href="<%=contextPath%>/logout">
